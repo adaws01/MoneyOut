@@ -37,6 +37,23 @@ include where in the city they spend the most money? How prices of common
 items vary across shops? It could possibly even generate strategic 
 shopping lists suited to various sections of the city.
 
+## User Stories
+
+"As a user, I want to be able to..."
+
+- Add a transaction to my transaction history
+- Modify a previous transaction's information (or delete it)
+- View a list of my complete transaction history
+- Update my balance
+- View my balance (current/projected)
+- View how many transactions I have made (since X time or in X neighbourhood).
+- Add a budget or a recurrent cost (to predict my balance) 
+(budgets never subtracted from balance, recurrent subtracted from balance on date of cost)
+- Categorize my transactions and have them work towards my budgets 
+(ex. budget $300 towards food each month -> transactions tagged "food" will subtract from food budget)
+- View percentages of what I spend money on
+- View shops that I spend the most money at
+
 ---
 
 ## Footnotes
