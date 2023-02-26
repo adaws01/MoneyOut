@@ -3,7 +3,7 @@ package model;
 // represents a transaction with cost (CAD), date (YYMMDD), type of good, and
 // quantity (#, or false for intangible costs (ex: rent payments)
 public class Transaction {
-    private float cost;
+    private double cost;
     private int date;
     private String good;
     private int quantity;
@@ -11,18 +11,20 @@ public class Transaction {
     //TODO: Add Location Class and reference in Transaction
 
     //EFFECTS: constructs the transaction (cost, date, good, quantity)
-    Transaction(float cost, int date, String good, int quantity){
+    Transaction(double cost, int date, String good, int quantity){
         this.cost = cost;
         this.date = date;
         this.good = good;
         this.quantity = quantity;
     }
 
-    //TODO: Transaction Modify Method
+    //TODO: Transaction Modify Method //should modify the transaction history list
 
-    //TODO: Transaction Delete Method
+    //TODO: Transaction Delete Method //should remove a transaction from the history list
 
-    public float getCost() {
+    //TODO: View Transaction History Method //return the list
+
+    public double getCost() {
         return cost;
     }
     public int getDate() {
