@@ -2,6 +2,9 @@ package model.Transactions;
 
 import model.MoneyOutPrimitives.Date;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // represents a transaction with cost (CAD), date (YYMMDD), type of good, and
 // quantity (#, or false for intangible costs (ex: rent payments)
 public abstract class Transaction {
@@ -15,6 +18,7 @@ public abstract class Transaction {
     }
 
     //TODO: Transaction List Implementation
+    public List<Transaction> transactionHistory = new ArrayList<>();
 
     //Transaction Delete Method //should remove a transaction from the history list
 
