@@ -16,8 +16,7 @@ public abstract class Transaction {
         this.cost = cost;
         this.date = date;
     }
-
-    //TODO: Transaction List Implementation
+    
     public List<Transaction> transactionHistory = new ArrayList<>();
 
     //Transaction Delete Method //should remove a transaction from the history list
