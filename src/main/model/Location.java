@@ -1,7 +1,7 @@
 package model;
 
 // Represents a Location in Greater Vancouver, CAN, with name, neighbourhood/district, and
-// distance from home (input by user, as no network calls are allowed within the scope of this project)
+// distance from home in km (input by user, as no network calls are allowed within the scope of this project)
 public class Location {
     private String name;
     private String district;
@@ -19,6 +19,15 @@ public class Location {
     public String getDistrict(){return district;}
     public int getDistanceFromHome(){return distanceFromHome;}
 
-    //TODO: Setters
+    //Setters
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+    public void setDistanceFromHome(int distanceFromHome) {
+        this.distanceFromHome = distanceFromHome;
+    }
 
 }
