@@ -1,4 +1,4 @@
-# Student Finances Application (Name TBD)
+# MoneyOut (A Finances Application)
 
 A tool for students to engage with their finances,
 view analytics, and budget intuitively. 

@@ -1,4 +1,4 @@
-package model;
+package model.MoneyOutPrimitives;
 
 //Represents a date in YYYYMMDD Format, where Date is an integer.
 
@@ -8,7 +8,7 @@ public class Date {
     //REQUIRES: d is int of exactly 8 integers, where 1 <= MM <= 12, 1 <= DD <= 31,
     //          and MMDD is consistent with the days of the Gregorian Calendar.
     //EFFECTS: Constructs the Date (d)
-    Date(int d){
+    public Date(int d){
         this.d = d;
     }
 
