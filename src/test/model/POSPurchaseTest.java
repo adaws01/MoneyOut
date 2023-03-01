@@ -14,9 +14,9 @@ class POSPurchaseTest {
 
     @BeforeEach
     void runBefore() {
-        Tomato  = new POSPurchase(2.50, new Date(20230207), "Tomato", 1, Location.SAVEONDUNBAR);
-        Eggs    = new POSPurchase(4, new Date(20210230), "Eggs",   1, Location.SAVEONDUNBAR);
-        Tomato2 = new POSPurchase(4, new Date(20230207), "Tomato", 2, Location.SAFEWAY4VINE);
+        Tomato  = new POSPurchase(2.50, new Date(20230207), "Tomato", 1, Location.SAVE_ON_DUNBAR);
+        Eggs    = new POSPurchase(4, new Date(20210230), "Eggs",   1, Location.SAVE_ON_DUNBAR);
+        Tomato2 = new POSPurchase(4, new Date(20230207), "Tomato", 2, Location.SAFEWAY_4_VINE);
     }
 
     @Test
@@ -25,7 +25,7 @@ class POSPurchaseTest {
         assertEquals(20230207, Tomato.getDate());
         assertEquals("Tomato", Tomato.getGood());
         assertEquals(1, Tomato.getQuantity());
-        assertEquals(Location.SAVEONDUNBAR, Tomato.getLocation());
+        assertEquals(Location.SAVE_ON_DUNBAR, Tomato.getLocation());
     }
 
     @Test
@@ -46,9 +46,9 @@ class POSPurchaseTest {
         assertEquals(400, Eggs.getQuantity());
         Tomato2.setQuantity(4);
         assertEquals(4, Tomato2.getQuantity());
-        Eggs.setLocation(Location.SAFEWAY4VINE);
-        assertEquals(Location.SAFEWAY4VINE, Eggs.getLocation());
-        Tomato2.setLocation(Location.SAVEONDUNBAR);
-        assertEquals(Location.SAVEONDUNBAR, Tomato2.getLocation());
+        Eggs.setLocation(Location.SAFEWAY_4_VINE);
+        assertEquals(Location.SAFEWAY_4_VINE, Eggs.getLocation());
+        Tomato2.setLocation(Location.SAVE_ON_DUNBAR);
+        assertEquals(Location.SAVE_ON_DUNBAR, Tomato2.getLocation());
     }
 }

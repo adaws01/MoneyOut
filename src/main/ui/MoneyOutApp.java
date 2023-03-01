@@ -3,12 +3,12 @@ package ui;
 import model.Account;
 import model.MoneyOutPrimitives.Location;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MoneyOutApp {
-    private final Location WATERY_LANE = new Location("6 Watery Lane", "Downtown", 0);
 
-    private Account account;  //User Account to track balance, name, and address. Only one user account instantiated.
+    public Account account;  //User Account to track balance, name, and address. Only one user account instantiated.
     private Scanner input;    //Instance of Java's Scanner library--for tracking console input
     private String step;      //Tracks what menu the user is in and redefines commands accordingly
 
@@ -18,7 +18,7 @@ public class MoneyOutApp {
     //MODIFIES: this
     //EFFECTS: Performs necessary setup to begin
     private void initialize() {
-        account = new Account(0, "Xander", WATERY_LANE);
+        account = new Account(0, "Xander", Location.HOME_ADDRESS);
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -46,8 +46,10 @@ public class MoneyOutApp {
 
     }
 
+    //MENU INTERFACE --------------------------------------------------------------------------------------------------
+
     //EFFECTS: Sets up the Start menu
-    private void callStart() {    //commands == t, a, l ,s
+    private void callStart() {    //commands == t, a, l ,s, b
         step = "start";
         System.out.println("Welcome, " + account.getName() + ". How can I help you?");
         System.out.println("\tt -> Manage Transactions");
@@ -58,7 +60,7 @@ public class MoneyOutApp {
     }
 
     //EFFECTS: Sets up the Transactions Menu
-    private void callTransaction() {    //commands == l, m, d, v
+    private void callTransaction() {    //commands == l, m, d, v, b
         step = "transaction";
         System.out.println("Transactions");
         System.out.println("\tl -> Log Transaction");
@@ -68,7 +70,7 @@ public class MoneyOutApp {
         printNavigation();
     }
 
-    private void callAccount() {    //commands == a, p
+    private void callAccount() {    //commands == a, p, b
         step = "account";
         System.out.println("Your Account");
         System.out.println("\ta -> Account Balance");
@@ -76,7 +78,7 @@ public class MoneyOutApp {
         printNavigation();
     }
 
-    private void callBalance() {    //commands == d, w
+    private void callBalance() {    //commands == d, w, b
         step = "balance";
         System.out.println("Your Account Balance is: " + account.getBalance());
         System.out.println("\td -> Deposit");
@@ -84,7 +86,7 @@ public class MoneyOutApp {
         printNavigation();
     }
 
-    private void callLocations() {    //commands == n, m, l
+    private void callLocations() {    //commands == n, m, l, b
         step = "location";
         System.out.println("Locations");
         System.out.println("\tn -> New Location");
@@ -92,6 +94,20 @@ public class MoneyOutApp {
         System.out.println("\tl -> View All Recorded Locations");
         printNavigation();
     }
+
+    private void callPersonalInfo() {    //commands == n, a, b
+        step = "personal info";
+        System.out.println("Personal Information");
+        System.out.println(" ");
+        System.out.println("Name: " + account.getName());
+        System.out.println("Address on File: " + account.getAddress().getName());
+        System.out.println(" ");
+        System.out.println("\tn -> Change Name on File");
+        System.out.println("\ta -> Modify Address");
+        printNavigation();
+    }
+
+    //INPUT INTERFACE -------------------------------------------------------------------------------------------------
 
     /* IDEA for deposit and withdraw
      *  If the amount input for deposit/withdrawal is below zero, we need to throw an exception from within the account
@@ -122,10 +138,44 @@ public class MoneyOutApp {
         callBalance();
     }
 
+    //TODO: callLogLocation
+
+    private void changeName() {
+        step = "change name";
+        System.out.println("Input Preferred Name:");
+
+        String name = input.next();
+        account.setName(name);
+        callPersonalInfo();
+    }
+
     private void printNavigation() {
         System.out.println("\tb -> Back");
         System.out.println("\tq -> Quit");
     }
+
+
+    private String writeLocation(Location location) {
+        return location.getName() + ", " + location.getDistrict() + ", " + location.getDistanceFromHome() +
+                "km from home.";
+    }
+
+    private void printLocation(Location location) {
+        System.out.println(writeLocation(location));
+    }
+
+    private void printListLocation() {
+        System.out.println("LOCATIONS");
+        for (int i = 0; i == accessLocationList().size() - 1; i++) {
+            System.out.println((i + 1) + ". " + writeLocation(accessLocationList().get(i)));
+        }
+    }
+
+    //TODO viewTransaction();
+
+    //TODO viewListTransaction();
+
+    //MENU CONTROLS ---------------------------------------------------------------------------------------------------
 
     //EFFECTS: input command handling for all possible inputs at any stage of the application
     private void commandHandler(String command) {
@@ -169,6 +219,9 @@ public class MoneyOutApp {
             callAccount();
         } else if (step.equals("account")) {
             callBalance();
+        } else if (step.equals("personal info")) {
+            //TODO modifyAddress();             //we need location entry interface
+            constructionCommand();
         } else {
             invalidCommand();
         }
@@ -176,7 +229,7 @@ public class MoneyOutApp {
     private void stepHandlerB() {
         if (step.equals("transaction") || step.equals("account") || step.equals("location")) {
             callStart();
-        } else if (step.equals("balance")) {
+        } else if (step.equals("balance") || step.equals("personal info")) {
             callAccount();
         } else if (step.equals("deposit")) {
             callBalance();
@@ -201,8 +254,7 @@ public class MoneyOutApp {
             //TODO Log Transaction                //process that will return to transaction menu
             constructionCommand(); //stub
         } else if (step.equals("location")) {
-            //TODO viewLocations            //process that will return to location menu
-            constructionCommand(); //stub
+            printListLocation();
         } else {
             invalidCommand();
         }
@@ -222,14 +274,15 @@ public class MoneyOutApp {
         if (step.equals("location")) {
             //TODO newLocation                    //process that will return to location menu
             constructionCommand(); //stub
+        } else if (step.equals("personal info")) {
+            changeName();
         } else {
             invalidCommand();
         }
     }
     private void stepHandlerP() {
         if (step.equals("account")) {
-            //TODO callPersonalInformation       //separate menu
-            constructionCommand();
+            callPersonalInfo();
         } else {
             invalidCommand();
         }
@@ -263,5 +316,11 @@ public class MoneyOutApp {
         } else {
             invalidCommand();
         }
+    }
+
+    //LIST METHODS ----------------------------------------------------------------------------------------------------
+
+    private List<Location> accessLocationList() {
+        return Location.HOME_ADDRESS.getLocationList();
     }
 }

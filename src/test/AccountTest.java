@@ -16,7 +16,7 @@ public class AccountTest {
     @BeforeEach
     void runBefore() {
         Xander = new Account(500, "Xander", WATERYLANE);
-        Bob = new Account(4237.50, "Bob", Location.SAVEONDUNBAR);
+        Bob = new Account(4237.50, "Bob", Location.SAVE_ON_DUNBAR);
         John = new Account(0.0, "John", GASTOWN);
     }
 
