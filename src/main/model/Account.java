@@ -13,6 +13,20 @@ public class Account {
         this.address = address;
     }
 
+    //REQUIRES: amount <= 0, amount is specified to a max. of two decimal places (ex. 0.00)
+    //MODIFIES: this
+    //EFFECTS: Adds deposit amount to account balance
+    public void deposit(double amount) {
+        this.balance = this.balance + amount;
+    }
+
+    //REQUIRES: amount <= 0, amount is specified to a max. of two decimal places (ex. 0.00)
+    //MODIFIES: this
+    //EFFECTS: Subtracts withdrawal amount from account balance
+    public void withdraw(double amount) {
+        this.balance = this.balance - amount;
+    }
+
     //Getters
     public double getBalance() {return this.balance;}
     public String getName() {return this.name;}

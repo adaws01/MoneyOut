@@ -93,6 +93,35 @@ public class MoneyOutApp {
         printNavigation();
     }
 
+    /* IDEA for deposit and withdraw
+     *  If the amount input for deposit/withdrawal is below zero, we need to throw an exception from within the account
+     *  class. That exception needs to be caught in the callDeposit() method in the form of a console input which
+     *  requests reentry of a value above or equal to zero.
+     *  This is to prevent people from inputting negative values for deposit.
+     *  Similar behaviour will need to be created for the withdrawal class.
+     *
+     *  We also need to force only two decimal places of input. Currently we can enter any decimal value.
+     *  This is not the behaviour we are looking for. The above failure handling mechanism should
+     *  also include this.
+     */
+    private void callDeposit() {
+        step = "deposit";
+        System.out.println("Input Deposit Amount:");
+
+        double amount = Double.parseDouble(input.next());
+        account.deposit(amount);
+        callBalance();
+    }
+
+    private void callWithdraw() {
+        step = "withdraw";
+        System.out.println("Input Withdrawal Amount:");
+
+        double amount = Double.parseDouble(input.next());
+        account.withdraw(amount);
+        callBalance();
+    }
+
     private void printNavigation() {
         System.out.println("\tb -> Back");
         System.out.println("\tq -> Quit");
@@ -149,6 +178,8 @@ public class MoneyOutApp {
             callStart();
         } else if (step.equals("balance")) {
             callAccount();
+        } else if (step.equals("deposit")) {
+            callBalance();
         } else {
             invalidCommand();
         }
@@ -158,8 +189,7 @@ public class MoneyOutApp {
             //TODO Delete Transaction            //process that will return to transaction menu
             constructionCommand(); //stub
         } else if (step.equals("balance")) {
-            //TODO deposit                       //process that will return to balance menu
-            constructionCommand(); //stub
+            callDeposit();
         } else {
             invalidCommand();
         }
@@ -229,8 +259,7 @@ public class MoneyOutApp {
     }
     private void stepHandlerW() {
         if (step.equals("balance")) {
-            //TODO withdraw                        //process that will return to location menu
-            constructionCommand();
+            callWithdraw();
         } else {
             invalidCommand();
         }
