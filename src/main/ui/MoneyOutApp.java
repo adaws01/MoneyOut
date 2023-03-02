@@ -1,7 +1,12 @@
 package ui;
 
 import model.Account;
+import model.MoneyOutPrimitives.Date;
 import model.MoneyOutPrimitives.Location;
+import model.Transactions.ETransfer;
+import model.Transactions.Investment;
+import model.Transactions.POSPurchase;
+import model.Transactions.Transaction;
 
 import java.util.List;
 import java.util.Scanner;
@@ -148,6 +153,42 @@ public class MoneyOutApp {
         new Location(name, district, distanceFromHome);
     }
 
+    private void modifyLocationList() {
+        System.out.println("Choose one of the following...");
+        printListLocation();
+        System.out.println(" ");
+        System.out.println("Input #:");
+
+        int i = Integer.parseInt(input.next());
+        Location location = accessLocationList().get(i - 1);
+
+        modifyLocation(location);
+
+        callLocations();
+    }
+
+    private void modifyLocation(Location location) {
+        System.out.println("You have selected to Modify:");
+        printLocation(location);
+        System.out.println(" ");
+
+        System.out.println("Enter Location Name/Address (re-enter if maintaining)");
+        String name = input.next();
+        location.setName(name);
+
+        System.out.println("Enter Location District (re-enter if maintaining)");
+        String district = input.next();
+        location.setDistrict(district);
+
+        System.out.println("Enter Location Distance from Home Address (re-enter if maintaining)");
+        int distanceFromHome = Integer.parseInt(input.next());
+        location.setDistanceFromHome(distanceFromHome);
+
+        System.out.println("Your updated Location is:");
+        printLocation(location);
+        System.out.println(" ");
+    }
+
     private void changeNameOnAccount() {
         step = "change name";
         System.out.println("Input Preferred Name:");
@@ -173,15 +214,58 @@ public class MoneyOutApp {
     }
 
     private void printListLocation() {
-        System.out.println("LOCATIONS");
         for (int i = 0; i <= accessLocationList().size() - 1; i++) {
             System.out.println((i + 1) + ". " + writeLocation(accessLocationList().get(i)));
         }
     }
 
-    //TODO viewTransaction();
+    private String writeDate(int date) {
+        return String.valueOf(date); //TODO modify this to format the date better
+    }
+
+    private String writeTransaction(Transaction transaction) {
+        String tranClass = String.valueOf(transaction.getClass());
+
+        return handleTransactionClass(transaction, tranClass);
+    }
+
+    private String handleTransactionClass(Transaction transaction, String tranClass) {
+        if (tranClass.equals("class model.Transactions.POSPurchase")) {
+            return writePOSPurchase((POSPurchase) transaction);
+        } else if (tranClass.equals("class model.Transactions.Investment")) {
+            return writeInvestment((Investment) transaction);
+        } else {
+            return writeETransfer((ETransfer) transaction);
+        }
+    }
+
+    private String writePOSPurchase(POSPurchase posPurchase) {
+        return "POS PURCHASE \n\tCost: $" + posPurchase.getCost() + ", Date of Purchase: " +
+                writeDate(posPurchase.getDate()) + ", Good: " + posPurchase.getGood() + ", Quantity: " +
+                posPurchase.getQuantity() + ", Purchased at: " + writeLocation(posPurchase.getLocation());
+    }
+
+    private String writeInvestment(Investment investment) {
+        return "INVESTMENT \n\tCost: $" + investment.getCost() + ", Date of Investment: " +
+                writeDate(investment.getDate()) + ", Company: " + investment.getCompany() +
+                ", Shares: " + investment.getShares() + ", Domain: " + investment.getDomain() + ".";
+    }
+
+    private String writeETransfer(ETransfer eTransfer) {
+        return "E-TRANSFER \n\tAmount: $" + eTransfer.getCost() + ", Date of E-Transfer: " +
+                writeDate(eTransfer.getDate()) + ", To: " + eTransfer.getName() + ".";
+    }
+
+    private void printTransaction(Transaction transaction) {
+        System.out.println(writeTransaction(transaction));
+    }
 
     //TODO viewListTransaction();
+    private void printTransactionHistory() {
+        for (int i = 0; i <= accessTransactionHistory().size() - 1; i++) {
+            System.out.println((i + 1) + ". " + writeTransaction(accessTransactionHistory().get(i)));
+        }
+    }
 
     //MENU CONTROLS ---------------------------------------------------------------------------------------------------
 
@@ -228,8 +312,8 @@ public class MoneyOutApp {
         } else if (step.equals("account")) {
             callBalance();
         } else if (step.equals("personal info")) {
-            //TODO modifyAddress();             //we need location entry interface
-            constructionCommand();
+            modifyLocation(Location.HOME_ADDRESS);             //we need location entry interface
+            callPersonalInfo();
         } else {
             invalidCommand();
         }
@@ -262,6 +346,7 @@ public class MoneyOutApp {
             //TODO Log Transaction                //process that will return to transaction menu
             constructionCommand(); //stub
         } else if (step.equals("location")) {
+            System.out.println("Locations on File:");
             printListLocation();
             System.out.println(" ");
             callLocations();
@@ -274,8 +359,7 @@ public class MoneyOutApp {
             //TODO Modify Transaction          //process that will return to transaction menu
             constructionCommand(); //stub
         } else if (step.equals("location")) {
-            //TODO Modify Location         //process that will return to location menu
-            constructionCommand();
+            modifyLocationList();
         } else {
             invalidCommand();
         }
@@ -313,8 +397,9 @@ public class MoneyOutApp {
     }
     private void stepHandlerV() {
         if (step.equals("transaction")) {
-            //TODO View Transaction History    //print statement, not separate menu
-            constructionCommand(); //stub
+            System.out.println("Transaction History");
+            printTransactionHistory();
+            callTransaction();
         } else {
             invalidCommand();
         }
@@ -329,7 +414,10 @@ public class MoneyOutApp {
 
     //LIST METHODS ----------------------------------------------------------------------------------------------------
 
-private List<Location> accessLocationList() {
+    private List<Location> accessLocationList() {
         return Location.locationList;
     }
+
+    private List<Transaction> accessTransactionHistory() {return Transaction.transactionHistory;}
+
 }
