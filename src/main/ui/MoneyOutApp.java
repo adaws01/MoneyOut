@@ -150,7 +150,98 @@ public class MoneyOutApp {
         System.out.println("Provide Distance from Home Address:");
         int distanceFromHome = Integer.parseInt(input.next());
 
-        new Location(name, district, distanceFromHome);
+        Location location = new Location(name, district, distanceFromHome);
+        System.out.println("You have recorded...");
+        printLocation(location);
+        callLocations();
+    }
+
+    private void logNewTransaction() {
+        System.out.println("Select Transaction Type:");
+        System.out.println("\tp -> POS Purchase");
+        System.out.println("\ti -> Investment");
+        System.out.println("\te -> E-Transfer");
+        String selection = input.next();
+
+        selectNewTransaction(selection);
+    }
+
+    private void selectNewTransaction(String selection) {
+        if (selection.equals("p")) {
+            System.out.println("POS PURCHASE");
+            logNewPOSPurchase();
+        } else if (selection.equals("i")) {
+            System.out.println("INVESTMENT");
+            logNewInvestment();
+        } else if (selection.equals("e")) {
+            System.out.println("E-TRANSFER");
+            logNewETransfer();
+        } else {
+            invalidCommand();
+            logNewTransaction();
+        }
+    }
+
+    private void logNewPOSPurchase() {
+        System.out.println("Input Cost:");
+        double cost = Double.parseDouble(input.next());
+        System.out.println("Input Date (YYYYMMDD):");
+        String date = input.next();
+        Date processedDate = new Date(Integer.parseInt(date));    //Failure Handling here for if date input wrong
+        String parsedDate = parseDate(processedDate);
+        System.out.println(parsedDate);
+        System.out.println("Input Good (What item was purchased?):");
+        String good = input.next();
+        System.out.println("Input Quantity Purchased");
+        int quantity = Integer.parseInt(input.next());
+        System.out.println("Select Location of Purchase:");
+        printListLocation();
+        int i = Integer.parseInt(input.next());
+        Location location = accessLocationList().get(i - 1);
+        POSPurchase purchase = new POSPurchase(cost, processedDate, good, quantity, location);
+        System.out.println("You have recorded...");
+        printTransaction(purchase);
+        callTransaction();
+    }
+
+    private void logNewInvestment() {
+        System.out.println("Input Cost:");
+        double cost = Double.parseDouble(input.next());
+        System.out.println("Input Date (YYYYMMDD):");
+        String date = input.next();
+        Date processedDate = new Date(Integer.parseInt(date));    //Failure Handling here for if date input wrong
+        String parsedDate = parseDate(processedDate);
+        System.out.println(parsedDate);
+        System.out.println("Input Company:");
+        String company = input.next();
+        System.out.println("Input Shares Bought:");
+        int shares = Integer.parseInt(input.next());
+        System.out.println("Input Domain of Investment (Ex. Technology):");
+        String domain = input.next();
+        Investment investment = new Investment(cost, processedDate, company, shares, domain);
+        System.out.println("You have recorded...");
+        printTransaction(investment);
+        callTransaction();
+    }
+
+    private void logNewETransfer() {
+        System.out.println("Input Amount Transferred:");
+        double cost = Double.parseDouble(input.next());
+        System.out.println("Input Date (YYYYMMDD):");
+        String date = input.next();
+        Date processedDate = new Date(Integer.parseInt(date));    //Failure Handling here for if date input wrong
+        String parsedDate = parseDate(processedDate);
+        System.out.println(parsedDate);
+        System.out.println("Input Transferred to:");
+        String name = input.next();
+        ETransfer eTransfer = new ETransfer(cost, processedDate, name);
+        System.out.println("You have recorded...");
+        printTransaction(eTransfer);
+        callTransaction();
+    }
+
+    private String parseDate(Date date) {
+        return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
     }
 
     private void modifyLocationList() {
@@ -203,7 +294,6 @@ public class MoneyOutApp {
         System.out.println("\tq -> Quit");
     }
 
-
     private String writeLocation(Location location) {
         return location.getName() + ", " + location.getDistrict() + ", " + location.getDistanceFromHome() +
                 "km from home.";
@@ -220,7 +310,8 @@ public class MoneyOutApp {
     }
 
     private String writeDate(int date) {
-        return String.valueOf(date); //TODO modify this to format the date better
+        Date processedDate = new Date(date);
+        return parseDate(processedDate);
     }
 
     private String writeTransaction(Transaction transaction) {
@@ -260,7 +351,6 @@ public class MoneyOutApp {
         System.out.println(writeTransaction(transaction));
     }
 
-    //TODO viewListTransaction();
     private void printTransactionHistory() {
         for (int i = 0; i <= accessTransactionHistory().size() - 1; i++) {
             System.out.println((i + 1) + ". " + writeTransaction(accessTransactionHistory().get(i)));
@@ -343,8 +433,7 @@ public class MoneyOutApp {
         if (step.equals("start")) {
             callLocations();
         } else if (step.equals("transaction")) {
-            //TODO Log Transaction                //process that will return to transaction menu
-            constructionCommand(); //stub
+            logNewTransaction();
         } else if (step.equals("location")) {
             System.out.println("Locations on File:");
             printListLocation();
