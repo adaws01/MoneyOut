@@ -6,6 +6,10 @@ import java.util.List;
 // Represents a Location in Greater Vancouver, CAN, with name, neighbourhood/district, and
 // distance from home in km (input by user, as no network calls are allowed within the scope of this project)
 public class Location {
+    //EFFECTS: Declares and Instantiates the list of all locations this app could need to handle
+    //         plus helper methods as described by ArrayList.
+    public static List<Location> locationList = new ArrayList<>();
+
     public static Location HOME_ADDRESS =
             new Location("ADDRESS/NAME", "DISTRICT", 0);
     public static Location SAVE_ON_DUNBAR =
@@ -16,8 +20,6 @@ public class Location {
     private String name;
     private String district;
     private int distanceFromHome;
-
-    private List<Location> locationList = new ArrayList<Location>();
 
     //EFFECTS: Constructs the Location (name, district, distanceFromHome) and adds it to the locationList
     public Location(String name, String district, int distanceFromHome) {
@@ -31,7 +33,6 @@ public class Location {
     public String getName(){return name;}
     public String getDistrict(){return district;}
     public int getDistanceFromHome(){return distanceFromHome;}
-    public List<Location> getLocationList() {return locationList;}
 
     //Setters
     public void setName(String name) {
@@ -43,5 +44,4 @@ public class Location {
     public void setDistanceFromHome(int distanceFromHome) {
         this.distanceFromHome = distanceFromHome;
     }
-
 }

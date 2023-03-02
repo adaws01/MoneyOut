@@ -130,7 +130,6 @@ public class MoneyOutApp {
     }
 
     private void callWithdraw() {
-        step = "withdraw";
         System.out.println("Input Withdrawal Amount:");
 
         double amount = Double.parseDouble(input.next());
@@ -138,9 +137,18 @@ public class MoneyOutApp {
         callBalance();
     }
 
-    //TODO: callLogLocation
+    private void logNewLocation() {
+        System.out.println("Provide Location Name or Address:");
+        String name = input.next();
+        System.out.println("Provide Location District:");
+        String district = input.next();
+        System.out.println("Provide Distance from Home Address:");
+        int distanceFromHome = Integer.parseInt(input.next());
 
-    private void changeName() {
+        new Location(name, district, distanceFromHome);
+    }
+
+    private void changeNameOnAccount() {
         step = "change name";
         System.out.println("Input Preferred Name:");
 
@@ -166,7 +174,7 @@ public class MoneyOutApp {
 
     private void printListLocation() {
         System.out.println("LOCATIONS");
-        for (int i = 0; i == accessLocationList().size() - 1; i++) {
+        for (int i = 0; i <= accessLocationList().size() - 1; i++) {
             System.out.println((i + 1) + ". " + writeLocation(accessLocationList().get(i)));
         }
     }
@@ -255,6 +263,8 @@ public class MoneyOutApp {
             constructionCommand(); //stub
         } else if (step.equals("location")) {
             printListLocation();
+            System.out.println(" ");
+            callLocations();
         } else {
             invalidCommand();
         }
@@ -272,10 +282,9 @@ public class MoneyOutApp {
     }
     private void stepHandlerN() {
         if (step.equals("location")) {
-            //TODO newLocation                    //process that will return to location menu
-            constructionCommand(); //stub
+            logNewLocation();                    //process that will return to location menu
         } else if (step.equals("personal info")) {
-            changeName();
+            changeNameOnAccount();
         } else {
             invalidCommand();
         }
@@ -320,7 +329,7 @@ public class MoneyOutApp {
 
     //LIST METHODS ----------------------------------------------------------------------------------------------------
 
-    private List<Location> accessLocationList() {
-        return Location.HOME_ADDRESS.getLocationList();
+private List<Location> accessLocationList() {
+        return Location.locationList;
     }
 }
