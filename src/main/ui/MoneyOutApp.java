@@ -317,6 +317,17 @@ public class MoneyOutApp {
         logReturnNewTransaction(eTransfer);
     }
 
+    private void deleteTransaction() {
+        System.out.println("Select Transaction to Delete");
+        printTransactionHistory();
+        System.out.println("Input Index # of Transaction to Delete:");
+        int index = (Integer.parseInt(input.next()) - 1);
+
+        accessTransactionHistory().remove(index);
+        System.out.println("Deleted Transaction #" + (index + 1) + ".");
+        callTransaction();
+    }
+
     private void modifyLocationList() {
         System.out.println("Choose one of the following...");
         printListLocation();
@@ -490,8 +501,7 @@ public class MoneyOutApp {
     }
     private void stepHandlerD() {
         if (step.equals("transaction")) {
-            //TODO Delete Transaction            //process that will return to transaction menu
-            constructionCommand(); //stub
+            deleteTransaction();
         } else if (step.equals("balance")) {
             callDeposit();
         } else {
