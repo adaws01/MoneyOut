@@ -7,7 +7,6 @@ import model.Transactions.ETransfer;
 import model.Transactions.Investment;
 import model.Transactions.POSPurchase;
 import model.Transactions.Transaction;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.List;
 import java.util.Scanner;
@@ -144,8 +143,8 @@ public class MoneyOutApp {
     }
 
     private void logNewLocation() {
-        String name = getString("Provide Location Name or Address:");
-        String district = getString("Provide Location District:");
+        String name = getStringAndPrint("Provide Location Name or Address:");
+        String district = getStringAndPrint("Provide Location District:");
         System.out.println("Provide Distance from Home Address:");
         int distanceFromHome = Integer.parseInt(input.next());
 
@@ -184,13 +183,31 @@ public class MoneyOutApp {
     //TODO: Organize logNew Methods and Helpers (the entire newTransaction section is a mess right now)
 
     private void logNewPOSPurchase() {
-        double cost = logGetCost();
-        Date processedDate = logGetDate();
-        String good = getString("Input Good Purchased:");
-        int quantity = logGetQuantity();
-        Location location = logGetLocation();
+        double cost = getDoubleAndPrint("Input Cost ($):");
+        Date processedDate = getDateAndPrint("Input Date of Purchase (YYYYMMDD):");
+        String good = getStringAndPrint("Input Good Purchased:");
+        int quantity = getIntAndPrint("Input Quantity Purchased");
+        Location location = getLocationAndPrint("Select Location of Purchase:");
         POSPurchase purchase = new POSPurchase(cost, processedDate, good, quantity, location);
         logReturnNewTransaction(purchase);
+    }
+
+    private void logNewInvestment() {
+        double cost = getDoubleAndPrint("Input Investment Amount ($):");
+        Date processedDate = getDateAndPrint("Input Date of Investment (YYYYMMDD):");
+        String company = getStringAndPrint("Input Company:");
+        int shares = getIntAndPrint("Input Shares Bought:");
+        String domain = getStringAndPrint("Input Domain of Investment (Ex. Technology):");
+        Investment investment = new Investment(cost, processedDate, company, shares, domain);
+        logReturnNewTransaction(investment);
+    }
+
+    private void logNewETransfer() {
+        double amount = getDoubleAndPrint("Input Amount Transferred ($):");
+        Date processedDate = getDateAndPrint("Input Date Transferred (YYYYMMDD):");
+        String name = getStringAndPrint("Input Transferred to:");
+        ETransfer eTransfer = new ETransfer(amount, processedDate, name);
+        logReturnNewTransaction(eTransfer);
     }
 
     private void logReturnNewTransaction(Transaction transaction) {
@@ -199,22 +216,14 @@ public class MoneyOutApp {
         callTransaction();
     }
 
-    private Location logGetLocation() {
-        System.out.println("Select Location of Purchase:");
-        printListLocation();
-        int i = Integer.parseInt(input.next());
-        Location location = accessLocationList().get(i - 1);
-        return location;
+    private double getDoubleAndPrint(String cOut) {
+        System.out.println(cOut);
+        double d = Double.parseDouble(input.next());
+        return d;
     }
 
-    private int logGetQuantity() {
-        System.out.println("Input Quantity Purchased");
-        int quantity = Integer.parseInt(input.next());
-        return quantity;
-    }
-
-    private Date logGetDate() {
-        System.out.println("Input Date (YYYYMMDD):");
+    private Date getDateAndPrint(String cOut) {
+        System.out.println(cOut);
         String date = input.next();
         Date processedDate = new Date(Integer.parseInt(date));    //Failure Handling here for if date input wrong
         String parsedDate = parseDate(processedDate);
@@ -222,44 +231,90 @@ public class MoneyOutApp {
         return processedDate;
     }
 
-    private double logGetCost() {
-        System.out.println("Input Cost:");
-        double cost = Double.parseDouble(input.next());
-        return cost;
+    private String parseDate(Date date) {
+        return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
     }
 
-    private void logNewInvestment() {
-        double cost = logGetCost();
-        Date processedDate = logGetDate();
-        String company = getString("Input Company:");
-        int shares = logGetShares();
-        String domain = getString("Input Domain of Investment (Ex. Technology):");
-        Investment investment = new Investment(cost, processedDate, company, shares, domain);
-        logReturnNewTransaction(investment);
-    }
-
-    private int logGetShares() {
-        System.out.println("Input Shares Bought:");
-        int shares = Integer.parseInt(input.next());
-        return shares;
-    }
-
-    private String getString(String cOut) {
+    private String getStringAndPrint(String cOut) {
         System.out.println(cOut);
         String string = input.next();
         return string;
     }
 
-    private void logNewETransfer() {
-        double amount = logGetCost();
-        Date processedDate = logGetDate();
-        String name = getString("Input Transferred to:");
-        ETransfer eTransfer = new ETransfer(amount, processedDate, name);
-        logReturnNewTransaction(eTransfer);
+    private int getIntAndPrint(String cOut) {
+        System.out.println(cOut);
+        int i = Integer.parseInt(input.next());
+        return i;
     }
 
-    private String parseDate(Date date) {
-        return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
+    private Location getLocationAndPrint(String cOut) {
+        System.out.println(cOut);
+        printListLocation();
+        int i = Integer.parseInt(input.next());
+        Location location = accessLocationList().get(i - 1);
+        return location;
+    }
+
+    private void modifyTransaction() {
+        System.out.println("Select Transaction to Modify");
+        printTransactionHistory();
+        System.out.println("Input Index # of Transaction to Modify:");
+        int index = (Integer.parseInt(input.next()) - 1);
+
+        System.out.println("You have selected to modify...");
+        Transaction transaction = accessTransactionHistory().get(index);
+        printTransaction(transaction);
+
+        transactionModifyHandler(transaction);
+    }
+
+    private void transactionModifyHandler(Transaction transaction) {
+        String tranClass = String.valueOf(transaction.getClass());
+        if (tranClass.equals( "class model.Transactions.POSPurchase")) {
+            modifyPOSPurchase((POSPurchase) transaction);
+        } else if (tranClass.equals("class model.Transactions.Investment")) {
+            modifyInvestment((Investment) transaction);
+        } else {
+            modifyETransfer((ETransfer) transaction);
+        }
+    }
+
+    private void modifyPOSPurchase(POSPurchase purchase) {
+        double cost = getDoubleAndPrint("Input Cost ($):");
+        purchase.setCost(cost);
+        Date processedDate = getDateAndPrint("Input Date of Purchase (YYYYMMDD):");
+        purchase.setDate(processedDate);
+        String good = getStringAndPrint("Input Good Purchased:");
+        purchase.setGood(good);
+        int quantity = getIntAndPrint("Input Quantity Purchased");
+        purchase.setQuantity(quantity);
+        Location location = getLocationAndPrint("Select Location of Purchase:");
+        purchase.setLocation(location);
+        logReturnNewTransaction(purchase);
+    }
+
+    private void modifyInvestment(Investment investment) {
+        double cost = getDoubleAndPrint("Input Investment Amount ($):");
+        investment.setCost(cost);
+        Date processedDate = getDateAndPrint("Input Date of Investment (YYYYMMDD):");
+        investment.setDate(processedDate);
+        String company = getStringAndPrint("Input Company:");
+        investment.setCompany(company);
+        int shares = getIntAndPrint("Input Shares Bought:");
+        investment.setShares(shares);
+        String domain = getStringAndPrint("Input Domain of Investment (Ex. Technology):");
+        investment.setDomain(domain);
+        logReturnNewTransaction(investment);
+    }
+
+    private void modifyETransfer(ETransfer eTransfer) {
+        double amount = getDoubleAndPrint("Input Amount Transferred ($):");
+        eTransfer.setCost(amount);
+        Date processedDate = getDateAndPrint("Input Date Transferred (YYYYMMDD):");
+        eTransfer.setDate(processedDate);
+        String name = getStringAndPrint("Input Transferred to:");
+        eTransfer.setName(name);
+        logReturnNewTransaction(eTransfer);
     }
 
     private void modifyLocationList() {
@@ -281,10 +336,10 @@ public class MoneyOutApp {
         printLocation(location);
         System.out.println(" ");
 
-        String name = getString("Enter Location Name/Address (re-enter if maintaining)");
+        String name = getStringAndPrint("Enter Location Name/Address (re-enter if maintaining)");
         location.setName(name);
 
-        String district = getString("Enter Location District (re-enter if maintaining)");
+        String district = getStringAndPrint("Enter Location District (re-enter if maintaining)");
         location.setDistrict(district);
 
         System.out.println("Enter Location Distance from Home Address (re-enter if maintaining)");
@@ -296,23 +351,9 @@ public class MoneyOutApp {
         System.out.println(" ");
     }
 
-    //TODO private void modifyTransaction()
-        private void modifyTransaction() {
-            System.out.println("Select Transaction to Modify");
-            printTransactionHistory();
-            System.out.println("Input Index # of Transaction to Modify:");
-            int index = (Integer.parseInt(input.next()) - 1);
-
-            System.out.println("You have selected to modify...");
-            Transaction transaction = accessTransactionHistory().get(index);
-            printTransaction(transaction);
-
-
-        }
-
     private void changeNameOnAccount() {
         step = "change name";
-        String name = getString("Input Preferred Name:");
+        String name = getStringAndPrint("Input Preferred Name:");
         account.setName(name);
         callPersonalInfo();
     }
@@ -473,8 +514,7 @@ public class MoneyOutApp {
     }
     private void stepHandlerM() {
         if (step.equals("transaction")) {
-            //TODO Modify Transaction          //process that will return to transaction menu
-            constructionCommand(); //stub
+            modifyTransaction();
         } else if (step.equals("location")) {
             modifyLocationList();
         } else {
