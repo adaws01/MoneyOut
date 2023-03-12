@@ -54,6 +54,11 @@ shopping lists suited to various sections of the city.
 - View percentages of what I spend money on
 - View shops that I spend the most money at
 
+### P2
+
+- Save my recorded Transactions, Locations, and Account information to file (if I so choose)
+- Load my recorded Transactions, Locations, and Account information from file (if I so choose)
+
 ---
 
 ## Footnotes
