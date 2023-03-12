@@ -6,11 +6,16 @@ public class Account {
     private double balance;
     private String name;
     private Location address;
+    public static Account account = instantiateAccount();
 
     public Account(double balance, String name, Location address) {
         this.balance = balance;
         this.name = name;
         this.address = address;
+    }
+
+    public static Account instantiateAccount() {
+        return new Account(0, "Xander", Location.HOME_ADDRESS);
     }
 
     //REQUIRES: amount <= 0, amount is specified to a max. of two decimal places (ex. 0.00)

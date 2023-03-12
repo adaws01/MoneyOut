@@ -1,16 +1,13 @@
 package model.Transactions;
 
+import model.Account;
 import model.MoneyOutPrimitives.Date;
 import model.MoneyOutPrimitives.Location;
 import ui.MoneyOutApp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 // represents a transaction with cost (CAD), date (YYMMDD), type of good, and
 // quantity (#, or false for intangible costs (ex: rent payments)
 public abstract class Transaction {
-    public static List<Transaction> transactionHistory = new ArrayList<>();
 
     private double cost;
     private Date date;
@@ -19,8 +16,8 @@ public abstract class Transaction {
     public Transaction(double cost, Date date){
         this.cost = cost;
         this.date = date;
-        transactionHistory.add(this);
-        MoneyOutApp.account.setBalance(MoneyOutApp.account.getBalance() - cost);
+        ListOfTransaction.transactionHistory.add(this);
+        Account.account.setBalance(Account.account.getBalance() - cost);
     }
 
     //Transaction Delete Method //should remove a transaction from the history list

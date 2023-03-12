@@ -3,17 +3,15 @@ package ui;
 import model.Account;
 import model.MoneyOutPrimitives.Date;
 import model.MoneyOutPrimitives.Location;
-import model.Transactions.ETransfer;
-import model.Transactions.Investment;
-import model.Transactions.POSPurchase;
-import model.Transactions.Transaction;
+import model.Transactions.*;
 
 import java.util.List;
 import java.util.Scanner;
 
+import static model.Account.account;
+
 public class MoneyOutApp {
 
-    public static Account account;  //User Account to track balance, name, and address. Only one user account instantiated.
     private Scanner input;    //Instance of Java's Scanner library--for tracking console input
     private String step;      //Tracks what menu the user is in and redefines commands accordingly
 
@@ -23,7 +21,6 @@ public class MoneyOutApp {
     //MODIFIES: this
     //EFFECTS: Performs necessary setup to begin
     private void initialize() {
-        account = new Account(0, "Xander", Location.HOME_ADDRESS);
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -80,6 +77,16 @@ public class MoneyOutApp {
         System.out.println("Your Account");
         System.out.println("\ta -> Account Balance");
         System.out.println("\tp -> Personal Information");
+        printNavigation();
+    }
+
+    private void callStatsInsights() { //commands == c, t, w, b
+        step = "stats insights";
+        System.out.println("Statistics and Insights");
+        System.out.println("\tc -> Count Transactions over the last month");
+        System.out.println("\tt -> Get Percent Breakdown of Money Spent by Transaction Type");
+        System.out.println("\tw -> Get Percent Breakdown of Money Spent by POS Purchase Locations over the Last Month");
+        System.out.println("\tf -> Find Best Shop to Purchase a Good");
         printNavigation();
     }
 
@@ -445,8 +452,12 @@ public class MoneyOutApp {
             stepHandlerA();
         } else if (command.equals("b")) {
             stepHandlerB();
+        } else if (command.equals("c")) {
+            stepHandlerC();
         } else if (command.equals("d")) {
             stepHandlerD();
+        } else if (command.equals("f")) {
+            stepHandlerF();
         } else if (command.equals("l")) {
             stepHandlerL();
         } else if (command.equals("m")) {
@@ -489,7 +500,8 @@ public class MoneyOutApp {
         }
     }
     private void stepHandlerB() {
-        if (step.equals("transaction") || step.equals("account") || step.equals("location")) {
+        if (step.equals("transaction") || step.equals("account")
+                || step.equals("stats insights") || step.equals("location")) {
             callStart();
         } else if (step.equals("balance") || step.equals("personal info")) {
             callAccount();
@@ -499,11 +511,26 @@ public class MoneyOutApp {
             invalidCommand();
         }
     }
+    private void stepHandlerC() {
+        if (step.equals("stats insights")) {
+            //TODO how many transactions in the last month?
+            constructionCommand(); //stub
+        } else {
+            invalidCommand();
+        }
+    }
     private void stepHandlerD() {
         if (step.equals("transaction")) {
             deleteTransaction();
         } else if (step.equals("balance")) {
             callDeposit();
+        } else {
+            invalidCommand();
+        }
+    }
+    private void stepHandlerF() {
+        if (step.equals("stats insights")) {
+            //TODO find best shop to buy good
         } else {
             invalidCommand();
         }
@@ -549,8 +576,7 @@ public class MoneyOutApp {
     }
     private void stepHandlerS() {
         if (step.equals("start")) {
-            //TODO callStatsInsights             //separate menu
-            constructionCommand(); //stub
+            callStatsInsights();
         } else {
             invalidCommand();
         }
@@ -558,6 +584,9 @@ public class MoneyOutApp {
     private void stepHandlerT() {
         if (step.equals("start")) {
             callTransaction();
+        } else if (step.equals("stats insights")) {
+            //TODO percent breakdwon of POS vs. Investments vs. ETransfers
+            constructionCommand(); //stub
         } else {
             invalidCommand();
         }
@@ -574,6 +603,9 @@ public class MoneyOutApp {
     private void stepHandlerW() {
         if (step.equals("balance")) {
             callWithdraw();
+        } else if (step.equals("stats insights")) {
+            //TODO view percent breakdown of where purchases were made last month
+            constructionCommand(); //stub
         } else {
             invalidCommand();
         }
@@ -585,6 +617,6 @@ public class MoneyOutApp {
         return Location.locationList;
     }
 
-    private List<Transaction> accessTransactionHistory() {return Transaction.transactionHistory;}
+    private List<Transaction> accessTransactionHistory() {return ListOfTransaction.transactionHistory;}
 
 }
