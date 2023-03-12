@@ -18,9 +18,9 @@ public abstract class Transaction {
         Account.account.setBalance(Account.account.getBalance() - cost);
     }
 
-    //Transaction Delete Method //should remove a transaction from the history list
-
-    //View Transaction History Method //return the list
+    public boolean afterDate(Date date) {
+        return this.date.getDate() >= date.getDate();
+    }
 
     //Getters
     public double getCost() {

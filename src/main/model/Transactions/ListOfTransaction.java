@@ -1,5 +1,6 @@
 package model.Transactions;
 
+import model.MoneyOutPrimitives.Date;
 import model.MoneyOutPrimitives.Location;
 import model.Transactions.Helpers.AverageCost;
 
@@ -9,6 +10,24 @@ import java.util.List;
 
 public class ListOfTransaction {
     public static List<Transaction> transactionHistory = new ArrayList<>();
+
+    public static int countTransactionsOverLastMonth(Date date) {
+        return getTransactionsOverLastMonth(date).size();
+    }
+
+    public static List<Transaction> getTransactionsOverLastMonth(Date date) {
+        Date monthAgo = date.getMonthAgo();
+        List<Transaction> lastMonthTransactions = new ArrayList<>();
+
+        for (int i = 0; i < transactionHistory.size(); i ++) {
+            Transaction transaction = transactionHistory.get(i);
+            if (transaction.afterDate(monthAgo)) {
+                lastMonthTransactions.add(transaction);
+            }
+        }
+
+        return lastMonthTransactions;
+    }
 
     public static Location locateBestShopFor(String good) {
         List<POSPurchase> goodPurchases = getListOfGoodPurchase(good);

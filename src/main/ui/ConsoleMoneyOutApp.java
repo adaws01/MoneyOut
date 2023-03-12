@@ -79,12 +79,10 @@ public class ConsoleMoneyOutApp {
         printNavigation();
     }
 
-    private void callStatsInsights() { //commands == c, t, w, b
+    private void callStatsInsights() { //commands == c, f, b
         step = "stats insights";
         System.out.println("Statistics and Insights");
         System.out.println("\tc -> Count Transactions over the last month");
-        System.out.println("\tt -> Get Percent Breakdown of Money Spent by Transaction Type");
-        System.out.println("\tw -> Get Percent Breakdown of Money Spent by POS Purchase Locations over the Last Month");
         System.out.println("\tf -> Find Best Shop to Purchase a Good");
         printNavigation();
     }
@@ -155,6 +153,17 @@ public class ConsoleMoneyOutApp {
         Location bestShop = ListOfTransaction.locateBestShopFor(good);
         System.out.println("You should opt to shop for " + good + " at :");
         printLocation(bestShop);
+        callStatsInsights();
+    }
+
+    private void transactionsLastMonth() {
+        System.out.println("Transactions Last Month");
+        System.out.println("\tInput Today's Date:");
+        Date today = new Date(Integer.parseInt(input.next()));
+        System.out.println("Transactions Last Month");
+        printTransactionList(ListOfTransaction.getTransactionsOverLastMonth(today));
+        System.out.println("You recorded " + ListOfTransaction.countTransactionsOverLastMonth(today)
+                + " transactions over the last month.");
         callStatsInsights();
     }
 
@@ -273,7 +282,7 @@ public class ConsoleMoneyOutApp {
 
     private void modifyTransaction() {
         System.out.println("Select Transaction to Modify");
-        printTransactionHistory();
+        printTransactionList(accessTransactionHistory());
         System.out.println("Input Index # of Transaction to Modify:");
         int index = (Integer.parseInt(input.next()) - 1);
 
@@ -335,7 +344,7 @@ public class ConsoleMoneyOutApp {
 
     private void deleteTransaction() {
         System.out.println("Select Transaction to Delete");
-        printTransactionHistory();
+        printTransactionList(accessTransactionHistory());
         System.out.println("Input Index # of Transaction to Delete:");
         int index = (Integer.parseInt(input.next()) - 1);
 
@@ -447,9 +456,9 @@ public class ConsoleMoneyOutApp {
         System.out.println(writeTransaction(transaction));
     }
 
-    private void printTransactionHistory() {
-        for (int i = 0; i <= accessTransactionHistory().size() - 1; i++) {
-            System.out.println((i + 1) + ". " + writeTransaction(accessTransactionHistory().get(i)));
+    private void printTransactionList(List<Transaction> transactionList) {
+        for (int i = 0; i <= transactionList.size() - 1; i++) {
+            System.out.println((i + 1) + ". " + writeTransaction(transactionList.get(i)));
         }
     }
 
@@ -522,8 +531,7 @@ public class ConsoleMoneyOutApp {
     }
     private void stepHandlerC() {
         if (step.equals("stats insights")) {
-            //TODO how many transactions in the last month?
-            constructionCommand(); //stub
+            transactionsLastMonth();
         } else {
             invalidCommand();
         }
@@ -593,9 +601,6 @@ public class ConsoleMoneyOutApp {
     private void stepHandlerT() {
         if (step.equals("start")) {
             callTransaction();
-        } else if (step.equals("stats insights")) {
-            //TODO percent breakdwon of POS vs. Investments vs. ETransfers
-            constructionCommand(); //stub
         } else {
             invalidCommand();
         }
@@ -603,7 +608,7 @@ public class ConsoleMoneyOutApp {
     private void stepHandlerV() {
         if (step.equals("transaction")) {
             System.out.println("Transaction History");
-            printTransactionHistory();
+            printTransactionList(accessTransactionHistory());
             callTransaction();
         } else {
             invalidCommand();
@@ -612,9 +617,6 @@ public class ConsoleMoneyOutApp {
     private void stepHandlerW() {
         if (step.equals("balance")) {
             callWithdraw();
-        } else if (step.equals("stats insights")) {
-            //TODO view percent breakdown of where purchases were made last month
-            constructionCommand(); //stub
         } else {
             invalidCommand();
         }

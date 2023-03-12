@@ -34,5 +34,31 @@ public class Date {
         return Integer.parseInt(subst);
     }
 
+    public Date getMonthAgo() {
+        int year = this.getYear();
+        int month = this.getMonth();
+        int day = this.getDay();
+        int newYear;
+        int newMonth;
+        if (month == 1) {
+            newMonth = 12;
+            newYear = year - 1;
+        } else {
+            newMonth = month - 1;
+            newYear = year;
+        }
+        int newDay;
+        if (day == 31) {
+            if (month == 3) {
+                newDay = 28;           //not dealing with leap years
+            } else {
+                newDay = 30;
+            }
+        } else {
+            newDay = day;
+        }
+        return new Date(newYear + newMonth + newDay);
+    }
+
     //Setters omitted here as Dates only need to be reset within other classes with setters of their own.
 }
