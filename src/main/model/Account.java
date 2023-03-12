@@ -2,18 +2,27 @@ package model;
 
 import model.MoneyOutPrimitives.Location;
 
+/**
+ * Represents an Account with account balance, name of account owner, and the home address of the account owner.
+ * A single account (named account) is instantiated for use across the entire application.
+ * All instantiated Transactions update account balance.
+ */
+
 public class Account {
     private double balance;
     private String name;
     private Location address;
     public static Account account = instantiateAccount();
 
+    //EFFECTS: Constructs an account with account balance, name of account owner, and owner's address.
     public Account(double balance, String name, Location address) {
         this.balance = balance;
         this.name = name;
         this.address = address;
     }
 
+    //EFFECTS: Instantiates the single account used across the application with initial balance = 0,
+    //         name = "Xander", and a shell home address location to be modified within the application.
     public static Account instantiateAccount() {
         return new Account(0, "Xander", Location.HOME_ADDRESS);
     }

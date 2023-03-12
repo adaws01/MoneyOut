@@ -1,13 +1,17 @@
 package model.Transactions.Helpers;
 
-//Represents the average cost of an item at a certain location, with net cost and net quantity.
-//Implemented in ListOfTransaction optimizeLocation() method.
+/**
+ * Represents the average cost of an item at a certain location, with net cost and net quantity.
+ * Implemented in ListOfTransaction optimizeLocation() method.
+ */
 
 public class AverageCost {
 
     private double cost;
     private int quantity;
 
+    //EFFECTS: Constructs the AverageCost (cost, quantity) of an item at a location
+    //         as defined in ListOfTransaction.optimizeLocation()
     public AverageCost(double cost, int quantity) {
         this.cost = cost;
         this.quantity = quantity;

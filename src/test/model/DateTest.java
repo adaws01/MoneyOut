@@ -9,12 +9,14 @@ public class DateTest {
     private Date Date1;
     private Date Date2;
     private Date Date3;
+    private Date Date4;
 
     @BeforeEach
     void runBefore() {
         Date1 = new Date(20230226);
         Date2 = new Date(19800113);
         Date3 = new Date(20001231);
+        Date4 = new Date(20000331);
     }
 
     @Test
@@ -43,6 +45,14 @@ public class DateTest {
         assertEquals(26, Date1.getDay());
         assertEquals(13, Date2.getDay());
         assertEquals(31, Date3.getDay());
+    }
+
+    @Test
+    void testGetMonthAgo() {
+        assertEquals(20230126, Date1.getMonthAgo().getDate());
+        assertEquals(19791213, Date2.getMonthAgo().getDate());
+        assertEquals(20001130, Date3.getMonthAgo().getDate());
+        assertEquals(20000228, Date4.getMonthAgo().getDate());
     }
 
 }

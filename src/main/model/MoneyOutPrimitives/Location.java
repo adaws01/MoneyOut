@@ -3,15 +3,19 @@ package model.MoneyOutPrimitives;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents a Location in Greater Vancouver, CAN, with name, neighbourhood/district, and
-// distance from home in km (input by user, as no network calls are allowed within the scope of this project)
+/**
+ *  Represents a Location in Greater Vancouver, CAN, with name, neighbourhood/district, and
+ *  distance from home in km (input by user, as no network calls are allowed within the scope of this project)
+ */
+
 public class Location {
     //EFFECTS: Declares and Instantiates the list of all locations this app could need to handle
     //         plus helper methods as described by ArrayList.
     public static List<Location> locationList = new ArrayList<>();
 
+    //Instantiation of common shops and Home Address objects for use in MoneyOutApp
     public static Location HOME_ADDRESS =
-            new Location("ADDRESS/NAME", "DISTRICT", 0);
+            new Location("NEED ADDRESS", "DISTRICT", 0);
     public static Location SAVE_ON_DUNBAR =
             new Location("Save On Foods", "Dunbar", 1);
     public static Location SAFEWAY_4_VINE =

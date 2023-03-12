@@ -22,6 +22,10 @@ public class ListOfTransactionTest {
     static POSPurchase p6;
     static POSPurchase p7;
     static POSPurchase p8;
+    static Investment i1;
+    static Investment i2;
+    static ETransfer e1;
+    static ETransfer e2;
     static List<POSPurchase> beforeLOTTests = new ArrayList<>();
 
 
@@ -32,22 +36,22 @@ public class ListOfTransactionTest {
                 40, Location.SAFEWAY_4_VINE);
         p2 = new POSPurchase(10, new Date(20230307), "Potato",
                 10, Location.SAFEWAY_4_VINE);
-        Investment i1 = new Investment(400, new Date(20220101), "Apple",
+        i1 = new Investment(400, new Date(20220101), "Apple",
                 3, "Technology");
         p3 = new POSPurchase(60, new Date(20230219), "Potato",
                 30, Location.SAVE_ON_DUNBAR);
-        ETransfer e1 = new ETransfer(800, new Date(20230101), "Landlord");
+        e1 = new ETransfer(800, new Date(20230101), "Landlord");
         p4 = new POSPurchase(8, new Date(20230206), "Potato",
                 4, Location.SAVE_ON_DUNBAR);
         p5 = new POSPurchase(40, new Date(20230301), "Glue",
                 40, Location.SAFEWAY_4_VINE);
         p6 = new POSPurchase(10, new Date(20230307), "Glue",
                 10, Location.SAFEWAY_4_VINE);
-        Investment i2 = new Investment(400, new Date(20220101), "Tesla",
+        i2 = new Investment(400, new Date(20220101), "Tesla",
                 3, "Technology");
         p7 = new POSPurchase(30, new Date(20230219), "Glue",
                 60, Location.SAVE_ON_DUNBAR);
-        ETransfer e2 = new ETransfer(800, new Date(20230101), "Friend");
+        e2 = new ETransfer(800, new Date(20230101), "Friend");
         p8 = new POSPurchase(4, new Date(20230206), "Glue",
                 8, Location.SAVE_ON_DUNBAR);
     }
@@ -106,5 +110,16 @@ public class ListOfTransactionTest {
         posPurchases.add(p7);
         posPurchases.add(p8);
         assertEquals(posPurchases, ListOfTransaction.getPOSPurchaseHistory());
+    }
+
+    @Test
+    void testTransactionsOverLastMonth() {
+        List<Transaction> lastMonth = new ArrayList<>();
+        lastMonth.add(p1);
+        lastMonth.add(p2);
+        lastMonth.add(p5);
+        lastMonth.add(p6);
+        assertEquals(lastMonth, ListOfTransaction.getTransactionsOverLastMonth(new Date(20230331)));
+        assertEquals(4, ListOfTransaction.countTransactionsOverLastMonth(new Date(20230331)));
     }
 }

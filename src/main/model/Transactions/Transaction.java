@@ -3,14 +3,22 @@ package model.Transactions;
 import model.Account;
 import model.MoneyOutPrimitives.Date;
 
-// represents a transaction with cost (CAD), date (YYMMDD), type of good, and
-// quantity (#, or false for intangible costs (ex: rent payments)
+/**
+ * Abstract Representation of a Transaction with cost (in CAD), and date (YYYYMMDD).
+ * Extended by POSPurchase, Investment, and ETransfer.
+ * All Transactions that are instantiated are automatically added to ListOfTransaction.transactionHistory.
+ * With each newly instantiated transaction, Account.account balance is modified
+ */
+
 public abstract class Transaction {
 
     private double cost;
     private Date date;
 
-    //EFFECTS: constructs the transaction (cost, date, good, quantity)
+    //REQUIRES: cost > 0
+    //MODIFIES: this, ListOfTransaction.transactionHistory, Account.account
+    //EFFECTS: Abstract constructor for Transaction (super for cost and date), extended in subclasses.
+    //         Adds any new transaction to ListOfTransaction.transactionHistory
     public Transaction(double cost, Date date){
         this.cost = cost;
         this.date = date;
@@ -18,6 +26,8 @@ public abstract class Transaction {
         Account.account.setBalance(Account.account.getBalance() - cost);
     }
 
+    //EFFECTS: Returns true if date attached to this is after the input date.
+    //         False otherwise
     public boolean afterDate(Date date) {
         return this.date.getDate() >= date.getDate();
     }

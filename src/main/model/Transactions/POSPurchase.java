@@ -3,12 +3,19 @@ package model.Transactions;
 import model.MoneyOutPrimitives.Date;
 import model.MoneyOutPrimitives.Location;
 
+/**
+ * Represents a POSPurchase: A type of Transaction with cost, date, good (what item was purchased), quantity,
+ *                           and location
+ */
+
 public class POSPurchase extends Transaction {
     private String good;
     private int quantity;
     private Location location;
 
-    //REQUIRES: Quantity > 0
+    //REQUIRES: quantity and cost > 0
+    //EFFECTS: Constructs a POSPurchase with cost, date, good, quantity, and location,
+    //         and adds it to ListOfTransaction.transactionHistory.
     public POSPurchase(double cost, Date date, String good, int quantity, Location location) {
         super(cost, date);
         this.good = good;

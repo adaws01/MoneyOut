@@ -2,11 +2,19 @@ package model.Transactions;
 
 import model.MoneyOutPrimitives.Date;
 
+/**
+ * Represents an Investment: A type of Transaction with cost, date, company invested in, number of shares purchased,
+ * and the domain that the company works in.
+ */
+
 public class Investment extends Transaction{
     private String company;
     private String domain;
     private int shares;
 
+    //REQUIRES: cost and shares > 0
+    //EFFECTS: Constructs the Investment with cost, date, company, shares, and domain,
+    //         and adds the Investment to ListOfTransaction.transactionHistory
     public Investment(double cost, Date date, String company, int shares, String domain) {
         super(cost, date);
         this.company = company;
