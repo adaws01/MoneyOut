@@ -2,6 +2,7 @@ package model.Transactions;
 
 import model.MoneyOutPrimitives.Date;
 import model.MoneyOutPrimitives.Location;
+import ui.MoneyOutApp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +12,6 @@ import java.util.List;
 public abstract class Transaction {
     public static List<Transaction> transactionHistory = new ArrayList<>();
 
-    //DELETE THESE WHEN DONE IMPLEMENTING TRANSACTION
-    public static Transaction TRANSACTION1 =
-            new POSPurchase(1, new Date(20000001), "Tomato", 1, Location.SAVE_ON_DUNBAR);
-    public static Transaction TRANSACTION2 =
-            new POSPurchase(2, new Date(20000002), "Tomato", 2, Location.SAVE_ON_DUNBAR);
-    public static Transaction TRANSACTION3 =
-            new ETransfer(3, new Date(20000003), "Person 3");
-    public static Transaction TRANSACTION4 =
-            new Investment(4, new Date(20000004), "Apple", 4, "Technology");
-
     private double cost;
     private Date date;
 
@@ -29,6 +20,7 @@ public abstract class Transaction {
         this.cost = cost;
         this.date = date;
         transactionHistory.add(this);
+        MoneyOutApp.account.setBalance(MoneyOutApp.account.getBalance() - cost);
     }
 
     //Transaction Delete Method //should remove a transaction from the history list

@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class MoneyOutApp {
 
-    public Account account;  //User Account to track balance, name, and address. Only one user account instantiated.
+    public static Account account;  //User Account to track balance, name, and address. Only one user account instantiated.
     private Scanner input;    //Instance of Java's Scanner library--for tracking console input
     private String step;      //Tracks what menu the user is in and redefines commands accordingly
 
