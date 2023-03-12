@@ -7,7 +7,7 @@ import model.MoneyOutPrimitives.Date;
  */
 
 public class ETransfer extends Transaction{
-    private String name;
+    private String name; //Name of the person to whom money was sent
 
     //REQUIRES: cost > 0
     //EFFECTS: Constructs an ETransfer with cost, date, and name and adds it to ListOfTransaction.transactionHistory

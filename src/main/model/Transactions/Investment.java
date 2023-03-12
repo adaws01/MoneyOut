@@ -8,9 +8,9 @@ import model.MoneyOutPrimitives.Date;
  */
 
 public class Investment extends Transaction{
-    private String company;
-    private String domain;
-    private int shares;
+    private String company; //Company invested in
+    private String domain;  //Company's main parent industry
+    private int shares;     //Number of Shares purchased
 
     //REQUIRES: cost and shares > 0
     //EFFECTS: Constructs the Investment with cost, date, company, shares, and domain,

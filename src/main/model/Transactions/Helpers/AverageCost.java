@@ -7,8 +7,8 @@ package model.Transactions.Helpers;
 
 public class AverageCost {
 
-    private double cost;
-    private int quantity;
+    private double cost; //Net cost of items purchased
+    private int quantity; //Quantity of item purchased
 
     //EFFECTS: Constructs the AverageCost (cost, quantity) of an item at a location
     //         as defined in ListOfTransaction.optimizeLocation()

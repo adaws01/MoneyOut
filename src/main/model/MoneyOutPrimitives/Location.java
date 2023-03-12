@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Represents a Location in Greater Vancouver, CAN, with name, neighbourhood/district, and
+ *  Represents a Location with name, neighbourhood/district, and
  *  distance from home in km (input by user, as no network calls are allowed within the scope of this project)
  */
 
@@ -21,9 +21,10 @@ public class Location {
     public static Location SAFEWAY_4_VINE =
             new Location("Safeway 4th and Vine", "Kitsilano", 6);
 
-    private String name;
-    private String district;
-    private int distanceFromHome;
+    private String name;  //Name assigned to the location. This could be an address, or a description of the location.
+    private String district;  //Neighbourhood that the location is in. This is flexible and could also represent
+                              //a city, or any more general description of where the location is.
+    private int distanceFromHome; //The distance from the user's home. Must be updated manually if home address changed
 
     //EFFECTS: Constructs the Location (name, district, distanceFromHome) and adds it to the locationList
     public Location(String name, String district, int distanceFromHome) {

@@ -9,9 +9,10 @@ import model.MoneyOutPrimitives.Location;
  */
 
 public class POSPurchase extends Transaction {
-    private String good;
-    private int quantity;
-    private Location location;
+    private String good;        //The type of item that was purchased (Ex: Tomato).
+                                // Proper noun capitalization, singular form of word.
+    private int quantity;       //Number of units purchased
+    private Location location;  //Location of the Transaction
 
     //REQUIRES: quantity and cost > 0
     //EFFECTS: Constructs a POSPurchase with cost, date, good, quantity, and location,

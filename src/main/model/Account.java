@@ -9,10 +9,10 @@ import model.MoneyOutPrimitives.Location;
  */
 
 public class Account {
-    private double balance;
-    private String name;
-    private Location address;
-    public static Account account = instantiateAccount();
+    private double balance;   //Account Balance
+    private String name;      //Name of Account Owner
+    private Location address; //Account Owner's Home Address
+    public static Account account = instantiateAccount(); //Declaration of account object
 
     //EFFECTS: Constructs an account with account balance, name of account owner, and owner's address.
     public Account(double balance, String name, Location address) {

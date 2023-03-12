@@ -5,7 +5,7 @@ package model.MoneyOutPrimitives;
  */
 
 public class Date {
-    private int d;
+    private int d; //Stores date as YYYYMMDD
 
     //REQUIRES: d is int of exactly 8 integers, where 1 <= MM <= 12, 1 <= DD <= 31,
     //          and MMDD is consistent with the days of the Gregorian Calendar.

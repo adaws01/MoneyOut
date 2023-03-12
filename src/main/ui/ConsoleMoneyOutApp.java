@@ -9,6 +9,13 @@ import java.util.Scanner;
 
 import static model.Account.account;
 
+/**
+ * This class manages all the functionality of a Console based UI for the MoneyOut application.
+ * Instantiate a new ConsoleMoneyOutApp in the Main class to launch the console based application
+ * Contains all Console Menus, and methods requiring user inputs.
+ * Makes calls that modify or manipulate the lists of data recorded in the model package.
+ */
+
 public class ConsoleMoneyOutApp {
 
     private Scanner input;    //Instance of Java's Scanner library--for tracking console input

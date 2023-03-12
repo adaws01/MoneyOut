@@ -12,8 +12,8 @@ import model.MoneyOutPrimitives.Date;
 
 public abstract class Transaction {
 
-    private double cost;
-    private Date date;
+    private double cost; //The price of the Transaction
+    private Date date;   //The date of the Transaction
 
     //REQUIRES: cost > 0
     //MODIFIES: this, ListOfTransaction.transactionHistory, Account.account

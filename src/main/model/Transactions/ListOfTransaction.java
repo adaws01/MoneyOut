@@ -16,6 +16,7 @@ import java.util.List;
  */
 
 public class ListOfTransaction {
+    //Instantiation of Transaction History: A record of all Transactions logged to this application.
     public static List<Transaction> transactionHistory = new ArrayList<>();
 
     //EFFECTS: returns the number of transactions with a date up to a month before the input date.
