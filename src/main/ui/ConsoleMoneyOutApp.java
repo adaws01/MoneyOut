@@ -1,6 +1,5 @@
 package ui;
 
-import model.Account;
 import model.MoneyOutPrimitives.Date;
 import model.MoneyOutPrimitives.Location;
 import model.Transactions.*;
@@ -10,13 +9,13 @@ import java.util.Scanner;
 
 import static model.Account.account;
 
-public class MoneyOutApp {
+public class ConsoleMoneyOutApp {
 
     private Scanner input;    //Instance of Java's Scanner library--for tracking console input
     private String step;      //Tracks what menu the user is in and redefines commands accordingly
 
     //EFFECTS: Runs the App
-    public MoneyOutApp() {runApp();}
+    public ConsoleMoneyOutApp() {runApp();}
 
     //MODIFIES: this
     //EFFECTS: Performs necessary setup to begin
@@ -147,6 +146,16 @@ public class MoneyOutApp {
         double amount = Double.parseDouble(input.next());
         account.withdraw(amount);
         callBalance();
+    }
+
+    private void optimizePurchaseByLocation() {
+        System.out.println("Find Best Shop to Purchase a Good");
+        System.out.println("\tEnter an item:");
+        String good = input.next();
+        Location bestShop = ListOfTransaction.locateBestShopFor(good);
+        System.out.println("You should opt to shop for " + good + " at :");
+        printLocation(bestShop);
+        callStatsInsights();
     }
 
     private void logNewLocation() {
@@ -530,7 +539,7 @@ public class MoneyOutApp {
     }
     private void stepHandlerF() {
         if (step.equals("stats insights")) {
-            //TODO find best shop to buy good
+            optimizePurchaseByLocation();
         } else {
             invalidCommand();
         }

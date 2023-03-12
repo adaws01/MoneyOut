@@ -2,8 +2,6 @@ package model.Transactions;
 
 import model.Account;
 import model.MoneyOutPrimitives.Date;
-import model.MoneyOutPrimitives.Location;
-import ui.MoneyOutApp;
 
 // represents a transaction with cost (CAD), date (YYMMDD), type of good, and
 // quantity (#, or false for intangible costs (ex: rent payments)

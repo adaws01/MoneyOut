@@ -54,7 +54,7 @@ public class ListOfTransactionTest {
 
     @Test
     void testLocateBestShop() {
-        assertEquals(Location.SAFEWAY_4_VINE, ListOfTransaction.locateBestShop("Potato"));
+        assertEquals(Location.SAFEWAY_4_VINE, ListOfTransaction.locateBestShopFor("Potato"));
     }
 
     @Test

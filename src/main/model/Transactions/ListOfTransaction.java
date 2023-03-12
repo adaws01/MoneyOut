@@ -10,7 +10,7 @@ import java.util.List;
 public class ListOfTransaction {
     public static List<Transaction> transactionHistory = new ArrayList<>();
 
-    public static Location locateBestShop(String good) {
+    public static Location locateBestShopFor(String good) {
         List<POSPurchase> goodPurchases = getListOfGoodPurchase(good);
 
         return optimizeLocation(goodPurchases);
