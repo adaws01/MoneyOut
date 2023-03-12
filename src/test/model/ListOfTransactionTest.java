@@ -1,9 +1,9 @@
 package model;
 
-import model.MoneyOutPrimitives.Date;
-import model.MoneyOutPrimitives.Location;
-import model.Transactions.*;
-import model.Transactions.Helpers.AverageCost;
+import model.moneyoutprimitives.Date;
+import model.moneyoutprimitives.Location;
+import model.transactions.*;
+import model.transactions.AverageCost;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -14,56 +14,56 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ListOfTransactionTest {
 
-    static POSPurchase p1;
-    static POSPurchase p2;
-    static POSPurchase p3;
-    static POSPurchase p4;
-    static POSPurchase p5;
-    static POSPurchase p6;
-    static POSPurchase p7;
-    static POSPurchase p8;
+    static PosPurchase p1;
+    static PosPurchase p2;
+    static PosPurchase p3;
+    static PosPurchase p4;
+    static PosPurchase p5;
+    static PosPurchase p6;
+    static PosPurchase p7;
+    static PosPurchase p8;
     static Investment i1;
     static Investment i2;
     static ETransfer e1;
     static ETransfer e2;
-    static List<POSPurchase> beforeLOTTests = new ArrayList<>();
+    static List<PosPurchase> beforeLOTTests = new ArrayList<>();
 
 
     @BeforeAll
     static void runBefore() {
-        beforeLOTTests.addAll(ListOfTransaction.getPOSPurchaseHistory());
-        p1 = new POSPurchase(40, new Date(20230301), "Potato",
-                40, Location.SAFEWAY_4_VINE);
-        p2 = new POSPurchase(10, new Date(20230307), "Potato",
-                10, Location.SAFEWAY_4_VINE);
+        beforeLOTTests.addAll(ListOfTransaction.getPosPurchaseHistory());
+        p1 = new PosPurchase(40, new Date(20230301), "Potato",
+                40, Location.accessSafewayFourthVine());
+        p2 = new PosPurchase(10, new Date(20230307), "Potato",
+                10, Location.accessSafewayFourthVine());
         i1 = new Investment(400, new Date(20220101), "Apple",
                 3, "Technology");
-        p3 = new POSPurchase(60, new Date(20230219), "Potato",
-                30, Location.SAVE_ON_DUNBAR);
+        p3 = new PosPurchase(60, new Date(20230219), "Potato",
+                30, Location.accessSaveOnDunbar());
         e1 = new ETransfer(800, new Date(20230101), "Landlord");
-        p4 = new POSPurchase(8, new Date(20230206), "Potato",
-                4, Location.SAVE_ON_DUNBAR);
-        p5 = new POSPurchase(40, new Date(20230301), "Glue",
-                40, Location.SAFEWAY_4_VINE);
-        p6 = new POSPurchase(10, new Date(20230307), "Glue",
-                10, Location.SAFEWAY_4_VINE);
+        p4 = new PosPurchase(8, new Date(20230206), "Potato",
+                4, Location.accessSaveOnDunbar());
+        p5 = new PosPurchase(40, new Date(20230301), "Glue",
+                40, Location.accessSafewayFourthVine());
+        p6 = new PosPurchase(10, new Date(20230307), "Glue",
+                10, Location.accessSafewayFourthVine());
         i2 = new Investment(400, new Date(20220101), "Tesla",
                 3, "Technology");
-        p7 = new POSPurchase(30, new Date(20230219), "Glue",
-                60, Location.SAVE_ON_DUNBAR);
+        p7 = new PosPurchase(30, new Date(20230219), "Glue",
+                60, Location.accessSaveOnDunbar());
         e2 = new ETransfer(800, new Date(20230101), "Friend");
-        p8 = new POSPurchase(4, new Date(20230206), "Glue",
-                8, Location.SAVE_ON_DUNBAR);
+        p8 = new PosPurchase(4, new Date(20230206), "Glue",
+                8, Location.accessSaveOnDunbar());
     }
 
     @Test
     void testLocateBestShop() {
-        assertEquals(Location.SAFEWAY_4_VINE, ListOfTransaction.locateBestShopFor("Potato"));
+        assertEquals(Location.accessSafewayFourthVine(), ListOfTransaction.locateBestShopFor("Potato"));
     }
 
     @Test
     void testGetListOfGoodPurchase() {
-        List<POSPurchase> goodPurchases = new ArrayList<>();
+        List<PosPurchase> goodPurchases = new ArrayList<>();
         goodPurchases.add(p1);
         goodPurchases.add(p2);
         goodPurchases.add(p3);
@@ -73,16 +73,16 @@ public class ListOfTransactionTest {
 
     @Test
     void testOptimizeLocation() {
-        POSPurchase p1 = (POSPurchase) ListOfTransaction.transactionHistory.get(0);
-        POSPurchase p2 = (POSPurchase) ListOfTransaction.transactionHistory.get(1);
-        POSPurchase p3 = (POSPurchase) ListOfTransaction.transactionHistory.get(3);
-        POSPurchase p4 = (POSPurchase) ListOfTransaction.transactionHistory.get(5);
-        List<POSPurchase> goodPurchases = new ArrayList<>();
+        PosPurchase p1 = (PosPurchase) ListOfTransaction.accessTransactionHistory().get(0);
+        PosPurchase p2 = (PosPurchase) ListOfTransaction.accessTransactionHistory().get(1);
+        PosPurchase p3 = (PosPurchase) ListOfTransaction.accessTransactionHistory().get(3);
+        PosPurchase p4 = (PosPurchase) ListOfTransaction.accessTransactionHistory().get(5);
+        List<PosPurchase> goodPurchases = new ArrayList<>();
         goodPurchases.add(p1);
         goodPurchases.add(p2);
         goodPurchases.add(p3);
         goodPurchases.add(p4);
-        assertEquals(Location.SAFEWAY_4_VINE, ListOfTransaction.optimizeLocation(goodPurchases));
+        assertEquals(Location.accessSafewayFourthVine(), ListOfTransaction.optimizeLocation(goodPurchases));
     }
 
     @Test
@@ -99,8 +99,7 @@ public class ListOfTransactionTest {
 
     @Test
     void testGetPOSPurchaseHistory() {
-        List<POSPurchase> posPurchases = new ArrayList<>();
-        posPurchases.addAll(beforeLOTTests);
+        List<PosPurchase> posPurchases = new ArrayList<>(beforeLOTTests);
         posPurchases.add(p1);
         posPurchases.add(p2);
         posPurchases.add(p3);
@@ -109,7 +108,7 @@ public class ListOfTransactionTest {
         posPurchases.add(p6);
         posPurchases.add(p7);
         posPurchases.add(p8);
-        assertEquals(posPurchases, ListOfTransaction.getPOSPurchaseHistory());
+        assertEquals(posPurchases, ListOfTransaction.getPosPurchaseHistory());
     }
 
     @Test

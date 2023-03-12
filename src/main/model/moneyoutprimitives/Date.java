@@ -1,43 +1,45 @@
-package model.MoneyOutPrimitives;
+package model.moneyoutprimitives;
 
 /**
  * Represents a date in YYYYMMDD Format, where Date is an integer.
  */
 
 public class Date {
-    private int d; //Stores date as YYYYMMDD
+    private int date; //Stores date as YYYYMMDD
 
     //REQUIRES: d is int of exactly 8 integers, where 1 <= MM <= 12, 1 <= DD <= 31,
     //          and MMDD is consistent with the days of the Gregorian Calendar.
     //          Only CE dates are considered (these specific financial systems are a recent development)
     //EFFECTS: Constructs the Date (d)
-    public Date(int d){
-        this.d = d;
+    public Date(int d) {
+        this.date = d;
     }
 
     //EFFECTS: returns this' date in YYYYMMDD format
-    public int getDate(){return d;}
+    public int getDate() {
+        return date;
+    }
 
     //EFFECTS: returns this' year
-    public int getYear(){
-        int date = d;
+    public int getYear() {
+        int date = this.date;
         String s = Integer.toString(date);
-        String subst = s.substring(0,4);
+        String subst = s.substring(0, 4);
         return Integer.parseInt(subst);
 
     }
 
     //EFFECTS: returns this' month (leading 0 is dropped)
-    public int getMonth(){
-        int date = d;
+    public int getMonth() {
+        int date = this.date;
         String s = Integer.toString(date);
         String subst = s.substring(4, 6);
         return Integer.parseInt(subst);
     }
 
     //EFFECTS: returns this' day (leading 0 is dropped)
-    public int getDay(){
-        int date = d;
+    public int getDay() {
+        int date = this.date;
         String s = Integer.toString(date);
         String subst = s.substring(6, 8);
         return Integer.parseInt(subst);
@@ -68,8 +70,7 @@ public class Date {
         } else {
             newDay = day;
         }
-        return new Date(Integer.parseInt(newYear + ensureLeadingZero(newMonth)
-                + ensureLeadingZero(newDay)));
+        return new Date(Integer.parseInt(newYear + ensureLeadingZero(newMonth) + ensureLeadingZero(newDay)));
     }
 
     //EFFECTS: Adds a leading zero to any integer that requires it for parsing to Date.

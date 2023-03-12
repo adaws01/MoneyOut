@@ -1,13 +1,14 @@
 package ui;
 
-import model.MoneyOutPrimitives.Date;
-import model.MoneyOutPrimitives.Location;
-import model.Transactions.*;
+import model.Account;
+import model.moneyoutprimitives.Date;
+import model.moneyoutprimitives.Location;
+import model.transactions.*;
 
 import java.util.List;
 import java.util.Scanner;
 
-import static model.Account.account;
+//import static model.Account.account;
 
 /**
  * This class manages all the functionality of a Console based UI for the MoneyOut application.
@@ -18,14 +19,19 @@ import static model.Account.account;
 
 public class ConsoleMoneyOutApp {
 
-    /**SETUP --------------------------------------------------------------------------------------------------------*/
+    /**
+     * SETUP --------------------------------------------------------------------------------------------------------
+     */
     // Methods run at start that initialize the functionality of the Console based app.
 
     private Scanner input;    //Instance of Java's Scanner library--for tracking console input
     private String step;      //Tracks what menu the user is in and redefines commands accordingly
+    Account account = Account.accessAccount(); //Accessor for account
 
     //EFFECTS: Runs the App
-    public ConsoleMoneyOutApp() {runApp();}
+    public ConsoleMoneyOutApp() {
+        runApp();
+    }
 
     //MODIFIES: this
     //EFFECTS: Performs necessary setup to begin
@@ -57,7 +63,9 @@ public class ConsoleMoneyOutApp {
 
     }
 
-    /**CONSOLE INTERFACE --------------------------------------------------------------------------------------------*/
+    /**
+     * CONSOLE INTERFACE --------------------------------------------------------------------------------------------
+     */
     // Methods called to return the user to sections of the application's main menu
 
     //MODIFIES: step
@@ -139,7 +147,9 @@ public class ConsoleMoneyOutApp {
         printNavigation();
     }
 
-    /**INPUT INTERFACE ----------------------------------------------------------------------------------------------*/
+    /**
+     * INPUT INTERFACE ----------------------------------------------------------------------------------------------
+     */
     // Methods called to request user input, modify data within the model package
 
     //MODIFIES: step, account
@@ -220,13 +230,13 @@ public class ConsoleMoneyOutApp {
 
     //EFFECTS: Records a new POSPurchase from user input
     //         Reads the newly recorded POSPurchase back to user
-    private void logNewPOSPurchase() {
+    private void logNewPosPurchase() {
         double cost = getDoubleAndPrint("Input Cost ($):");
         Date processedDate = getDateAndPrint("Input Date of Purchase (YYYYMMDD):");
         String good = getStringAndPrint("Input Good Purchased:");
         int quantity = getIntAndPrint("Input Quantity Purchased");
         Location location = getLocationAndPrint("Select Location of Purchase:");
-        POSPurchase purchase = new POSPurchase(cost, processedDate, good, quantity, location);
+        PosPurchase purchase = new PosPurchase(cost, processedDate, good, quantity, location);
         logReturnNewTransaction(purchase);
     }
 
@@ -248,8 +258,8 @@ public class ConsoleMoneyOutApp {
         double amount = getDoubleAndPrint("Input Amount Transferred ($):");
         Date processedDate = getDateAndPrint("Input Date Transferred (YYYYMMDD):");
         String name = getStringAndPrint("Input Transferred to:");
-        ETransfer eTransfer = new ETransfer(amount, processedDate, name);
-        logReturnNewTransaction(eTransfer);
+        ETransfer etransfer = new ETransfer(amount, processedDate, name);
+        logReturnNewTransaction(etransfer);
     }
 
     //EFFECTS: Lists transactionHistory and prompts user to select Transaction to modify
@@ -268,7 +278,7 @@ public class ConsoleMoneyOutApp {
     }
 
     //EFFECTS: Updates a POSPurchase in transactionHistory based on user input
-    private void modifyPOSPurchase(POSPurchase purchase) {
+    private void modifyPosPurchase(PosPurchase purchase) {
         double cost = getDoubleAndPrint("Input Cost ($):");
         purchase.setCost(cost);
         Date processedDate = getDateAndPrint("Input Date of Purchase (YYYYMMDD):");
@@ -298,14 +308,14 @@ public class ConsoleMoneyOutApp {
     }
 
     //EFFECTS: Updates an ETransfer in transactionHistory based on user input
-    private void modifyETransfer(ETransfer eTransfer) {
+    private void modifyETransfer(ETransfer etransfer) {
         double amount = getDoubleAndPrint("Input Amount Transferred ($):");
-        eTransfer.setCost(amount);
+        etransfer.setCost(amount);
         Date processedDate = getDateAndPrint("Input Date Transferred (YYYYMMDD):");
-        eTransfer.setDate(processedDate);
+        etransfer.setDate(processedDate);
         String name = getStringAndPrint("Input Transferred to:");
-        eTransfer.setName(name);
-        logReturnNewTransaction(eTransfer);
+        etransfer.setName(name);
+        logReturnNewTransaction(etransfer);
     }
 
     //EFFECTS: Lists transactionHistory and prompts user to select Transaction to delete
@@ -368,23 +378,25 @@ public class ConsoleMoneyOutApp {
         callPersonalInfo();
     }
 
-    /**INPUT HELPER FUNCTIONS (by category) -------------------------------------------------------------------------*/
+    /**
+     * INPUT HELPER FUNCTIONS (by category) -------------------------------------------------------------------------
+     */
     // Methods that facilitate the functionality of processing and outputting data.
 
-        //PROCESS DATA METHODS
+    //PROCESS DATA METHODS
 
     //REQUIRES: User input is a real number
     //EFFECTS: Abstract Helper Method. Prints double request statement and processes user input
-    private double getDoubleAndPrint(String cOut) {
-        System.out.println(cOut);
+    private double getDoubleAndPrint(String cout) {
+        System.out.println(cout);
         double d = Double.parseDouble(input.next());
         return d;
     }
 
     //REQUIRES: User input is consistent with format of Date class
     //EFFECTS: Abstract Helper Method. Prints Date request statement and processes user input
-    private Date getDateAndPrint(String cOut) {
-        System.out.println(cOut);
+    private Date getDateAndPrint(String cout) {
+        System.out.println(cout);
         String date = input.next();
         Date processedDate = new Date(Integer.parseInt(date));
         String parsedDate = parseDate(processedDate);
@@ -398,24 +410,24 @@ public class ConsoleMoneyOutApp {
     }
 
     //EFFECTS: Abstract Helper Method. Prints String request statement and processes user input
-    private String getStringAndPrint(String cOut) {
-        System.out.println(cOut);
+    private String getStringAndPrint(String cout) {
+        System.out.println(cout);
         String string = input.next();
         return string;
     }
 
     //REQUIRES: User input is an integer
     //EFFECTS: Abstract Helper Method. Prints int request statement and processes user input
-    private int getIntAndPrint(String cOut) {
-        System.out.println(cOut);
+    private int getIntAndPrint(String cout) {
+        System.out.println(cout);
         int i = Integer.parseInt(input.next());
         return i;
     }
 
     //REQUIRES: User input is an integer within the range of 0 to locationList.size() - 1
     //EFFECTS: Abstract Helper Method. Prints locationList and index request statement and processes user input
-    private Location getLocationAndPrint(String cOut) {
-        System.out.println(cOut);
+    private Location getLocationAndPrint(String cout) {
+        System.out.println(cout);
         printListLocation();
         int i = Integer.parseInt(input.next());
         Location location = accessLocationList().get(i - 1);
@@ -425,9 +437,9 @@ public class ConsoleMoneyOutApp {
     //EFFECTS: Handles calling of the correct method based on the subclass of the input Transaction
     private void transactionModifyHandler(Transaction transaction) {
         String tranClass = String.valueOf(transaction.getClass());
-        if (tranClass.equals( "class model.Transactions.POSPurchase")) {
-            modifyPOSPurchase((POSPurchase) transaction);
-        } else if (tranClass.equals("class model.Transactions.Investment")) {
+        if (tranClass.equals("class model.transactions.PosPurchase")) {
+            modifyPosPurchase((PosPurchase) transaction);
+        } else if (tranClass.equals("class model.transactions.Investment")) {
             modifyInvestment((Investment) transaction);
         } else {
             modifyETransfer((ETransfer) transaction);
@@ -438,7 +450,7 @@ public class ConsoleMoneyOutApp {
     private void selectNewTransaction(String selection) {
         if (selection.equals("p")) {
             System.out.println("POS PURCHASE");
-            logNewPOSPurchase();
+            logNewPosPurchase();
         } else if (selection.equals("i")) {
             System.out.println("INVESTMENT");
             logNewInvestment();
@@ -451,7 +463,7 @@ public class ConsoleMoneyOutApp {
         }
     }
 
-        //OUTPUT DATA METHODS
+    //OUTPUT DATA METHODS
 
     //EFFECTS: Prints back and quit statements prompting user input
     private void printNavigation() {
@@ -461,8 +473,8 @@ public class ConsoleMoneyOutApp {
 
     //EFFECTS: Generates a String containing a formatted representation of a Location
     private String writeLocation(Location location) {
-        return location.getName() + ", " + location.getDistrict() + ", " + location.getDistanceFromHome() +
-                "km from home.";
+        return location.getName() + ", " + location.getDistrict() + ", " + location.getDistanceFromHome()
+                + "km from home.";
     }
 
     //EFFECTS: Prints a formatted representation of a Location
@@ -492,9 +504,9 @@ public class ConsoleMoneyOutApp {
 
     //EFFECTS: Handles selecting String format of Transaction based on subclass
     private String handleTransactionClass(Transaction transaction, String tranClass) {
-        if (tranClass.equals("class model.Transactions.POSPurchase")) {
-            return writePOSPurchase((POSPurchase) transaction);
-        } else if (tranClass.equals("class model.Transactions.Investment")) {
+        if (tranClass.equals("class model.transactions.PosPurchase")) {
+            return writePosPurchase((PosPurchase) transaction);
+        } else if (tranClass.equals("class model.transactions.Investment")) {
             return writeInvestment((Investment) transaction);
         } else {
             return writeETransfer((ETransfer) transaction);
@@ -502,23 +514,23 @@ public class ConsoleMoneyOutApp {
     }
 
     //EFFECTS: Generates a String containing a formatted representation of a POSPurchase
-    private String writePOSPurchase(POSPurchase posPurchase) {
-        return "POS PURCHASE \n\tCost: $" + posPurchase.getCost() + ", Date of Purchase: " +
-                writeDate(posPurchase.getDate()) + ", Good: " + posPurchase.getGood() + ", Quantity: " +
-                posPurchase.getQuantity() + ", Purchased at: " + writeLocation(posPurchase.getLocation());
+    private String writePosPurchase(PosPurchase posPurchase) {
+        return "POS PURCHASE \n\tCost: $" + posPurchase.getCost() + ", Date of Purchase: "
+                + writeDate(posPurchase.getDate()) + ", Good: " + posPurchase.getGood() + ", Quantity: "
+                + posPurchase.getQuantity() + ", Purchased at: " + writeLocation(posPurchase.getLocation());
     }
 
     //EFFECTS: Generates a String containing a formatted representation of an Investment
     private String writeInvestment(Investment investment) {
-        return "INVESTMENT \n\tCost: $" + investment.getCost() + ", Date of Investment: " +
-                writeDate(investment.getDate()) + ", Company: " + investment.getCompany() +
-                ", Shares: " + investment.getShares() + ", Domain: " + investment.getDomain() + ".";
+        return "INVESTMENT \n\tCost: $" + investment.getCost() + ", Date of Investment: "
+                + writeDate(investment.getDate()) + ", Company: " + investment.getCompany()
+                + ", Shares: " + investment.getShares() + ", Domain: " + investment.getDomain() + ".";
     }
 
     //EFFECTS: Generates a String containing a formatted representation of an ETransfer
-    private String writeETransfer(ETransfer eTransfer) {
-        return "E-TRANSFER \n\tAmount: $" + eTransfer.getCost() + ", Date of E-Transfer: " +
-                writeDate(eTransfer.getDate()) + ", To: " + eTransfer.getName() + ".";
+    private String writeETransfer(ETransfer etransfer) {
+        return "E-TRANSFER \n\tAmount: $" + etransfer.getCost() + ", Date of E-Transfer: "
+                + writeDate(etransfer.getDate()) + ", To: " + etransfer.getName() + ".";
     }
 
     //EFFECTS: Prints a formatted String representation of a Transaction to console, based on transaction subclass
@@ -541,10 +553,12 @@ public class ConsoleMoneyOutApp {
     }
 
 
-    /**MENU CONTROL -------------------------------------------------------------------------------------------------*/
+    /**
+     * MENU CONTROL -------------------------------------------------------------------------------------------------
+     */
     // Facilitates the menus and updates input controls based on where in the application the user is.
 
-    //EFFECTS: input command handling for all possible inputs at any stage of the application
+    //EFFECTS: input command handling for all inputs at any stage of the application
     private void commandHandler(String command) {
         if (command.equals("a")) {
             stepHandlerA();
@@ -558,7 +572,14 @@ public class ConsoleMoneyOutApp {
             stepHandlerF();
         } else if (command.equals("l")) {
             stepHandlerL();
-        } else if (command.equals("m")) {
+        } else {
+            commandHandlerContinued(command);
+        }
+    }
+
+    //EFFECTS: input command handling for all inputs m through z at any stage of the application
+    private void commandHandlerContinued(String command) {
+        if (command.equals("m")) {
             stepHandlerM();
         } else if (command.equals("n")) {
             stepHandlerN();
@@ -591,12 +612,13 @@ public class ConsoleMoneyOutApp {
         } else if (step.equals("account")) {
             callBalance();
         } else if (step.equals("personal info")) {
-            modifyLocation(Location.HOME_ADDRESS);             //we need location entry interface
+            modifyLocation(Location.accessHomeAddress());             //we need location entry interface
             callPersonalInfo();
         } else {
             invalidCommand();
         }
     }
+
     private void stepHandlerB() {
         if (step.equals("transaction") || step.equals("account")
                 || step.equals("stats insights") || step.equals("location")) {
@@ -609,6 +631,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerC() {
         if (step.equals("stats insights")) {
             transactionsLastMonth();
@@ -616,6 +639,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerD() {
         if (step.equals("transaction")) {
             deleteTransaction();
@@ -625,6 +649,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerF() {
         if (step.equals("stats insights")) {
             optimizePurchaseByLocation();
@@ -632,6 +657,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerL() {
         if (step.equals("start")) {
             callLocations();
@@ -646,6 +672,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerM() {
         if (step.equals("transaction")) {
             modifyTransaction();
@@ -655,6 +682,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerN() {
         if (step.equals("location")) {
             logNewLocation();                    //process that will return to location menu
@@ -664,6 +692,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerP() {
         if (step.equals("account")) {
             callPersonalInfo();
@@ -671,6 +700,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerS() {
         if (step.equals("start")) {
             callStatsInsights();
@@ -678,6 +708,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerT() {
         if (step.equals("start")) {
             callTransaction();
@@ -685,6 +716,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerV() {
         if (step.equals("transaction")) {
             System.out.println("Transaction History");
@@ -694,6 +726,7 @@ public class ConsoleMoneyOutApp {
             invalidCommand();
         }
     }
+
     private void stepHandlerW() {
         if (step.equals("balance")) {
             callWithdraw();
@@ -702,15 +735,19 @@ public class ConsoleMoneyOutApp {
         }
     }
 
-    /**ACCESSOR METHODS ---------------------------------------------------------------------------------------------*/
+    /**
+     * ACCESSOR METHODS ---------------------------------------------------------------------------------------------
+     */
     // Provides access to the lists of data in the model package
 
     //EFFECTS: Accessor Method for locationList
     private List<Location> accessLocationList() {
-        return Location.locationList;
+        return Location.accessLocationList();
     }
 
     //EFFECTS: Accessor Method for transactionHistory
-    private List<Transaction> accessTransactionHistory() {return ListOfTransaction.transactionHistory;}
+    private List<Transaction> accessTransactionHistory() {
+        return ListOfTransaction.accessTransactionHistory();
+    }
 
 }

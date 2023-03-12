@@ -1,13 +1,13 @@
-package model.Transactions;
+package model.transactions;
 
-import model.MoneyOutPrimitives.Date;
+import model.moneyoutprimitives.Date;
 
 /**
  * Represents an Investment: A type of Transaction with cost, date, company invested in, number of shares purchased,
  * and the domain that the company works in.
  */
 
-public class Investment extends Transaction{
+public class Investment extends Transaction {
     private String company; //Company invested in
     private String domain;  //Company's main parent industry
     private int shares;     //Number of Shares purchased
@@ -26,11 +26,25 @@ public class Investment extends Transaction{
     public String getCompany() {
         return this.company;
     }
-    public int getShares() {return this.shares;}
-    public String getDomain() {return this.domain;}
+
+    public int getShares() {
+        return this.shares;
+    }
+
+    public String getDomain() {
+        return this.domain;
+    }
 
     //Setters
-    public void setCompany(String company) {this.company = company;}
-    public void setShares(int shares) {this.shares = shares;}
-    public void setDomain(String domain) {this.domain = domain;}
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setShares(int shares) {
+        this.shares = shares;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 }

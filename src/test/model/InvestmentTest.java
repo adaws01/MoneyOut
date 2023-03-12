@@ -1,7 +1,7 @@
 package model;
 
-import model.MoneyOutPrimitives.Date;
-import model.Transactions.Investment;
+import model.moneyoutprimitives.Date;
+import model.transactions.Investment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

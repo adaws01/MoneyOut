@@ -1,7 +1,7 @@
-package model.Transactions;
+package model.transactions;
 
 import model.Account;
-import model.MoneyOutPrimitives.Date;
+import model.moneyoutprimitives.Date;
 
 /**
  * Abstract Representation of a Transaction with cost (in CAD), and date (YYYYMMDD).
@@ -19,11 +19,11 @@ public abstract class Transaction {
     //MODIFIES: this, ListOfTransaction.transactionHistory, Account.account
     //EFFECTS: Abstract constructor for Transaction (super for cost and date), extended in subclasses.
     //         Adds any new transaction to ListOfTransaction.transactionHistory
-    public Transaction(double cost, Date date){
+    public Transaction(double cost, Date date) {
         this.cost = cost;
         this.date = date;
-        ListOfTransaction.transactionHistory.add(this);
-        Account.account.setBalance(Account.account.getBalance() - cost);
+        ListOfTransaction.accessTransactionHistory().add(this);
+        Account.accessAccount().setBalance(Account.accessAccount().getBalance() - cost);
     }
 
     //EFFECTS: Returns true if date attached to this is after the input date.
@@ -36,11 +36,17 @@ public abstract class Transaction {
     public double getCost() {
         return cost;
     }
+
     public int getDate() {
         return date.getDate();
     }
 
     //Setters (Test Coverage handled in POSPurchase)
-    public void setCost(double cost) {this.cost = cost;}
-    public void setDate(Date date) {this.date = date;}
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

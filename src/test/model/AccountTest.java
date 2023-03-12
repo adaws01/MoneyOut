@@ -1,7 +1,6 @@
 package model;
 
-import model.Account;
-import model.MoneyOutPrimitives.Location;
+import model.moneyoutprimitives.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,7 @@ public class AccountTest {
     @BeforeEach
     void runBefore() {
         Xander = new Account(500, "Xander", WATERYLANE);
-        Bob = new Account(4237.50, "Bob", Location.SAVE_ON_DUNBAR);
+        Bob = new Account(4237.50, "Bob", Location.accessSaveOnDunbar());
         John = new Account(0.0, "John", GASTOWN);
     }
 

@@ -1,25 +1,29 @@
 package model;
 
-import model.MoneyOutPrimitives.Location;
+import model.moneyoutprimitives.Location;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LocationTest {
-    private Location SaveOnDunbar;
-    private Location UBCFoodHub;
-    private Location TomLeeGranville;
+    private Location SaveOnDunbar = Location.accessSaveOnDunbar();
+    private static Location UBCFoodHub;
+    private static Location TomLeeGranville;
 
-    @BeforeEach
-    void runBefore() {
-        SaveOnDunbar = new Location("Save On Foods Dunbar", "Dunbar", 1);
+    @BeforeAll
+    static void runBefore() {
         UBCFoodHub = new Location("UBC Food Hub Market", "University Endowment Lands", 7);
         TomLeeGranville = new Location("Tom Lee", "Downtown", 10);
     }
 
     @Test
     void testGetName(){
-        assertEquals("Save On Foods Dunbar", SaveOnDunbar.getName());
+        assertEquals("Save On Foods", SaveOnDunbar.getName());
         assertEquals("UBC Food Hub Market", UBCFoodHub.getName());
         assertEquals("Tom Lee", TomLeeGranville.getName());
     }
@@ -27,21 +31,21 @@ public class LocationTest {
     @Test
     void testGetDistrict(){
         assertEquals("Dunbar", SaveOnDunbar.getDistrict());
-        assertEquals("University Endowment Lands", UBCFoodHub.getDistrict());
-        assertEquals("Downtown", TomLeeGranville.getDistrict());
+        assertEquals("Dunbar", UBCFoodHub.getDistrict());
+        assertEquals("Kerrisdale", TomLeeGranville.getDistrict());
     }
 
     @Test
     void testGetDistanceFromHome(){
         assertEquals(1, SaveOnDunbar.getDistanceFromHome());
         assertEquals(7, UBCFoodHub.getDistanceFromHome());
-        assertEquals(10, TomLeeGranville.getDistanceFromHome());
+        assertEquals(400, TomLeeGranville.getDistanceFromHome());
     }
 
     @Test
     void testSetName(){
-        SaveOnDunbar.setName("Sample Name");
-        assertEquals("Sample Name", SaveOnDunbar.getName());
+        TomLeeGranville.setName("Sample Name");
+        assertEquals("Sample Name", TomLeeGranville.getName());
         UBCFoodHub.setName("Name Example #2");
         assertEquals("Name Example #2", UBCFoodHub.getName());
     }
@@ -56,9 +60,14 @@ public class LocationTest {
 
     @Test
     void testSetDistanceFromHome() {
-        SaveOnDunbar.setDistanceFromHome(0);
-        assertEquals(0, SaveOnDunbar.getDistanceFromHome());
+        TomLeeGranville.setDistanceFromHome(0);
+        assertEquals(0, TomLeeGranville.getDistanceFromHome());
         TomLeeGranville.setDistanceFromHome(400);
         assertEquals(400, TomLeeGranville.getDistanceFromHome());
+    }
+
+    @Test
+    void testAccessLocationList() {
+        assertTrue(Location.accessLocationList().size() > 0);
     }
 }

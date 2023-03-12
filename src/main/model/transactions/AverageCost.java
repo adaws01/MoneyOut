@@ -1,4 +1,4 @@
-package model.Transactions.Helpers;
+package model.transactions;
 
 /**
  * Represents the average cost of an item at a certain location, with net cost and net quantity.
@@ -21,6 +21,7 @@ public class AverageCost {
     public double getCost() {
         return cost;
     }
+
     public int getQuantity() {
         return quantity;
     }
@@ -29,6 +30,7 @@ public class AverageCost {
     public void setCost(double cost) {
         this.cost = cost;
     }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }

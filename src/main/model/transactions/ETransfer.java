@@ -1,12 +1,12 @@
-package model.Transactions;
+package model.transactions;
 
-import model.MoneyOutPrimitives.Date;
+import model.moneyoutprimitives.Date;
 
 /**
  * Represents an ETransfer: A type of Transaction with cost, date, and name of the person to which money was sent.
  */
 
-public class ETransfer extends Transaction{
+public class ETransfer extends Transaction {
     private String name; //Name of the person to whom money was sent
 
     //REQUIRES: cost > 0
@@ -17,9 +17,13 @@ public class ETransfer extends Transaction{
     }
 
     //Getters
-    public String getName() {return this.name;}
+    public String getName() {
+        return this.name;
+    }
 
     //Setters
-    public void setName(String name) {this.name = name;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

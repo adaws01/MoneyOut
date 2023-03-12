@@ -1,8 +1,7 @@
-package model.Transactions;
+package model.transactions;
 
-import model.MoneyOutPrimitives.Date;
-import model.MoneyOutPrimitives.Location;
-import model.Transactions.Helpers.AverageCost;
+import model.moneyoutprimitives.Date;
+import model.moneyoutprimitives.Location;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +16,7 @@ import java.util.List;
 
 public class ListOfTransaction {
     //Instantiation of Transaction History: A record of all Transactions logged to this application.
-    public static List<Transaction> transactionHistory = new ArrayList<>();
+    private static List<Transaction> transactionHistory = new ArrayList<>();
 
     //EFFECTS: returns the number of transactions with a date up to a month before the input date.
     public static int countTransactionsOverLastMonth(Date date) {
@@ -29,7 +28,7 @@ public class ListOfTransaction {
         Date monthAgo = date.getMonthAgo();
         List<Transaction> lastMonthTransactions = new ArrayList<>();
 
-        for (int i = 0; i < transactionHistory.size(); i ++) {
+        for (int i = 0; i < transactionHistory.size(); i++) {
             Transaction transaction = transactionHistory.get(i);
             if (transaction.afterDate(monthAgo)) {
                 lastMonthTransactions.add(transaction);
@@ -44,7 +43,7 @@ public class ListOfTransaction {
     //EFFECTS: returns the optimal location for the user to purchase a given item based on their previous
     //         POSPurchase history.
     public static Location locateBestShopFor(String good) {
-        List<POSPurchase> goodPurchases = getListOfGoodPurchase(good);
+        List<PosPurchase> goodPurchases = getListOfGoodPurchase(good);
 
         return optimizeLocation(goodPurchases);
     }
@@ -53,11 +52,11 @@ public class ListOfTransaction {
     //          - Good is in grammatical singular form and properly spelled with proper capitalization (Example)
     //EFFECTS: scans a list of all recorded POSPurchases and returns a list of all the purchases of the item good.
     //Helper function for locateBestShopFor()
-    public static List<POSPurchase> getListOfGoodPurchase(String good) {
-        List<POSPurchase> listOfGoodPurchase = new ArrayList<>();
+    public static List<PosPurchase> getListOfGoodPurchase(String good) {
+        List<PosPurchase> listOfGoodPurchase = new ArrayList<>();
 
-        for (int i = 0; i < getPOSPurchaseHistory().size(); i ++) {
-            POSPurchase posPurchase = getPOSPurchaseHistory().get(i);
+        for (int i = 0; i < getPosPurchaseHistory().size(); i++) {
+            PosPurchase posPurchase = getPosPurchaseHistory().get(i);
             if (posPurchase.getGood().equals(good)) {
                 listOfGoodPurchase.add(posPurchase);
             }
@@ -72,12 +71,12 @@ public class ListOfTransaction {
     //         and calculates the average cost of the good at each location.
     //         Returns the Location at which the average cost of the good is lowest.
     //Helper function for locateBestShopFor()
-    public static Location optimizeLocation(List<POSPurchase> goodPurchases) {
+    public static Location optimizeLocation(List<PosPurchase> goodPurchases) {
         List<Location> listOfLocation = new ArrayList<>();
         List<AverageCost> listOfAverageCost = new ArrayList<>();
 
-        for (int i = 0; i < goodPurchases.size(); i ++) {
-            POSPurchase curPurchase = goodPurchases.get(i);
+        for (int i = 0; i < goodPurchases.size(); i++) {
+            PosPurchase curPurchase = goodPurchases.get(i);
             if (listOfLocation.contains(curPurchase.getLocation())) {
                 AverageCost corAvCost = listOfAverageCost.get(listOfLocation.indexOf(curPurchase.getLocation()));
                 corAvCost.setCost(corAvCost.getCost() + curPurchase.getCost());
@@ -99,7 +98,7 @@ public class ListOfTransaction {
     public static int parseAverageCostList(List<AverageCost> listOfAverageCost) {
         List<Double> parsedListOfAverageCost = new ArrayList<>();
 
-        for (int i = 0; i < listOfAverageCost.size(); i ++) {
+        for (int i = 0; i < listOfAverageCost.size(); i++) {
             AverageCost current = listOfAverageCost.get(i);
             double average = current.getCost() / current.getQuantity();
             parsedListOfAverageCost.add(average);
@@ -109,17 +108,21 @@ public class ListOfTransaction {
     }
 
     //EFFECTS: Returns a list of all POSPurchases recorded in transactionHistory.
-    public static List<POSPurchase> getPOSPurchaseHistory() {
-        List<POSPurchase> posPurchaseHistory = new ArrayList<>();
+    public static List<PosPurchase> getPosPurchaseHistory() {
+        List<PosPurchase> posPurchaseHistory = new ArrayList<>();
 
-        for (int i = 0; i < transactionHistory.size(); i ++) {
+        for (int i = 0; i < transactionHistory.size(); i++) {
             Transaction transaction = transactionHistory.get(i);
             String classString = transaction.getClass().toString();
-            if (classString.equals("class model.Transactions.POSPurchase")) {
-                posPurchaseHistory.add((POSPurchase) transaction);
+            if (classString.equals("class model.transactions.PosPurchase")) {
+                posPurchaseHistory.add((PosPurchase) transaction);
             }
         }
 
         return posPurchaseHistory;
+    }
+
+    public static List<Transaction> accessTransactionHistory() {
+        return transactionHistory;
     }
 }

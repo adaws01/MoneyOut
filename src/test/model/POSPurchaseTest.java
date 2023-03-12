@@ -1,22 +1,22 @@
 package model;
 
-import model.MoneyOutPrimitives.Date;
-import model.MoneyOutPrimitives.Location;
-import model.Transactions.POSPurchase;
+import model.moneyoutprimitives.Date;
+import model.moneyoutprimitives.Location;
+import model.transactions.PosPurchase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class POSPurchaseTest {
-    private POSPurchase Tomato;
-    private POSPurchase Eggs;
-    private POSPurchase Tomato2;
+    private PosPurchase Tomato;
+    private PosPurchase Eggs;
+    private PosPurchase Tomato2;
 
     @BeforeEach
     void runBefore() {
-        Tomato  = new POSPurchase(2.50, new Date(20230207), "Tomato", 1, Location.SAVE_ON_DUNBAR);
-        Eggs    = new POSPurchase(4, new Date(20210230), "Eggs",   1, Location.SAVE_ON_DUNBAR);
-        Tomato2 = new POSPurchase(4, new Date(20230207), "Tomato", 2, Location.SAFEWAY_4_VINE);
+        Tomato  = new PosPurchase(2.50, new Date(20230207), "Tomato", 1, Location.accessSaveOnDunbar());
+        Eggs    = new PosPurchase(4, new Date(20210230), "Eggs",   1, Location.accessSaveOnDunbar());
+        Tomato2 = new PosPurchase(4, new Date(20230207), "Tomato", 2, Location.accessSafewayFourthVine());
     }
 
     @Test
@@ -25,7 +25,7 @@ class POSPurchaseTest {
         assertEquals(20230207, Tomato.getDate());
         assertEquals("Tomato", Tomato.getGood());
         assertEquals(1, Tomato.getQuantity());
-        assertEquals(Location.SAVE_ON_DUNBAR, Tomato.getLocation());
+        assertEquals(Location.accessSaveOnDunbar(), Tomato.getLocation());
     }
 
     @Test
@@ -46,9 +46,9 @@ class POSPurchaseTest {
         assertEquals(400, Eggs.getQuantity());
         Tomato2.setQuantity(4);
         assertEquals(4, Tomato2.getQuantity());
-        Eggs.setLocation(Location.SAFEWAY_4_VINE);
-        assertEquals(Location.SAFEWAY_4_VINE, Eggs.getLocation());
-        Tomato2.setLocation(Location.SAVE_ON_DUNBAR);
-        assertEquals(Location.SAVE_ON_DUNBAR, Tomato2.getLocation());
+        Eggs.setLocation(Location.accessSafewayFourthVine());
+        assertEquals(Location.accessSafewayFourthVine(), Eggs.getLocation());
+        Tomato2.setLocation(Location.accessSaveOnDunbar());
+        assertEquals(Location.accessSaveOnDunbar(), Tomato2.getLocation());
     }
 }

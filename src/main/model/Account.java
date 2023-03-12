@@ -1,6 +1,6 @@
 package model;
 
-import model.MoneyOutPrimitives.Location;
+import model.moneyoutprimitives.Location;
 
 /**
  * Represents an Account with account balance, name of account owner, and the home address of the account owner.
@@ -12,7 +12,7 @@ public class Account {
     private double balance;   //Account Balance
     private String name;      //Name of Account Owner
     private Location address; //Account Owner's Home Address
-    public static Account account = instantiateAccount(); //Declaration of account object
+    private static Account account = instantiateAccount(); //Declaration of account object
 
     //EFFECTS: Constructs an account with account balance, name of account owner, and owner's address.
     public Account(double balance, String name, Location address) {
@@ -24,7 +24,7 @@ public class Account {
     //EFFECTS: Instantiates the single account used across the application with initial balance = 0,
     //         name = "Xander", and a shell home address location to be modified within the application.
     public static Account instantiateAccount() {
-        return new Account(0, "Xander", Location.HOME_ADDRESS);
+        return new Account(0, "Xander", Location.accessHomeAddress());
     }
 
     //REQUIRES: amount <= 0, amount is specified to a max. of two decimal places (ex. 0.00)
@@ -42,12 +42,32 @@ public class Account {
     }
 
     //Getters
-    public double getBalance() {return this.balance;}
-    public String getName() {return this.name;}
-    public Location getAddress() {return this.address;}
+    public double getBalance() {
+        return this.balance;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Location getAddress() {
+        return this.address;
+    }
 
     //Setters
-    public void setBalance(double balance) {this.balance = balance;}
-    public void setName(String name) {this.name = name;}
-    public void setAddress(Location address) {this.address = address;}
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(Location address) {
+        this.address = address;
+    }
+
+    public static Account accessAccount() {
+        return account;
+    }
 }
