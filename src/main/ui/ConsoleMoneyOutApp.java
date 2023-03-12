@@ -18,6 +18,9 @@ import static model.Account.account;
 
 public class ConsoleMoneyOutApp {
 
+    /**SETUP --------------------------------------------------------------------------------------------------------*/
+    // Methods run at start that initialize the functionality of the Console based app.
+
     private Scanner input;    //Instance of Java's Scanner library--for tracking console input
     private String step;      //Tracks what menu the user is in and redefines commands accordingly
 
@@ -31,7 +34,7 @@ public class ConsoleMoneyOutApp {
         input.useDelimiter("\n");
     }
 
-    //EFFECTS: Processes console input (not case-sensitive)
+    //EFFECTS: Processes console input (not case-sensitive). Directly handles Quit. Else: calls MENU CONTROL methods.
     private void runApp() {
         boolean keepGoing = true;
 
@@ -54,9 +57,11 @@ public class ConsoleMoneyOutApp {
 
     }
 
-    //MENU INTERFACE --------------------------------------------------------------------------------------------------
+    /**CONSOLE INTERFACE --------------------------------------------------------------------------------------------*/
+    // Methods called to return the user to sections of the application's main menu
 
-    //EFFECTS: Sets up the Start menu
+    //MODIFIES: step
+    //EFFECTS: Opens the Main menu
     private void callStart() {    //commands == t, a, l ,s, b
         step = "start";
         System.out.println("Welcome, " + account.getName() + ". How can I help you?");
@@ -67,7 +72,8 @@ public class ConsoleMoneyOutApp {
         System.out.println("\tq -> Quit");
     }
 
-    //EFFECTS: Sets up the Transactions Menu
+    //MODIFIES: step
+    //EFFECTS: Opens the Transactions Menu
     private void callTransaction() {    //commands == l, m, d, v, b
         step = "transaction";
         System.out.println("Transactions");
@@ -78,6 +84,8 @@ public class ConsoleMoneyOutApp {
         printNavigation();
     }
 
+    //MODIFIES: step
+    //EFFECTS: Opens the Account Menu
     private void callAccount() {    //commands == a, p, b
         step = "account";
         System.out.println("Your Account");
@@ -86,6 +94,8 @@ public class ConsoleMoneyOutApp {
         printNavigation();
     }
 
+    //MODIFIES: step
+    //EFFECTS: Opens the Statistics and Insights Menu
     private void callStatsInsights() { //commands == c, f, b
         step = "stats insights";
         System.out.println("Statistics and Insights");
@@ -94,6 +104,8 @@ public class ConsoleMoneyOutApp {
         printNavigation();
     }
 
+    //MODIFIES: step
+    //EFFECTS: Opens the Account Balance Menu
     private void callBalance() {    //commands == d, w, b
         step = "balance";
         System.out.println("Your Account Balance is: " + account.getBalance());
@@ -102,6 +114,8 @@ public class ConsoleMoneyOutApp {
         printNavigation();
     }
 
+    //MODIFIES: step
+    //EFFECTS: Opens the Locations Menu
     private void callLocations() {    //commands == n, m, l, b
         step = "location";
         System.out.println("Locations");
@@ -111,6 +125,8 @@ public class ConsoleMoneyOutApp {
         printNavigation();
     }
 
+    //MODIFIES: step
+    //EFFECTS: Opens the Personal Information Menu
     private void callPersonalInfo() {    //commands == n, a, b
         step = "personal info";
         System.out.println("Personal Information");
@@ -123,19 +139,11 @@ public class ConsoleMoneyOutApp {
         printNavigation();
     }
 
-    //INPUT INTERFACE -------------------------------------------------------------------------------------------------
+    /**INPUT INTERFACE ----------------------------------------------------------------------------------------------*/
+    // Methods called to request user input, modify data within the model package
 
-    /* IDEA for deposit and withdraw
-     *  If the amount input for deposit/withdrawal is below zero, we need to throw an exception from within the account
-     *  class. That exception needs to be caught in the callDeposit() method in the form of a console input which
-     *  requests reentry of a value above or equal to zero.
-     *  This is to prevent people from inputting negative values for deposit.
-     *  Similar behaviour will need to be created for the withdrawal class.
-     *
-     *  We also need to force only two decimal places of input. Currently we can enter any decimal value.
-     *  This is not the behaviour we are looking for. The above failure handling mechanism should
-     *  also include this.
-     */
+    //MODIFIES: step, account
+    //EFFECTS: Facilitates making a deposit to account (increase account balance). Returns to Balance Menu
     private void callDeposit() {
         step = "deposit";
         System.out.println("Input Deposit Amount:");
@@ -145,6 +153,9 @@ public class ConsoleMoneyOutApp {
         callBalance();
     }
 
+    //MODIFIES: account
+    //EFFECTS: Facilitates making a withdrawal from account (decrease account balance without a transaction).
+    //         Returns to Balance Menu
     private void callWithdraw() {
         System.out.println("Input Withdrawal Amount:");
 
@@ -153,6 +164,9 @@ public class ConsoleMoneyOutApp {
         callBalance();
     }
 
+    //REQUIRES: good entered exists within transactionHistory and matches spelling and case of recorded instances.
+    //EFFECTS: Prints a statement telling user at which location they should shop for an input item to minimize spending
+    //         Returns to Statistics and Insights Menu
     private void optimizePurchaseByLocation() {
         System.out.println("Find Best Shop to Purchase a Good");
         System.out.println("\tEnter an item:");
@@ -163,6 +177,9 @@ public class ConsoleMoneyOutApp {
         callStatsInsights();
     }
 
+    //EFFECTS: Prints a list of all transactions recorded up to a month before the input date.
+    //         Prints the number of transactions recorded up to a month before the input date.
+    //         Returns to Statistics and Insights Menu
     private void transactionsLastMonth() {
         System.out.println("Transactions Last Month");
         System.out.println("\tInput Today's Date:");
@@ -174,6 +191,9 @@ public class ConsoleMoneyOutApp {
         callStatsInsights();
     }
 
+    //EFFECTS: Records a new Location from user input
+    //         Reads the newly recorded Location back to user
+    //         Returns to Locations Menu
     private void logNewLocation() {
         String name = getStringAndPrint("Provide Location Name or Address:");
         String district = getStringAndPrint("Provide Location District:");
@@ -186,6 +206,8 @@ public class ConsoleMoneyOutApp {
         callLocations();
     }
 
+    //EFFECTS: Asks user to select transaction subclass
+    //         Records new transaction from user input
     private void logNewTransaction() {
         System.out.println("Select Transaction Type:");
         System.out.println("\tp -> POS Purchase");
@@ -196,24 +218,8 @@ public class ConsoleMoneyOutApp {
         selectNewTransaction(selection);
     }
 
-    private void selectNewTransaction(String selection) {
-        if (selection.equals("p")) {
-            System.out.println("POS PURCHASE");
-            logNewPOSPurchase();
-        } else if (selection.equals("i")) {
-            System.out.println("INVESTMENT");
-            logNewInvestment();
-        } else if (selection.equals("e")) {
-            System.out.println("E-TRANSFER");
-            logNewETransfer();
-        } else {
-            invalidCommand();
-            logNewTransaction();
-        }
-    }
-
-    //TODO: Organize logNew Methods and Helpers (the entire newTransaction section is a mess right now)
-
+    //EFFECTS: Records a new POSPurchase from user input
+    //         Reads the newly recorded POSPurchase back to user
     private void logNewPOSPurchase() {
         double cost = getDoubleAndPrint("Input Cost ($):");
         Date processedDate = getDateAndPrint("Input Date of Purchase (YYYYMMDD):");
@@ -224,6 +230,8 @@ public class ConsoleMoneyOutApp {
         logReturnNewTransaction(purchase);
     }
 
+    //EFFECTS: Records a new Investment from user input
+    //         Reads the newly recorded Investment back to user
     private void logNewInvestment() {
         double cost = getDoubleAndPrint("Input Investment Amount ($):");
         Date processedDate = getDateAndPrint("Input Date of Investment (YYYYMMDD):");
@@ -234,6 +242,8 @@ public class ConsoleMoneyOutApp {
         logReturnNewTransaction(investment);
     }
 
+    //EFFECTS: Records a new ETransfer from user input
+    //         Reads the newly recorded ETransfer back to user
     private void logNewETransfer() {
         double amount = getDoubleAndPrint("Input Amount Transferred ($):");
         Date processedDate = getDateAndPrint("Input Date Transferred (YYYYMMDD):");
@@ -242,51 +252,8 @@ public class ConsoleMoneyOutApp {
         logReturnNewTransaction(eTransfer);
     }
 
-    private void logReturnNewTransaction(Transaction transaction) {
-        System.out.println("You have recorded...");
-        printTransaction(transaction);
-        callTransaction();
-    }
-
-    private double getDoubleAndPrint(String cOut) {
-        System.out.println(cOut);
-        double d = Double.parseDouble(input.next());
-        return d;
-    }
-
-    private Date getDateAndPrint(String cOut) {
-        System.out.println(cOut);
-        String date = input.next();
-        Date processedDate = new Date(Integer.parseInt(date));    //Failure Handling here for if date input wrong
-        String parsedDate = parseDate(processedDate);
-        System.out.println(parsedDate);
-        return processedDate;
-    }
-
-    private String parseDate(Date date) {
-        return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
-    }
-
-    private String getStringAndPrint(String cOut) {
-        System.out.println(cOut);
-        String string = input.next();
-        return string;
-    }
-
-    private int getIntAndPrint(String cOut) {
-        System.out.println(cOut);
-        int i = Integer.parseInt(input.next());
-        return i;
-    }
-
-    private Location getLocationAndPrint(String cOut) {
-        System.out.println(cOut);
-        printListLocation();
-        int i = Integer.parseInt(input.next());
-        Location location = accessLocationList().get(i - 1);
-        return location;
-    }
-
+    //EFFECTS: Lists transactionHistory and prompts user to select Transaction to modify
+    //         updates Transaction information in transactionHistory
     private void modifyTransaction() {
         System.out.println("Select Transaction to Modify");
         printTransactionList(accessTransactionHistory());
@@ -300,17 +267,7 @@ public class ConsoleMoneyOutApp {
         transactionModifyHandler(transaction);
     }
 
-    private void transactionModifyHandler(Transaction transaction) {
-        String tranClass = String.valueOf(transaction.getClass());
-        if (tranClass.equals( "class model.Transactions.POSPurchase")) {
-            modifyPOSPurchase((POSPurchase) transaction);
-        } else if (tranClass.equals("class model.Transactions.Investment")) {
-            modifyInvestment((Investment) transaction);
-        } else {
-            modifyETransfer((ETransfer) transaction);
-        }
-    }
-
+    //EFFECTS: Updates a POSPurchase in transactionHistory based on user input
     private void modifyPOSPurchase(POSPurchase purchase) {
         double cost = getDoubleAndPrint("Input Cost ($):");
         purchase.setCost(cost);
@@ -325,6 +282,7 @@ public class ConsoleMoneyOutApp {
         logReturnNewTransaction(purchase);
     }
 
+    //EFFECTS: Updates an Investment in transactionHistory based on user input
     private void modifyInvestment(Investment investment) {
         double cost = getDoubleAndPrint("Input Investment Amount ($):");
         investment.setCost(cost);
@@ -339,6 +297,7 @@ public class ConsoleMoneyOutApp {
         logReturnNewTransaction(investment);
     }
 
+    //EFFECTS: Updates an ETransfer in transactionHistory based on user input
     private void modifyETransfer(ETransfer eTransfer) {
         double amount = getDoubleAndPrint("Input Amount Transferred ($):");
         eTransfer.setCost(amount);
@@ -349,6 +308,8 @@ public class ConsoleMoneyOutApp {
         logReturnNewTransaction(eTransfer);
     }
 
+    //EFFECTS: Lists transactionHistory and prompts user to select Transaction to delete
+    //         removes Transaction from transactionHistory
     private void deleteTransaction() {
         System.out.println("Select Transaction to Delete");
         printTransactionList(accessTransactionHistory());
@@ -360,6 +321,8 @@ public class ConsoleMoneyOutApp {
         callTransaction();
     }
 
+    //EFFECTS: Lists locationList and prompts user to select Location to modify
+    //         calls modifyLocation() method to handle input
     private void modifyLocationList() {
         System.out.println("Choose one of the following...");
         printListLocation();
@@ -374,6 +337,8 @@ public class ConsoleMoneyOutApp {
         callLocations();
     }
 
+    //MODIFIES: location
+    //EFFECTS: updates Location information in locationList based on user input
     private void modifyLocation(Location location) {
         System.out.println("You have selected to Modify:");
         printLocation(location);
@@ -394,6 +359,8 @@ public class ConsoleMoneyOutApp {
         System.out.println(" ");
     }
 
+    //MODIFIES account
+    //EFFECTS: updates name on account based on user input
     private void changeNameOnAccount() {
         step = "change name";
         String name = getStringAndPrint("Input Preferred Name:");
@@ -401,37 +368,129 @@ public class ConsoleMoneyOutApp {
         callPersonalInfo();
     }
 
+    /**INPUT HELPER FUNCTIONS (by category) -------------------------------------------------------------------------*/
+    // Methods that facilitate the functionality of processing and outputting data.
+
+        //PROCESS DATA METHODS
+
+    //REQUIRES: User input is a real number
+    //EFFECTS: Abstract Helper Method. Prints double request statement and processes user input
+    private double getDoubleAndPrint(String cOut) {
+        System.out.println(cOut);
+        double d = Double.parseDouble(input.next());
+        return d;
+    }
+
+    //REQUIRES: User input is consistent with format of Date class
+    //EFFECTS: Abstract Helper Method. Prints Date request statement and processes user input
+    private Date getDateAndPrint(String cOut) {
+        System.out.println(cOut);
+        String date = input.next();
+        Date processedDate = new Date(Integer.parseInt(date));
+        String parsedDate = parseDate(processedDate);
+        System.out.println(parsedDate);
+        return processedDate;
+    }
+
+    //EFFECTS: Generates a String that formats Date to be more easily read by user
+    private String parseDate(Date date) {
+        return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
+    }
+
+    //EFFECTS: Abstract Helper Method. Prints String request statement and processes user input
+    private String getStringAndPrint(String cOut) {
+        System.out.println(cOut);
+        String string = input.next();
+        return string;
+    }
+
+    //REQUIRES: User input is an integer
+    //EFFECTS: Abstract Helper Method. Prints int request statement and processes user input
+    private int getIntAndPrint(String cOut) {
+        System.out.println(cOut);
+        int i = Integer.parseInt(input.next());
+        return i;
+    }
+
+    //REQUIRES: User input is an integer within the range of 0 to locationList.size() - 1
+    //EFFECTS: Abstract Helper Method. Prints locationList and index request statement and processes user input
+    private Location getLocationAndPrint(String cOut) {
+        System.out.println(cOut);
+        printListLocation();
+        int i = Integer.parseInt(input.next());
+        Location location = accessLocationList().get(i - 1);
+        return location;
+    }
+
+    //EFFECTS: Handles calling of the correct method based on the subclass of the input Transaction
+    private void transactionModifyHandler(Transaction transaction) {
+        String tranClass = String.valueOf(transaction.getClass());
+        if (tranClass.equals( "class model.Transactions.POSPurchase")) {
+            modifyPOSPurchase((POSPurchase) transaction);
+        } else if (tranClass.equals("class model.Transactions.Investment")) {
+            modifyInvestment((Investment) transaction);
+        } else {
+            modifyETransfer((ETransfer) transaction);
+        }
+    }
+
+    //EFFECTS: Handles calling of the correct method based on user input regarding Transaction subclass
+    private void selectNewTransaction(String selection) {
+        if (selection.equals("p")) {
+            System.out.println("POS PURCHASE");
+            logNewPOSPurchase();
+        } else if (selection.equals("i")) {
+            System.out.println("INVESTMENT");
+            logNewInvestment();
+        } else if (selection.equals("e")) {
+            System.out.println("E-TRANSFER");
+            logNewETransfer();
+        } else {
+            invalidCommand();
+            logNewTransaction();
+        }
+    }
+
+        //OUTPUT DATA METHODS
+
+    //EFFECTS: Prints back and quit statements prompting user input
     private void printNavigation() {
         System.out.println("\tb -> Back");
         System.out.println("\tq -> Quit");
     }
 
+    //EFFECTS: Generates a String containing a formatted representation of a Location
     private String writeLocation(Location location) {
         return location.getName() + ", " + location.getDistrict() + ", " + location.getDistanceFromHome() +
                 "km from home.";
     }
 
+    //EFFECTS: Prints a formatted representation of a Location
     private void printLocation(Location location) {
         System.out.println(writeLocation(location));
     }
 
+    //EFFECTS: Prints a formatted list of Location Strings
     private void printListLocation() {
         for (int i = 0; i <= accessLocationList().size() - 1; i++) {
             System.out.println((i + 1) + ". " + writeLocation(accessLocationList().get(i)));
         }
     }
 
+    //EFFECTS: Generates a String containing a formatted representation of a Date
     private String writeDate(int date) {
         Date processedDate = new Date(date);
         return parseDate(processedDate);
     }
 
+    //EFFECTS: Makes a call to handleTransactionClass()
     private String writeTransaction(Transaction transaction) {
         String tranClass = String.valueOf(transaction.getClass());
 
         return handleTransactionClass(transaction, tranClass);
     }
 
+    //EFFECTS: Handles selecting String format of Transaction based on subclass
     private String handleTransactionClass(Transaction transaction, String tranClass) {
         if (tranClass.equals("class model.Transactions.POSPurchase")) {
             return writePOSPurchase((POSPurchase) transaction);
@@ -442,34 +501,48 @@ public class ConsoleMoneyOutApp {
         }
     }
 
+    //EFFECTS: Generates a String containing a formatted representation of a POSPurchase
     private String writePOSPurchase(POSPurchase posPurchase) {
         return "POS PURCHASE \n\tCost: $" + posPurchase.getCost() + ", Date of Purchase: " +
                 writeDate(posPurchase.getDate()) + ", Good: " + posPurchase.getGood() + ", Quantity: " +
                 posPurchase.getQuantity() + ", Purchased at: " + writeLocation(posPurchase.getLocation());
     }
 
+    //EFFECTS: Generates a String containing a formatted representation of an Investment
     private String writeInvestment(Investment investment) {
         return "INVESTMENT \n\tCost: $" + investment.getCost() + ", Date of Investment: " +
                 writeDate(investment.getDate()) + ", Company: " + investment.getCompany() +
                 ", Shares: " + investment.getShares() + ", Domain: " + investment.getDomain() + ".";
     }
 
+    //EFFECTS: Generates a String containing a formatted representation of an ETransfer
     private String writeETransfer(ETransfer eTransfer) {
         return "E-TRANSFER \n\tAmount: $" + eTransfer.getCost() + ", Date of E-Transfer: " +
                 writeDate(eTransfer.getDate()) + ", To: " + eTransfer.getName() + ".";
     }
 
+    //EFFECTS: Prints a formatted String representation of a Transaction to console, based on transaction subclass
     private void printTransaction(Transaction transaction) {
         System.out.println(writeTransaction(transaction));
     }
 
+    //EFFECTS: Prints a list of formatted Transactions to console.
     private void printTransactionList(List<Transaction> transactionList) {
         for (int i = 0; i <= transactionList.size() - 1; i++) {
             System.out.println((i + 1) + ". " + writeTransaction(transactionList.get(i)));
         }
     }
 
-    //MENU CONTROLS ---------------------------------------------------------------------------------------------------
+    //EFFECTS: Reads a Transaction that was recently recorded back to the user
+    private void logReturnNewTransaction(Transaction transaction) {
+        System.out.println("You have recorded...");
+        printTransaction(transaction);
+        callTransaction();
+    }
+
+
+    /**MENU CONTROL -------------------------------------------------------------------------------------------------*/
+    // Facilitates the menus and updates input controls based on where in the application the user is.
 
     //EFFECTS: input command handling for all possible inputs at any stage of the application
     private void commandHandler(String command) {
@@ -504,14 +577,14 @@ public class ConsoleMoneyOutApp {
         }
     }
 
+    //EFFECTS: Prints a statement prompting the user to try a different console input
     private void invalidCommand() {
         System.out.println("Invalid command. Please try again!");
     }
-    private void constructionCommand() {
-        System.out.println("This Feature is under construction!");
-    }
 
     //EFFECTS: Helper Methods for the commandHandler() method that handle menus and redefining input commands
+    //         Each Helper Method corresponds to a single key input. The input's behaviour is redefined depending on
+    //         what menu the user is currently at (bottom of the console).
     private void stepHandlerA() {
         if (step.equals("start")) {
             callAccount();
@@ -629,12 +702,15 @@ public class ConsoleMoneyOutApp {
         }
     }
 
-    //LIST METHODS ----------------------------------------------------------------------------------------------------
+    /**ACCESSOR METHODS ---------------------------------------------------------------------------------------------*/
+    // Provides access to the lists of data in the model package
 
+    //EFFECTS: Accessor Method for locationList
     private List<Location> accessLocationList() {
         return Location.locationList;
     }
 
+    //EFFECTS: Accessor Method for transactionHistory
     private List<Transaction> accessTransactionHistory() {return ListOfTransaction.transactionHistory;}
 
 }
