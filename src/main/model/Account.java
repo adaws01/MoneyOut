@@ -1,6 +1,8 @@
 package model;
 
 import model.moneyoutprimitives.Location;
+import org.json.JSONObject;
+import persistence.Writable;
 
 /**
  * Represents an Account with account balance, name of account owner, and the home address of the account owner.
@@ -8,7 +10,7 @@ import model.moneyoutprimitives.Location;
  * All instantiated Transactions update account balance.
  */
 
-public class Account {
+public class Account implements Writable {
     private double balance;   //Account Balance
     private String name;      //Name of Account Owner
     private Location address; //Account Owner's Home Address
@@ -69,5 +71,15 @@ public class Account {
 
     public static Account accessAccount() {
         return account;
+    }
+
+    //JSON
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("balance", balance);
+        json.put("name", name);
+        json.put("address", address);
+        return json;
     }
 }

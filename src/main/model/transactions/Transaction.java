@@ -2,6 +2,8 @@ package model.transactions;
 
 import model.Account;
 import model.moneyoutprimitives.Date;
+import org.json.JSONObject;
+import persistence.Writable;
 
 /**
  * Abstract Representation of a Transaction with cost (in CAD), and date (YYYYMMDD).
@@ -10,7 +12,7 @@ import model.moneyoutprimitives.Date;
  * With each newly instantiated transaction, Account.account balance is modified
  */
 
-public abstract class Transaction {
+public abstract class Transaction implements Writable {
 
     private double cost; //The price of the Transaction
     private Date date;   //The date of the Transaction
@@ -48,5 +50,11 @@ public abstract class Transaction {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    //JSON
+    @Override
+    public JSONObject toJson() {
+        return null;
     }
 }

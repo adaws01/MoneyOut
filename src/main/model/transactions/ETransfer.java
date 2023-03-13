@@ -1,6 +1,7 @@
 package model.transactions;
 
 import model.moneyoutprimitives.Date;
+import org.json.JSONObject;
 
 /**
  * Represents an ETransfer: A type of Transaction with cost, date, and name of the person to which money was sent.
@@ -26,4 +27,13 @@ public class ETransfer extends Transaction {
         this.name = name;
     }
 
+    //JSON
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("cost", this.getCost());
+        json.put("date", this.getDate());
+        json.put("name", name);
+        return json;
+    }
 }

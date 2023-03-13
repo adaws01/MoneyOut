@@ -1,6 +1,7 @@
 package model.transactions;
 
 import model.moneyoutprimitives.Date;
+import org.json.JSONObject;
 
 /**
  * Represents an Investment: A type of Transaction with cost, date, company invested in, number of shares purchased,
@@ -46,5 +47,17 @@ public class Investment extends Transaction {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    //JSON
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("cost", this.getCost());
+        json.put("date", this.getDate());
+        json.put("company", company);
+        json.put("shares", shares);
+        json.put("domain", domain);
+        return json;
     }
 }

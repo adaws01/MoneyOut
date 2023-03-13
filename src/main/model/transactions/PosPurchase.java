@@ -2,6 +2,7 @@ package model.transactions;
 
 import model.moneyoutprimitives.Date;
 import model.moneyoutprimitives.Location;
+import org.json.JSONObject;
 
 /**
  * Represents a POSPurchase: A type of Transaction with cost, date, good (what item was purchased), quantity,
@@ -48,5 +49,17 @@ public class PosPurchase extends Transaction {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    //JSON
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("cost", this.getCost());
+        json.put("date", this.getDate());
+        json.put("good", good);
+        json.put("quantity", quantity);
+        json.put("location", location);
+        return json;
     }
 }

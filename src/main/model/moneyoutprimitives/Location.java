@@ -1,6 +1,8 @@
 package model.moneyoutprimitives;
 
 import model.transactions.Transaction;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
  * distance from home in km (input by user, as no network calls are allowed within the scope of this project)
  */
 
-public class Location {
+public class Location implements Writable {
     //EFFECTS: Declares and Instantiates the list of all locations this app could need to handle
     //         plus helper methods as described by ArrayList.
     private static List<Location> locationList = new ArrayList<>();
@@ -77,5 +79,15 @@ public class Location {
 
     public static Location accessSafewayFourthVine() {
         return SAFEWAY_4_VINE;
+    }
+
+    //JSON Data
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("district", district);
+        json.put("distanceFromHome", distanceFromHome);
+        return json;
     }
 }

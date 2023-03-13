@@ -4,7 +4,12 @@ import model.Account;
 import model.moneyoutprimitives.Date;
 import model.moneyoutprimitives.Location;
 import model.transactions.*;
+import persistence.AccountWriter;
+import persistence.JsonWriter;
+import persistence.LocationListWriter;
+import persistence.TransactionHistoryWriter;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,9 +32,15 @@ public class ConsoleMoneyOutApp {
     private Scanner input;    //Instance of Java's Scanner library--for tracking console input
     private String step;      //Tracks what menu the user is in and redefines commands accordingly
     Account account = Account.accessAccount(); //Accessor for account
+    private static final String ACCOUNT_JSON_STORE = "./data/account.json";
+    private static final String TRANSACTION_HISTORY_JSON_STORE = "./data/transactionHistory.json";
+    private static final String LOCATION_LIST_JSON_STORE = "./data/locationList.json";
+    private LocationListWriter locationListWriter;
+    private TransactionHistoryWriter transactionHistoryWriter;
+    private AccountWriter accountWriter;
 
     //EFFECTS: Runs the App
-    public ConsoleMoneyOutApp() {
+    public ConsoleMoneyOutApp() throws FileNotFoundException {
         runApp();
     }
 
@@ -38,6 +49,9 @@ public class ConsoleMoneyOutApp {
     private void initialize() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        accountWriter = new AccountWriter(ACCOUNT_JSON_STORE);
+        transactionHistoryWriter = new TransactionHistoryWriter(TRANSACTION_HISTORY_JSON_STORE);
+        locationListWriter = new LocationListWriter(LOCATION_LIST_JSON_STORE);
     }
 
     //EFFECTS: Processes console input (not case-sensitive). Directly handles Quit. Else: calls MENU CONTROL methods.
@@ -70,13 +84,14 @@ public class ConsoleMoneyOutApp {
 
     //MODIFIES: step
     //EFFECTS: Opens the Main menu
-    private void callStart() {    //commands == t, a, l ,s, b
+    private void callStart() {    //commands == t, a, l ,i, b
         step = "start";
         System.out.println("Welcome, " + account.getName() + ". How can I help you?");
         System.out.println("\tt -> Manage Transactions");
         System.out.println("\ta -> Manage Account");
         System.out.println("\tl -> Manage Locations");
-        System.out.println("\ts -> Statistics & Insights");
+        System.out.println("\ti -> Statistics & Insights");
+        System.out.println("\ts -> Save");
         System.out.println("\tq -> Quit");
     }
 
@@ -570,6 +585,8 @@ public class ConsoleMoneyOutApp {
             stepHandlerD();
         } else if (command.equals("f")) {
             stepHandlerF();
+        } else if (command.equals("i")) {
+            stepHandlerI();
         } else if (command.equals("l")) {
             stepHandlerL();
         } else {
@@ -658,6 +675,14 @@ public class ConsoleMoneyOutApp {
         }
     }
 
+    private void stepHandlerI() {
+        if (step.equals("start")) {
+            callStatsInsights();
+        } else {
+            invalidCommand();
+        }
+    }
+
     private void stepHandlerL() {
         if (step.equals("start")) {
             callLocations();
@@ -703,7 +728,10 @@ public class ConsoleMoneyOutApp {
 
     private void stepHandlerS() {
         if (step.equals("start")) {
-            callStatsInsights();
+            saveLocationList();
+            saveTransactionHistory();
+            saveAccount();
+            callStart();
         } else {
             invalidCommand();
         }
@@ -748,6 +776,54 @@ public class ConsoleMoneyOutApp {
     //EFFECTS: Accessor Method for transactionHistory
     private List<Transaction> accessTransactionHistory() {
         return ListOfTransaction.accessTransactionHistory();
+    }
+
+    /**
+     * JSON Methods --------------------------------------------------------------------------------------------------
+     */
+    // Read and Write
+
+    // EFFECTS: saves LocationList to file
+    private void saveLocationList() {
+        try {
+            LocationListWriter.open();
+            for (int i = 0; i < accessLocationList().size(); i ++) {
+                Location location = accessLocationList().get(i);
+                LocationListWriter.writeLocationList(location);
+            }
+            LocationListWriter.close();
+            System.out.println("Saved Locations to " + LOCATION_LIST_JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + LOCATION_LIST_JSON_STORE);
+        }
+    }
+
+    // REQUIRES: At least one Transaction in transactionHistory
+    // EFFECTS: saves transactionHistory to file
+    private void saveTransactionHistory() {
+        try {
+            TransactionHistoryWriter.open();
+            for (int i = 0; i < accessTransactionHistory().size(); i ++) {
+                Transaction transaction = accessTransactionHistory().get(i);
+                TransactionHistoryWriter.writeTransaction(transaction);
+            }
+            TransactionHistoryWriter.close();
+            System.out.println("Saved Transaction History to " + TRANSACTION_HISTORY_JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + TRANSACTION_HISTORY_JSON_STORE);
+        }
+    }
+
+    //EFFECTS: saves account to file
+    private void saveAccount() {
+        try {
+            AccountWriter.open();
+            AccountWriter.writeAccount(account);
+            AccountWriter.close();
+            System.out.println("Saved Account Information to " + ACCOUNT_JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + ACCOUNT_JSON_STORE);
+        }
     }
 
 }
