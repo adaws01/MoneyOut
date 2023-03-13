@@ -1,7 +1,18 @@
-{
-    "date": 20200202,
-    "cost": 2,
-    "quantity": 2,
-    "location": "model.moneyoutprimitives.Location@4e9ba398",
-    "good": "Something"
-}
+{"TransactionHistory": [
+    {
+        "date": 20200202,
+        "cost": 345,
+        "name": "erdg"
+    },
+    {
+        "date": 20200202,
+        "cost": 345,
+        "quantity": 4,
+        "location": {
+            "district": "adwefsgdf",
+            "distanceFromHome": 3,
+            "name": "werdg"
+        },
+        "good": "gdhfgfg"
+    }
+]}

@@ -2,6 +2,9 @@ package model.transactions;
 
 import model.moneyoutprimitives.Date;
 import model.moneyoutprimitives.Location;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,9 +17,16 @@ import java.util.List;
  * Includes methods for calculating statistics across a variety of different transactions.
  */
 
-public class ListOfTransaction {
+public class TransactionList implements Writable {
+
+    private ArrayList<Transaction> list;
+
+    public TransactionList(ArrayList<Transaction> list) {
+        this.list = list;
+    }
+
     //Instantiation of Transaction History: A record of all Transactions logged to this application.
-    private static List<Transaction> transactionHistory = new ArrayList<>();
+    private static TransactionList transactionHistory = new TransactionList (new ArrayList<>());
 
     //EFFECTS: returns the number of transactions with a date up to a month before the input date.
     public static int countTransactionsOverLastMonth(Date date) {
@@ -28,8 +38,8 @@ public class ListOfTransaction {
         Date monthAgo = date.getMonthAgo();
         List<Transaction> lastMonthTransactions = new ArrayList<>();
 
-        for (int i = 0; i < transactionHistory.size(); i++) {
-            Transaction transaction = transactionHistory.get(i);
+        for (int i = 0; i < transactionHistory.list.size(); i++) {
+            Transaction transaction = transactionHistory.list.get(i);
             if (transaction.afterDate(monthAgo)) {
                 lastMonthTransactions.add(transaction);
             }
@@ -111,8 +121,8 @@ public class ListOfTransaction {
     public static List<PosPurchase> getPosPurchaseHistory() {
         List<PosPurchase> posPurchaseHistory = new ArrayList<>();
 
-        for (int i = 0; i < transactionHistory.size(); i++) {
-            Transaction transaction = transactionHistory.get(i);
+        for (int i = 0; i < transactionHistory.list.size(); i++) {
+            Transaction transaction = transactionHistory.list.get(i);
             String classString = transaction.getClass().toString();
             if (classString.equals("class model.transactions.PosPurchase")) {
                 posPurchaseHistory.add((PosPurchase) transaction);
@@ -123,6 +133,32 @@ public class ListOfTransaction {
     }
 
     public static List<Transaction> accessTransactionHistory() {
+        return transactionHistory.list;
+    }
+
+    public static TransactionList accessTransactionHistoryAsTransactionList() {
         return transactionHistory;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        transactionHistory.list.add(transaction);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("TransactionHistory", transactionsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in transactionHistory as a JSON array
+    private JSONArray transactionsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Transaction t : transactionHistory.list) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
     }
 }

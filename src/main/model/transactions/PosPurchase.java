@@ -59,7 +59,7 @@ public class PosPurchase extends Transaction {
         json.put("date", this.getDate());
         json.put("good", good);
         json.put("quantity", quantity);
-        json.put("location", location);
+        json.put("location", location.toJson());
         return json;
     }
 }

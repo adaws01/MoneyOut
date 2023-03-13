@@ -5,12 +5,10 @@ import model.moneyoutprimitives.Date;
 import model.moneyoutprimitives.Location;
 import model.moneyoutprimitives.LocationList;
 import model.transactions.*;
-import persistence.AccountWriter;
-import persistence.LocationListWriter;
-import persistence.TransactionHistoryWriter;
+import persistence.*;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,6 +37,9 @@ public class ConsoleMoneyOutApp {
     private LocationListWriter locationListWriter;
     private TransactionHistoryWriter transactionHistoryWriter;
     private AccountWriter accountWriter;
+    private AccountReader accountReader;
+    private LocationListReader locationListReader;
+    private TransactionHistoryReader transactionHistoryReader;
 
     //EFFECTS: Runs the App
     public ConsoleMoneyOutApp() throws FileNotFoundException {
@@ -53,6 +54,9 @@ public class ConsoleMoneyOutApp {
         accountWriter = new AccountWriter(ACCOUNT_JSON_STORE);
         transactionHistoryWriter = new TransactionHistoryWriter(TRANSACTION_HISTORY_JSON_STORE);
         locationListWriter = new LocationListWriter(LOCATION_LIST_JSON_STORE);
+        accountReader = new AccountReader(ACCOUNT_JSON_STORE);
+        locationListReader = new LocationListReader(LOCATION_LIST_JSON_STORE);
+        transactionHistoryReader = new TransactionHistoryReader(TRANSACTION_HISTORY_JSON_STORE);
     }
 
     //EFFECTS: Processes console input (not case-sensitive). Directly handles Quit. Else: calls MENU CONTROL methods.
@@ -85,14 +89,15 @@ public class ConsoleMoneyOutApp {
 
     //MODIFIES: step
     //EFFECTS: Opens the Main menu
-    private void callStart() {    //commands == t, a, l ,i, b
+    private void callStart() {    //commands == t, a, v ,i, b
         step = "start";
         System.out.println("Welcome, " + account.getName() + ". How can I help you?");
         System.out.println("\tt -> Manage Transactions");
         System.out.println("\ta -> Manage Account");
-        System.out.println("\tl -> Manage Locations");
+        System.out.println("\tv -> Manage Locations");
         System.out.println("\ti -> Statistics & Insights");
-        System.out.println("\ts -> Save");
+        System.out.println("\ts -> Save to File");
+        System.out.println("\tl -> Load from File");
         System.out.println("\tq -> Quit");
     }
 
@@ -197,7 +202,7 @@ public class ConsoleMoneyOutApp {
         System.out.println("Find Best Shop to Purchase a Good");
         System.out.println("\tEnter an item:");
         String good = input.next();
-        Location bestShop = ListOfTransaction.locateBestShopFor(good);
+        Location bestShop = TransactionList.locateBestShopFor(good);
         System.out.println("You should opt to shop for " + good + " at :");
         printLocation(bestShop);
         callStatsInsights();
@@ -211,8 +216,8 @@ public class ConsoleMoneyOutApp {
         System.out.println("\tInput Today's Date:");
         Date today = new Date(Integer.parseInt(input.next()));
         System.out.println("Transactions Last Month");
-        printTransactionList(ListOfTransaction.getTransactionsOverLastMonth(today));
-        System.out.println("You recorded " + ListOfTransaction.countTransactionsOverLastMonth(today)
+        printTransactionList(TransactionList.getTransactionsOverLastMonth(today));
+        System.out.println("You recorded " + TransactionList.countTransactionsOverLastMonth(today)
                 + " transactions over the last month.");
         callStatsInsights();
     }
@@ -227,6 +232,7 @@ public class ConsoleMoneyOutApp {
         int distanceFromHome = Integer.parseInt(input.next());
 
         Location location = new Location(name, district, distanceFromHome);
+        accessLocationList().add(location);
         System.out.println("You have recorded...");
         printLocation(location);
         callLocations();
@@ -253,6 +259,8 @@ public class ConsoleMoneyOutApp {
         int quantity = getIntAndPrint("Input Quantity Purchased");
         Location location = getLocationAndPrint("Select Location of Purchase:");
         PosPurchase purchase = new PosPurchase(cost, processedDate, good, quantity, location);
+        TransactionList.accessTransactionHistory().add(purchase);
+        Account.accessAccount().setBalance(Account.accessAccount().getBalance() - cost);
         logReturnNewTransaction(purchase);
     }
 
@@ -265,6 +273,8 @@ public class ConsoleMoneyOutApp {
         int shares = getIntAndPrint("Input Shares Bought:");
         String domain = getStringAndPrint("Input Domain of Investment (Ex. Technology):");
         Investment investment = new Investment(cost, processedDate, company, shares, domain);
+        TransactionList.accessTransactionHistory().add(investment);
+        Account.accessAccount().setBalance(Account.accessAccount().getBalance() - cost);
         logReturnNewTransaction(investment);
     }
 
@@ -275,6 +285,8 @@ public class ConsoleMoneyOutApp {
         Date processedDate = getDateAndPrint("Input Date Transferred (YYYYMMDD):");
         String name = getStringAndPrint("Input Transferred to:");
         ETransfer etransfer = new ETransfer(amount, processedDate, name);
+        TransactionList.accessTransactionHistory().add(etransfer);
+        Account.accessAccount().setBalance(Account.accessAccount().getBalance() - amount);
         logReturnNewTransaction(etransfer);
     }
 
@@ -295,6 +307,7 @@ public class ConsoleMoneyOutApp {
 
     //EFFECTS: Updates a POSPurchase in transactionHistory based on user input
     private void modifyPosPurchase(PosPurchase purchase) {
+        double oldCost = purchase.getCost();
         double cost = getDoubleAndPrint("Input Cost ($):");
         purchase.setCost(cost);
         Date processedDate = getDateAndPrint("Input Date of Purchase (YYYYMMDD):");
@@ -305,11 +318,13 @@ public class ConsoleMoneyOutApp {
         purchase.setQuantity(quantity);
         Location location = getLocationAndPrint("Select Location of Purchase:");
         purchase.setLocation(location);
+        Account.accessAccount().setBalance(Account.accessAccount().getBalance() + oldCost - cost);
         logReturnNewTransaction(purchase);
     }
 
     //EFFECTS: Updates an Investment in transactionHistory based on user input
     private void modifyInvestment(Investment investment) {
+        double oldCost = investment.getCost();
         double cost = getDoubleAndPrint("Input Investment Amount ($):");
         investment.setCost(cost);
         Date processedDate = getDateAndPrint("Input Date of Investment (YYYYMMDD):");
@@ -320,17 +335,20 @@ public class ConsoleMoneyOutApp {
         investment.setShares(shares);
         String domain = getStringAndPrint("Input Domain of Investment (Ex. Technology):");
         investment.setDomain(domain);
+        Account.accessAccount().setBalance(Account.accessAccount().getBalance() + oldCost - cost);
         logReturnNewTransaction(investment);
     }
 
     //EFFECTS: Updates an ETransfer in transactionHistory based on user input
     private void modifyETransfer(ETransfer etransfer) {
+        double oldCost = etransfer.getCost();
         double amount = getDoubleAndPrint("Input Amount Transferred ($):");
         etransfer.setCost(amount);
         Date processedDate = getDateAndPrint("Input Date Transferred (YYYYMMDD):");
         etransfer.setDate(processedDate);
         String name = getStringAndPrint("Input Transferred to:");
         etransfer.setName(name);
+        Account.accessAccount().setBalance(Account.accessAccount().getBalance() + oldCost - amount);
         logReturnNewTransaction(etransfer);
     }
 
@@ -686,7 +704,9 @@ public class ConsoleMoneyOutApp {
 
     private void stepHandlerL() {
         if (step.equals("start")) {
-            callLocations();
+            loadAccount();
+            loadLocationList();
+            loadTransactionHistory();
         } else if (step.equals("transaction")) {
             logNewTransaction();
         } else if (step.equals("location")) {
@@ -747,7 +767,9 @@ public class ConsoleMoneyOutApp {
     }
 
     private void stepHandlerV() {
-        if (step.equals("transaction")) {
+        if (step.equals("start")) {
+            callLocations();
+        } else if (step.equals("transaction")) {
             System.out.println("Transaction History");
             printTransactionList(accessTransactionHistory());
             callTransaction();
@@ -776,7 +798,7 @@ public class ConsoleMoneyOutApp {
 
     //EFFECTS: Accessor Method for transactionHistory
     private List<Transaction> accessTransactionHistory() {
-        return ListOfTransaction.accessTransactionHistory();
+        return TransactionList.accessTransactionHistory();
     }
 
     /**
@@ -789,11 +811,6 @@ public class ConsoleMoneyOutApp {
         try {
             LocationListWriter.open();
             LocationListWriter.writeLocationList(LocationList.accessLocationListAsLocationList());
-
-            //for (int i = 0; i < accessLocationList().size(); i ++) {
-            //    Location location = accessLocationList().get(i);
-            //    LocationListWriter.writeLocationList(location);
-            //}
             LocationListWriter.close();
             System.out.println("Saved Locations to " + LOCATION_LIST_JSON_STORE);
         } catch (FileNotFoundException e) {
@@ -806,10 +823,12 @@ public class ConsoleMoneyOutApp {
     private void saveTransactionHistory() {
         try {
             TransactionHistoryWriter.open();
-            for (int i = 0; i < accessTransactionHistory().size(); i ++) {
-                Transaction transaction = accessTransactionHistory().get(i);
-                TransactionHistoryWriter.writeTransaction(transaction);
-            }
+            TransactionHistoryWriter.writeTransactionHistory
+                    (TransactionList.accessTransactionHistoryAsTransactionList());
+            //for (int i = 0; i < accessTransactionHistory().size(); i ++) {
+            //    Transaction transaction = accessTransactionHistory().get(i);
+            //    TransactionHistoryWriter.writeTransactionHistory(transaction);
+            //}
             TransactionHistoryWriter.close();
             System.out.println("Saved Transaction History to " + TRANSACTION_HISTORY_JSON_STORE);
         } catch (FileNotFoundException e) {
@@ -826,6 +845,39 @@ public class ConsoleMoneyOutApp {
             System.out.println("Saved Account Information to " + ACCOUNT_JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + ACCOUNT_JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads Account from file
+    private void loadAccount() {
+        try {
+            AccountReader.readAccount();
+            System.out.println("Loaded Account from " + ACCOUNT_JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + ACCOUNT_JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads Location List from file
+    private void loadLocationList() {
+        try {
+            LocationListReader.readLocationList();
+            System.out.println("Loaded Location List from " + LOCATION_LIST_JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + ACCOUNT_JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads Location List from file
+    private void loadTransactionHistory() {
+        try {
+            TransactionHistoryReader.readTransactionHistory();
+            System.out.println("Loaded Transaction History from " + TRANSACTION_HISTORY_JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + ACCOUNT_JSON_STORE);
         }
     }
 

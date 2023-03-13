@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Represents a List of Location
- * listLocation isntantiated for use throughout the entire application
+ * listLocation instantiated for use throughout the entire application
  */
 
 public class LocationList implements Writable {
@@ -31,6 +31,10 @@ public class LocationList implements Writable {
 
     public static LocationList accessLocationListAsLocationList() {
         return locationList;
+    }
+
+    public void addLocation(Location location) {
+        locationList.list.add(location);
     }
 
     @Override

@@ -19,10 +19,10 @@ public class Location implements Writable {
     //Instantiation of common shops and Home Address objects for use in MoneyOutApp
     private static Location HOME_ADDRESS =
             new Location("NEED ADDRESS", "DISTRICT", 0);
-    private static Location SAVE_ON_DUNBAR =
-            new Location("Save On Foods", "Dunbar", 1);
-    private static Location SAFEWAY_4_VINE =
-            new Location("Safeway 4th and Vine", "Kitsilano", 6);
+    //private static Location SAVE_ON_DUNBAR =
+    //        new Location("Save On Foods", "Dunbar", 1);
+    //private static Location SAFEWAY_4_VINE =
+    //        new Location("Safeway 4th and Vine", "Kitsilano", 6);
 
     private String name;  //Name assigned to the location. This could be an address, or a description of the location.
     private String district;  //Neighbourhood that the location is in. This is flexible and could also represent
@@ -34,7 +34,7 @@ public class Location implements Writable {
         this.name = name;
         this.district = district;
         this.distanceFromHome = distanceFromHome;
-        accessLocationList().add(this);
+        //accessLocationList().add(this);
     }
 
     //Getters
@@ -72,11 +72,11 @@ public class Location implements Writable {
     }
 
     public static Location accessSaveOnDunbar() {
-        return SAVE_ON_DUNBAR;
+        return new Location("Save On Foods", "Dunbar", 1);
     }
 
     public static Location accessSafewayFourthVine() {
-        return SAFEWAY_4_VINE;
+        return new Location("Safeway 4th and Vine", "Kitsilano", 6);
     }
 
     //JSON Data

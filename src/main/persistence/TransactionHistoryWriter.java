@@ -1,10 +1,6 @@
 package persistence;
 
-import model.moneyoutprimitives.Location;
-import model.transactions.ETransfer;
-import model.transactions.Investment;
-import model.transactions.PosPurchase;
-import model.transactions.Transaction;
+import model.transactions.*;
 import org.json.JSONObject;
 
 
@@ -29,16 +25,20 @@ public class TransactionHistoryWriter {
     }
 
     // EFFECTS: Handles which type of Transaction we need to write
-    public static void writeTransaction(Object object) {
-        Transaction transaction = (Transaction) object;
-        String tranClass = String.valueOf(transaction.getClass());
-        if (tranClass.equals("class model.transactions.PosPurchase")) {
-            writePosPurchase((PosPurchase) transaction);
-        } else if (tranClass.equals("class model.transactions.Investment")) {
-            writeInvestment((Investment) transaction);
-        } else {
-            writeETransfer((ETransfer) transaction);
-        }
+    public static void writeTransactionHistory(TransactionList transactionList) {
+
+        JSONObject json = transactionList.toJson();
+        saveToFile(json.toString(TAB));
+
+        //Transaction transaction = (Transaction) object;
+        //String tranClass = String.valueOf(transaction.getClass());
+        //if (tranClass.equals("class model.transactions.PosPurchase")) {
+        //    writePosPurchase((PosPurchase) transaction);
+        //} else if (tranClass.equals("class model.transactions.Investment")) {
+        //    writeInvestment((Investment) transaction);
+        //} else {
+        //    writeETransfer((ETransfer) transaction);
+        //}
     }
 
     //MODIFIES: this

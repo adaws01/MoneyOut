@@ -24,8 +24,8 @@ public abstract class Transaction implements Writable {
     public Transaction(double cost, Date date) {
         this.cost = cost;
         this.date = date;
-        ListOfTransaction.accessTransactionHistory().add(this);
-        Account.accessAccount().setBalance(Account.accessAccount().getBalance() - cost);
+        //TransactionList.accessTransactionHistory().add(this);
+        //Account.accessAccount().setBalance(Account.accessAccount().getBalance() - cost);
     }
 
     //EFFECTS: Returns true if date attached to this is after the input date.

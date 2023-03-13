@@ -1,5 +1,9 @@
 {
-    "address": "model.moneyoutprimitives.Location@6d7b4f4c",
-    "balance": -2,
-    "name": "Xander"
+    "address": {
+        "district": "wdesfdgh",
+        "distanceFromHome": 0,
+        "name": "wdefgh"
+    },
+    "balance": 310,
+    "name": "wefsrgdfh"
 }

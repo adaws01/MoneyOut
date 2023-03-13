@@ -31,7 +31,7 @@ public class ListOfTransactionTest {
 
     @BeforeAll
     static void runBefore() {
-        beforeLOTTests.addAll(ListOfTransaction.getPosPurchaseHistory());
+        beforeLOTTests.addAll(TransactionList.getPosPurchaseHistory());
         p1 = new PosPurchase(40, new Date(20230301), "Potato",
                 40, Location.accessSafewayFourthVine());
         p2 = new PosPurchase(10, new Date(20230307), "Potato",
@@ -58,7 +58,7 @@ public class ListOfTransactionTest {
 
     @Test
     void testLocateBestShop() {
-        assertEquals(Location.accessSafewayFourthVine(), ListOfTransaction.locateBestShopFor("Potato"));
+        assertEquals(Location.accessSafewayFourthVine(), TransactionList.locateBestShopFor("Potato"));
     }
 
     @Test
@@ -68,21 +68,21 @@ public class ListOfTransactionTest {
         goodPurchases.add(p2);
         goodPurchases.add(p3);
         goodPurchases.add(p4);
-        assertEquals(goodPurchases, ListOfTransaction.getListOfGoodPurchase("Potato"));
+        assertEquals(goodPurchases, TransactionList.getListOfGoodPurchase("Potato"));
     }
 
     @Test
     void testOptimizeLocation() {
-        PosPurchase p1 = (PosPurchase) ListOfTransaction.accessTransactionHistory().get(0);
-        PosPurchase p2 = (PosPurchase) ListOfTransaction.accessTransactionHistory().get(1);
-        PosPurchase p3 = (PosPurchase) ListOfTransaction.accessTransactionHistory().get(3);
-        PosPurchase p4 = (PosPurchase) ListOfTransaction.accessTransactionHistory().get(5);
+        PosPurchase p1 = (PosPurchase) TransactionList.accessTransactionHistory().get(0);
+        PosPurchase p2 = (PosPurchase) TransactionList.accessTransactionHistory().get(1);
+        PosPurchase p3 = (PosPurchase) TransactionList.accessTransactionHistory().get(3);
+        PosPurchase p4 = (PosPurchase) TransactionList.accessTransactionHistory().get(5);
         List<PosPurchase> goodPurchases = new ArrayList<>();
         goodPurchases.add(p1);
         goodPurchases.add(p2);
         goodPurchases.add(p3);
         goodPurchases.add(p4);
-        assertEquals(Location.accessSafewayFourthVine(), ListOfTransaction.optimizeLocation(goodPurchases));
+        assertEquals(Location.accessSafewayFourthVine(), TransactionList.optimizeLocation(goodPurchases));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ListOfTransactionTest {
         averageCostList.add(av1);
         averageCostList.add(av2);
         averageCostList.add(av3);
-        assertEquals(2, ListOfTransaction.parseAverageCostList(averageCostList));
+        assertEquals(2, TransactionList.parseAverageCostList(averageCostList));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class ListOfTransactionTest {
         posPurchases.add(p6);
         posPurchases.add(p7);
         posPurchases.add(p8);
-        assertEquals(posPurchases, ListOfTransaction.getPosPurchaseHistory());
+        assertEquals(posPurchases, TransactionList.getPosPurchaseHistory());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class ListOfTransactionTest {
         lastMonth.add(p2);
         lastMonth.add(p5);
         lastMonth.add(p6);
-        assertEquals(lastMonth, ListOfTransaction.getTransactionsOverLastMonth(new Date(20230331)));
-        assertEquals(4, ListOfTransaction.countTransactionsOverLastMonth(new Date(20230331)));
+        assertEquals(lastMonth, TransactionList.getTransactionsOverLastMonth(new Date(20230331)));
+        assertEquals(4, TransactionList.countTransactionsOverLastMonth(new Date(20230331)));
     }
 }
