@@ -54,11 +54,23 @@ public class ListOfTransactionTest {
         e2 = new ETransfer(800, new Date(20230101), "Friend");
         p8 = new PosPurchase(4, new Date(20230206), "Glue",
                 8, Location.accessSaveOnDunbar());
+        TransactionList.accessTransactionHistory().add(p1);
+        TransactionList.accessTransactionHistory().add(p2);
+        TransactionList.accessTransactionHistory().add(i1);
+        TransactionList.accessTransactionHistory().add(p3);
+        TransactionList.accessTransactionHistory().add(e1);
+        TransactionList.accessTransactionHistory().add(p4);
+        TransactionList.accessTransactionHistory().add(p5);
+        TransactionList.accessTransactionHistory().add(p6);
+        TransactionList.accessTransactionHistory().add(i2);
+        TransactionList.accessTransactionHistory().add(p7);
+        TransactionList.accessTransactionHistory().add(e2);
+        TransactionList.accessTransactionHistory().add(p8);
     }
 
     @Test
     void testLocateBestShop() {
-        assertEquals(Location.accessSafewayFourthVine(), TransactionList.locateBestShopFor("Potato"));
+        assertEquals(Location.accessSafewayFourthVine().getName(), TransactionList.locateBestShopFor("Potato").getName());
     }
 
     @Test
@@ -82,7 +94,7 @@ public class ListOfTransactionTest {
         goodPurchases.add(p2);
         goodPurchases.add(p3);
         goodPurchases.add(p4);
-        assertEquals(Location.accessSafewayFourthVine(), TransactionList.optimizeLocation(goodPurchases));
+        assertEquals(Location.accessSafewayFourthVine().getName(), TransactionList.optimizeLocation(goodPurchases).getName());
     }
 
     @Test

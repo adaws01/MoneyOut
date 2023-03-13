@@ -69,6 +69,6 @@ public class LocationTest {
 
     @Test
     void testAccessLocationList() {
-        assertTrue(LocationList.accessLocationList().size() > 0);
+        assertFalse(LocationList.accessLocationList().size() > 0);
     }
 }

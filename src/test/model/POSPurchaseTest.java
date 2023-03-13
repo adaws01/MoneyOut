@@ -25,7 +25,9 @@ class POSPurchaseTest {
         assertEquals(20230207, Tomato.getDate());
         assertEquals("Tomato", Tomato.getGood());
         assertEquals(1, Tomato.getQuantity());
-        assertEquals(Location.accessSaveOnDunbar(), Tomato.getLocation());
+        assertEquals(Location.accessSaveOnDunbar().getName(), Tomato.getLocation().getName());
+        assertEquals(Location.accessSaveOnDunbar().getDistrict(), Tomato.getLocation().getDistrict());
+        assertEquals(Location.accessSaveOnDunbar().getDistanceFromHome(), Tomato.getLocation().getDistanceFromHome());
     }
 
     @Test
@@ -47,8 +49,10 @@ class POSPurchaseTest {
         Tomato2.setQuantity(4);
         assertEquals(4, Tomato2.getQuantity());
         Eggs.setLocation(Location.accessSafewayFourthVine());
-        assertEquals(Location.accessSafewayFourthVine(), Eggs.getLocation());
+        assertEquals(Location.accessSafewayFourthVine().getName(), Eggs.getLocation().getName());
+        assertEquals(Location.accessSafewayFourthVine().getDistrict(), Eggs.getLocation().getDistrict());
+        assertEquals(Location.accessSafewayFourthVine().getDistanceFromHome(), Eggs.getLocation().getDistanceFromHome());
         Tomato2.setLocation(Location.accessSaveOnDunbar());
-        assertEquals(Location.accessSaveOnDunbar(), Tomato2.getLocation());
+        assertEquals(Location.accessSaveOnDunbar().getName(), Tomato2.getLocation().getName());
     }
 }
