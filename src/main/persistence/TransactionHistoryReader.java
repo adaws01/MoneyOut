@@ -32,7 +32,7 @@ public class TransactionHistoryReader {
     private static String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
-        try (Stream<String> stream = Files.lines( Paths.get(source), StandardCharsets.UTF_8)) {
+        try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
 
@@ -41,7 +41,7 @@ public class TransactionHistoryReader {
 
     // EFFECTS: parses workroom from JSON object and returns it
     private static TransactionList parseTransactionList(JSONObject jsonObject) {
-        TransactionList tl = TransactionList.accessTransactionHistoryAsTransactionList();
+        TransactionList tl = TransactionList.accessTransactionHistoryAsTranList();
         addTransactions(tl, jsonObject);
         return tl;
     }
@@ -69,7 +69,7 @@ public class TransactionHistoryReader {
             Date date = new Date(jsonObject.getInt("date"));
             String good = jsonObject.getString("good");
             int quantity = jsonObject.getInt("quantity");
-            Location location = getLocation(jsonObject);
+            Location location = openLocation(jsonObject);
             return new PosPurchase(cost, date, good, quantity, location);
         } catch (Exception e) {
             try {
@@ -83,9 +83,14 @@ public class TransactionHistoryReader {
                 double cost = jsonObject.getDouble("cost");
                 Date date = new Date(jsonObject.getInt("date"));
                 String name = jsonObject.getString("name");
-                return new ETransfer(cost, date,name);
+                return new ETransfer(cost, date, name);
             }
         }
+    }
+
+    private static Location openLocation(JSONObject jsonObject) {
+        JSONObject jsonObject2 = jsonObject.getJSONObject("location");
+        return getLocation(jsonObject2);
     }
 
     private static Location getLocation(JSONObject jsonObject) {

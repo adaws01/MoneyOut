@@ -17,7 +17,7 @@ public class LocationList implements Writable {
     //EFFECTS: Declares and Instantiates the list of all locations this app could need to handle
     //         plus helper methods as described by ArrayList.
 
-    private static LocationList locationList = new LocationList (new ArrayList<>());
+    private static LocationList locationList = new LocationList(new ArrayList<>());
 
     private ArrayList<Location> list;
 

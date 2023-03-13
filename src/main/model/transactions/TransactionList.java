@@ -26,7 +26,7 @@ public class TransactionList implements Writable {
     }
 
     //Instantiation of Transaction History: A record of all Transactions logged to this application.
-    private static TransactionList transactionHistory = new TransactionList (new ArrayList<>());
+    private static TransactionList transactionHistory = new TransactionList(new ArrayList<>());
 
     //EFFECTS: returns the number of transactions with a date up to a month before the input date.
     public static int countTransactionsOverLastMonth(Date date) {
@@ -136,7 +136,7 @@ public class TransactionList implements Writable {
         return transactionHistory.list;
     }
 
-    public static TransactionList accessTransactionHistoryAsTransactionList() {
+    public static TransactionList accessTransactionHistoryAsTranList() {
         return transactionHistory;
     }
 

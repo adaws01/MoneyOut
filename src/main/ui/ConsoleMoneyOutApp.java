@@ -823,8 +823,7 @@ public class ConsoleMoneyOutApp {
     private void saveTransactionHistory() {
         try {
             TransactionHistoryWriter.open();
-            TransactionHistoryWriter.writeTransactionHistory
-                    (TransactionList.accessTransactionHistoryAsTransactionList());
+            TransactionHistoryWriter.writeTransactionHistory(TransactionList.accessTransactionHistoryAsTranList());
             //for (int i = 0; i < accessTransactionHistory().size(); i ++) {
             //    Transaction transaction = accessTransactionHistory().get(i);
             //    TransactionHistoryWriter.writeTransactionHistory(transaction);
