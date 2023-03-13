@@ -7,15 +7,14 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.moneyoutprimitives.LocationList.accessLocationList;
+
 /**
  * Represents a Location with name, neighbourhood/district, and
  * distance from home in km (input by user, as no network calls are allowed within the scope of this project)
  */
 
 public class Location implements Writable {
-    //EFFECTS: Declares and Instantiates the list of all locations this app could need to handle
-    //         plus helper methods as described by ArrayList.
-    private static List<Location> locationList = new ArrayList<>();
 
     //Instantiation of common shops and Home Address objects for use in MoneyOutApp
     private static Location HOME_ADDRESS =
@@ -35,7 +34,7 @@ public class Location implements Writable {
         this.name = name;
         this.district = district;
         this.distanceFromHome = distanceFromHome;
-        locationList.add(this);
+        accessLocationList().add(this);
     }
 
     //Getters
@@ -65,9 +64,8 @@ public class Location implements Writable {
     }
 
     //Accessor Methods
-    public static List<Location> accessLocationList() {
-        return locationList;
-    }
+
+
 
     public static Location accessHomeAddress() {
         return HOME_ADDRESS;

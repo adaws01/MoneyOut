@@ -1,6 +1,7 @@
 package model;
 
 import model.moneyoutprimitives.Location;
+import model.moneyoutprimitives.LocationList;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,6 +69,6 @@ public class LocationTest {
 
     @Test
     void testAccessLocationList() {
-        assertTrue(Location.accessLocationList().size() > 0);
+        assertTrue(LocationList.accessLocationList().size() > 0);
     }
 }

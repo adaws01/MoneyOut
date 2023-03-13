@@ -1,11 +1,16 @@
 package persistence;
 
 import model.moneyoutprimitives.Location;
+import model.moneyoutprimitives.LocationList;
 import model.transactions.Transaction;
 import org.json.JSONObject;
 
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static model.moneyoutprimitives.LocationList.accessLocationList;
 
 // Represents a writer that writes JSON representation of Location to file
 public class LocationListWriter {
@@ -27,8 +32,8 @@ public class LocationListWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of Location to file
-    public static void writeLocationList(Location location) {
-        JSONObject json = location.toJson();
+    public static void writeLocationList(LocationList locationList) {
+        JSONObject json = locationList.toJson();
         saveToFile(json.toString(TAB));
     }
 

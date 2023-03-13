@@ -3,13 +3,14 @@ package ui;
 import model.Account;
 import model.moneyoutprimitives.Date;
 import model.moneyoutprimitives.Location;
+import model.moneyoutprimitives.LocationList;
 import model.transactions.*;
 import persistence.AccountWriter;
-import persistence.JsonWriter;
 import persistence.LocationListWriter;
 import persistence.TransactionHistoryWriter;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -770,7 +771,7 @@ public class ConsoleMoneyOutApp {
 
     //EFFECTS: Accessor Method for locationList
     private List<Location> accessLocationList() {
-        return Location.accessLocationList();
+        return LocationList.accessLocationList();
     }
 
     //EFFECTS: Accessor Method for transactionHistory
@@ -787,10 +788,12 @@ public class ConsoleMoneyOutApp {
     private void saveLocationList() {
         try {
             LocationListWriter.open();
-            for (int i = 0; i < accessLocationList().size(); i ++) {
-                Location location = accessLocationList().get(i);
-                LocationListWriter.writeLocationList(location);
-            }
+            LocationListWriter.writeLocationList(LocationList.accessLocationListAsLocationList());
+
+            //for (int i = 0; i < accessLocationList().size(); i ++) {
+            //    Location location = accessLocationList().get(i);
+            //    LocationListWriter.writeLocationList(location);
+            //}
             LocationListWriter.close();
             System.out.println("Saved Locations to " + LOCATION_LIST_JSON_STORE);
         } catch (FileNotFoundException e) {
