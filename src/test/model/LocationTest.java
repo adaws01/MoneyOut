@@ -68,7 +68,14 @@ public class LocationTest {
     }
 
     @Test
-    void testAccessLocationList() {
+    void testAccessAndAddLocationList() {
         assertFalse(LocationList.accessLocationList().size() > 0);
+        String classLocationList = String.valueOf(LocationList.accessLocationListAsLocationList().getClass());
+        assertEquals("class model.moneyoutprimitives.LocationList",
+                classLocationList);
+        Location newLoc = new Location("Location", "District", 0);
+        LocationList.addLocation(newLoc);
+        assertEquals(newLoc, LocationList.accessLocationList().get(0));
+        assertEquals(1, LocationList.accessLocationList().size());
     }
 }

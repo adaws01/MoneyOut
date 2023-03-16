@@ -130,7 +130,16 @@ public class ListOfTransactionTest {
         lastMonth.add(p2);
         lastMonth.add(p5);
         lastMonth.add(p6);
+        lastMonth.add(p1);
         assertEquals(lastMonth, TransactionList.getTransactionsOverLastMonth(new Date(20230331)));
-        assertEquals(4, TransactionList.countTransactionsOverLastMonth(new Date(20230331)));
+        assertEquals(5, TransactionList.countTransactionsOverLastMonth(new Date(20230331)));
+    }
+
+    @Test
+    void testAccessAndAddTransaction() {
+        TransactionList transList = TransactionList.accessTransactionHistoryAsTranList();
+        assertEquals("class model.transactions.TransactionList", String.valueOf(transList.getClass()));
+        TransactionList.addTransaction(p1);
+        assertEquals(13, TransactionList.accessTransactionHistory().size());
     }
 }

@@ -33,7 +33,7 @@ public class LocationList implements Writable {
         return locationList;
     }
 
-    public void addLocation(Location location) {
+    public static void addLocation(Location location) {
         locationList.list.add(location);
     }
 

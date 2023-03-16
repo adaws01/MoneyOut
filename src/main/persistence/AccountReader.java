@@ -20,10 +20,11 @@ public class AccountReader {
 
     // EFFECTS: reads Account from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public static void readAccount() throws IOException {
+    public static Account readAccount() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         parseAccount(jsonObject);
+        return null;
     }
 
     // EFFECTS: reads source file as string and returns it

@@ -140,7 +140,7 @@ public class TransactionList implements Writable {
         return transactionHistory;
     }
 
-    public void addTransaction(Transaction transaction) {
+    public static void addTransaction(Transaction transaction) {
         transactionHistory.list.add(transaction);
     }
 
