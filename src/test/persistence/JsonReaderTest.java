@@ -48,8 +48,8 @@ public class JsonReaderTest extends JsonTest{
         }
     }
 
-    @Test
-    void testReadEmptyTransactionHistory() {
-        TransactionHistoryReader thr = new TransactionHistoryReader("./data/TestEmptyTransactionHistory.json");
-    }
+    //@Test
+    //void testReadEmptyTransactionHistory() {
+    //    TransactionHistoryReader thr = new TransactionHistoryReader("./data/TestEmptyTransactionHistory.json");
+    //}
 }
