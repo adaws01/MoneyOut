@@ -12,11 +12,14 @@ import java.util.List;
 
 import static model.moneyoutprimitives.LocationList.accessLocationList;
 
-// Represents a writer that writes JSON representation of Location to file
+/**
+ * Represents a writer that writes JSON representation of LocationList to file
+ */
+
 public class LocationListWriter {
-    private static final int TAB = 4;
-    private static PrintWriter writer;
-    private static String destination;
+    private static final int TAB = 4;  //contains the number of spaces in TAB—for formatting the JSON file
+    private static PrintWriter writer;  //Object that handles writing the JSON data to file
+    private static String destination;  //pathname for file destination of written JSON data
 
     // EFFECTS: constructs writer to write to destination file
     public LocationListWriter(String destination) {
@@ -31,7 +34,7 @@ public class LocationListWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of Location to file
+    // EFFECTS: writes JSON representation of LocationList to file
     public static void writeLocationList(LocationList locationList) {
         JSONObject json = locationList.toJson();
         saveToFile(json.toString(TAB));

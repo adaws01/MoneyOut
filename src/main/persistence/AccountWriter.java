@@ -7,11 +7,13 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-// Represents a writer that writes JSON representation of Account to file
+/**
+ * Represents a writer that writes JSON representation of Account to file
+ */
 public class AccountWriter {
-    private static final int TAB = 4;
-    private static PrintWriter writer;
-    private static String destination;
+    private static final int TAB = 4;  //JSON formatting: number of spaces in TAB
+    private static PrintWriter writer;  //Object that handles writing the JSON data
+    private static String destination;  //pathname for file destination of written JSON data
 
     // EFFECTS: constructs writer to write to destination file
     public AccountWriter(String destination) {

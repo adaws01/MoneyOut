@@ -69,11 +69,13 @@ public class Account implements Writable {
         this.address = address;
     }
 
+    //Accessor Methods
     public static Account accessAccount() {
         return account;
     }
 
     //JSON
+    //EFFECTS: Returns Account information in JSON format. Overrides Writable toJson() method.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

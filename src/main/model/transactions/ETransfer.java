@@ -28,6 +28,7 @@ public class ETransfer extends Transaction {
     }
 
     //JSON
+    //EFFECTS: Returns a single ETransfer in JSON format.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

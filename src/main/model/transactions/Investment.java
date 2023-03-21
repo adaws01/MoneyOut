@@ -50,6 +50,7 @@ public class Investment extends Transaction {
     }
 
     //JSON
+    //EFFECTS: Returns a single investment in JSON format.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

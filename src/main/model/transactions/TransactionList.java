@@ -19,8 +19,9 @@ import java.util.List;
 
 public class TransactionList implements Writable {
 
-    private ArrayList<Transaction> list;
+    private ArrayList<Transaction> list;  //ArrayList<Transaction> parameter for TransactionList Constructor
 
+    //EFFECTS: TransactionList constructor. Contains an ArrayList<Transaction>
     public TransactionList(ArrayList<Transaction> list) {
         this.list = list;
     }
@@ -132,18 +133,23 @@ public class TransactionList implements Writable {
         return posPurchaseHistory;
     }
 
+    //EFFECTS: returns global transaction history as ArrayList object
     public static List<Transaction> accessTransactionHistory() {
         return transactionHistory.list;
     }
 
+    //EFFECTS: returns global transaction history as TransactionList object
     public static TransactionList accessTransactionHistoryAsTranList() {
         return transactionHistory;
     }
 
+    //EFFECTS: adds a transaction to end of transaction history
     public static void addTransaction(Transaction transaction) {
         transactionHistory.list.add(transaction);
     }
 
+    //JSON
+    //EFFECTS: Returns global transaction history in JSON format
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -151,7 +157,7 @@ public class TransactionList implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in transactionHistory as a JSON array
+    // EFFECTS: returns Transactions in transactionHistory as a JSON array
     private JSONArray transactionsToJson() {
         JSONArray jsonArray = new JSONArray();
 

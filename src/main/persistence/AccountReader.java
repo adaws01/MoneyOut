@@ -10,8 +10,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+/**
+ * AccountReader: Handles Reading and parsing Account Data from JSON source file.
+ */
+
 public class AccountReader {
-    private static String source;
+    private static String source;  //pathname of .json source file to access
 
     // EFFECTS: constructs reader to read from source file
     public AccountReader(String source) {
@@ -38,7 +42,7 @@ public class AccountReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses Account data from JSON object and returns it
     private static void parseAccount(JSONObject jsonObject) {
         Location address = openLocation(jsonObject);
         double balance = jsonObject.getDouble("balance");
@@ -48,11 +52,13 @@ public class AccountReader {
         Account.accessAccount().setAddress(address);
     }
 
+    //EFFECTS: handles parsing the home address location built into Account
     private static Location openLocation(JSONObject jsonObject) {
         JSONObject jsonObject2 = jsonObject.getJSONObject("address");
         return getLocation(jsonObject2);
     }
 
+    //EFFECTS: Helper for openLocation(). returns Location data from JSON file.
     private static Location getLocation(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         String district = jsonObject.getString("district");

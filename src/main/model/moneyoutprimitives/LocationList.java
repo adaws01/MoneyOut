@@ -16,27 +16,32 @@ public class LocationList implements Writable {
 
     //EFFECTS: Declares and Instantiates the list of all locations this app could need to handle
     //         plus helper methods as described by ArrayList.
-
     private static LocationList locationList = new LocationList(new ArrayList<>());
 
-    private ArrayList<Location> list;
+    private ArrayList<Location> list; //list parameter for LocationList constructor
 
+    //EFFECTS: Constructs a new LocationList containing an ArrayList of Location.
+    //This implementation was created before I learned how to override an equals method.
     public LocationList(ArrayList<Location> list) {
         this.list = list;
     }
 
+    //EFFECTS: Getter that returns an ArrayList<Location> object
     public static List<Location> accessLocationList() {
         return locationList.list;
     }
 
+    //EFFECTS: Getter that returns a LocationList object.
     public static LocationList accessLocationListAsLocationList() {
         return locationList;
     }
 
+    //EFFECTS: Adds input location to the end of the global LocationList.
     public static void addLocation(Location location) {
         locationList.list.add(location);
     }
 
+    //EFFECTS: Returns a list of Location in JSON format.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -44,7 +49,7 @@ public class LocationList implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in locationList as a JSON array
+    // EFFECTS: returns Locations in locationList as a JSON array
     private JSONArray locationsToJson() {
         JSONArray jsonArray = new JSONArray();
 

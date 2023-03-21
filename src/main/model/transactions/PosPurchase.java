@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 public class PosPurchase extends Transaction {
     private String good;        //The type of item that was purchased (Ex: Tomato).
-    // Proper noun capitalization, singular form of word.
+                                // Proper noun capitalization, singular form of word.
     private int quantity;       //Number of units purchased
     private Location location;  //Location of the Transaction
 
@@ -52,6 +52,7 @@ public class PosPurchase extends Transaction {
     }
 
     //JSON
+    //EFFECTS: Returns a single PosPurchase in JSON format
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

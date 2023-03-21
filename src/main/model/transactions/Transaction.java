@@ -18,14 +18,12 @@ public abstract class Transaction implements Writable {
     private Date date;   //The date of the Transaction
 
     //REQUIRES: cost > 0
-    //MODIFIES: this, ListOfTransaction.transactionHistory, Account.account
+    //MODIFIES: this
     //EFFECTS: Abstract constructor for Transaction (super for cost and date), extended in subclasses.
-    //         Adds any new transaction to ListOfTransaction.transactionHistory
+    //Account Balance and TransactionList updates are handled within the ConsoleMoneyOutApp class.
     public Transaction(double cost, Date date) {
         this.cost = cost;
         this.date = date;
-        //TransactionList.accessTransactionHistory().add(this);
-        //Account.accessAccount().setBalance(Account.accessAccount().getBalance() - cost);
     }
 
     //EFFECTS: Returns true if date attached to this is after the input date.
@@ -53,6 +51,7 @@ public abstract class Transaction implements Writable {
     }
 
     //JSON
+    //EFFECTS: Abstract method to convert an individual Transaction to JSON data. Overridden by Transaction subclasses.
     @Override
     public JSONObject toJson() {
         return null;

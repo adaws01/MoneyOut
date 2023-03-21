@@ -19,14 +19,10 @@ public class Location implements Writable {
     //Instantiation of common shops and Home Address objects for use in MoneyOutApp
     private static Location HOME_ADDRESS =
             new Location("NEED ADDRESS", "DISTRICT", 0);
-    //private static Location SAVE_ON_DUNBAR =
-    //        new Location("Save On Foods", "Dunbar", 1);
-    //private static Location SAFEWAY_4_VINE =
-    //        new Location("Safeway 4th and Vine", "Kitsilano", 6);
 
     private String name;  //Name assigned to the location. This could be an address, or a description of the location.
     private String district;  //Neighbourhood that the location is in. This is flexible and could also represent
-    //a city, or any more general description of where the location is.
+                              //a city, or any more general description of where the location is.
     private int distanceFromHome; //The distance from the user's home. Must be updated manually if home address changed
 
     //EFFECTS: Constructs the Location (name, district, distanceFromHome) and adds it to the locationList
@@ -34,7 +30,6 @@ public class Location implements Writable {
         this.name = name;
         this.district = district;
         this.distanceFromHome = distanceFromHome;
-        //accessLocationList().add(this);
     }
 
     //Getters
@@ -64,9 +59,6 @@ public class Location implements Writable {
     }
 
     //Accessor Methods
-
-
-
     public static Location accessHomeAddress() {
         return HOME_ADDRESS;
     }
@@ -80,6 +72,7 @@ public class Location implements Writable {
     }
 
     //JSON Data
+    //EFFECTS: Returns a single Location in JSON format. Overrides Writable toJson() method.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -12,15 +12,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+/**
+ * Handles Reading and Parsing TransactionHistory from JSON source file
+ */
+
 public class TransactionHistoryReader {
-    private static String source;
+    private static String source;  //pathname of JSON source file
 
     // EFFECTS: constructs reader to read from source file
     public TransactionHistoryReader(String source) {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads TransactionHistory from file and returns it;
     // throws IOException if an error occurs reading data from file
     public static TransactionList readTransactionHistory() throws IOException {
         String jsonData = readFile(source);
@@ -39,15 +43,15 @@ public class TransactionHistoryReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses TransactionHistory from JSON object and returns it
     private static TransactionList parseTransactionList(JSONObject jsonObject) {
         TransactionList tl = TransactionList.accessTransactionHistoryAsTranList();
         addTransactions(tl, jsonObject);
         return tl;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
+    // MODIFIES: tl
+    // EFFECTS: parses Transactions from JSON object and adds them to TransactionHistory
     private static void addTransactions(TransactionList tl, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("TransactionHistory");
         for (Object json : jsonArray) {
@@ -56,13 +60,14 @@ public class TransactionHistoryReader {
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: tl
+    // EFFECTS: parses Transaction from JSON object and adds it to TransactionHistory
     private static void addTransaction(TransactionList tl, JSONObject jsonObject) {
         Transaction transaction = sortTransactionReturn(jsonObject);
         tl.addTransaction(transaction);
     }
 
+    //EFFECTS: Handles the differences in data structure between Transaction subclasses
     private static Transaction sortTransactionReturn(JSONObject jsonObject) {
         try {
             double cost = jsonObject.getDouble("cost");
@@ -88,11 +93,13 @@ public class TransactionHistoryReader {
         }
     }
 
+    //EFFECTS: Handles parsing any location data built into individual Transactions
     private static Location openLocation(JSONObject jsonObject) {
         JSONObject jsonObject2 = jsonObject.getJSONObject("location");
         return getLocation(jsonObject2);
     }
 
+    //EFFECTS: Helper for openLocation(). returns Location data from JSON file.
     private static Location getLocation(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         String district = jsonObject.getString("district");

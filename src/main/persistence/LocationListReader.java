@@ -11,8 +11,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+/**
+ * Handles the reading and parsing of LocationList data from JSON file.
+ */
+
 public class LocationListReader {
-    private static String source;
+    private static String source;  //pathname for .json source file containing LocationList data
 
     // EFFECTS: constructs reader to read from source file
     public LocationListReader(String source) {
@@ -45,8 +49,8 @@ public class LocationListReader {
         return ll;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses Locations from JSON object and adds them to LocationKist
+    // MODIFIES: ll
+    // EFFECTS: parses Locations from JSON object and adds them to LocationList
     private static void addLocations(LocationList ll, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("LocationList");
         for (Object json : jsonArray) {
@@ -55,7 +59,7 @@ public class LocationListReader {
         }
     }
 
-    // MODIFIES: wr
+    // MODIFIES: ll
     // EFFECTS: parses Location from JSON object and adds it to LocationList
     private static void addLocation(LocationList ll, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
