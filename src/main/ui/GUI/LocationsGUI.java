@@ -51,13 +51,18 @@ public class LocationsGUI extends AbstractGUI implements ActionListener {
         } else if (e.getSource() == newLocationButton) {
             logNewLocation();
         } else if (e.getSource() == modifyLocationButton) {
-            //TODO Modify location action
+            modifyLocation();
         }
     }
 
     private void logNewLocation() {
         frame.dispose();
         new LocationEntryGUI();
+    }
+
+    private void modifyLocation() {
+        frame.dispose();
+        new LocationModifyGUI();
     }
 
 
