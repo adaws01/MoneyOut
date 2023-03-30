@@ -148,6 +148,17 @@ public class TransactionList implements Writable {
         transactionHistory.list.add(transaction);
     }
 
+    //MODIFIES: transactionHistory
+    //EFFECTS: Wipes Transaction History. Used in testing to refresh transactionHistory for each individual test.
+    public static void wipeTransactionHistory() {
+        transactionHistory.list.clear();
+    }
+
+    //Getter
+    public ArrayList<Transaction> getList() {
+        return this.list;
+    }
+
     //JSON
     //EFFECTS: Returns global transaction history in JSON format
     @Override

@@ -41,6 +41,17 @@ public class LocationList implements Writable {
         locationList.list.add(location);
     }
 
+    //MODIFIES: locationList
+    //EFFECTS: Wipes locationList. Used in Testing to refresh locationList before each test.
+    public static void wipeLocationList() {
+        locationList.list.clear();
+    }
+
+    //GETTER
+    public ArrayList<Location> getList() {
+        return this.list;
+    }
+
     //EFFECTS: Returns a list of Location in JSON format.
     @Override
     public JSONObject toJson() {
