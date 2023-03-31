@@ -12,6 +12,7 @@ import java.awt.*;
 
 import static model.moneyoutprimitives.LocationList.accessLocationList;
 import static model.transactions.TransactionList.accessTransactionHistory;
+import static model.transactions.TransactionList.getPosPurchaseHistory;
 
 /**
  * AbstractGUI contains the window setup information for all GUI windows.
@@ -114,5 +115,20 @@ public abstract class AbstractGUI {
         transactionsScrollPane.setViewportView(transactionHistoryPanel);
 
         return transactionsScrollPane;
+    }
+
+    public JScrollPane generatePosPurchaseHistoryScrollPane() {
+        JPanel posPurchaseHistoryPanel = new JPanel();
+        posPurchaseHistoryPanel.setLayout(new GridLayout(0, 1));
+
+        for (int i = 0; i <= getPosPurchaseHistory().size() - 1; i++) {
+            JLabel label = new JLabel((i + 1) + ". " + generateTransactionString(getPosPurchaseHistory().get(i)));
+            posPurchaseHistoryPanel.add(label);
+        }
+
+        JScrollPane posPurchasesScrollPane = new JScrollPane();
+        posPurchasesScrollPane.setViewportView(posPurchaseHistoryPanel);
+
+        return posPurchasesScrollPane;
     }
 }

@@ -133,6 +133,10 @@ public class TransactionList implements Writable {
         return posPurchaseHistory;
     }
 
+    //TODO getInvestmentHistory()
+
+    //TODO getETransferHistory()
+
     //EFFECTS: returns global transaction history as ArrayList object
     public static List<Transaction> accessTransactionHistory() {
         return transactionHistory.list;

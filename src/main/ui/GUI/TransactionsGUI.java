@@ -59,7 +59,7 @@ public class TransactionsGUI extends AbstractGUI implements ActionListener {
             new LogTransactionGUI();
         } else if (e.getSource() == modifyButton) {
             frame.dispose();
-            //TODO new ModifyTransactionGUI();
+            new ModifyTransactionGUI();
         } else {
             frame.dispose();
             //TODO new DeleteTransactionGUI();
