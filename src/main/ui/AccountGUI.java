@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.moneyoutprimitives.Location;
 
@@ -30,20 +30,15 @@ public class AccountGUI extends AbstractGUI implements ActionListener {
     JButton withdrawButton = new JButton("Withdraw");
     JButton editButton = new JButton("Edit");
 
+
     public AccountGUI() {
         windowSetup();
-
         panel.setLayout(new GridLayout(1, 2));
         accountPanel.setLayout(new GridLayout(2, 1));
         balancePanel.setLayout(new GridLayout(3, 1));
         personalInfoEditPanel.setLayout(new GridLayout(1, 2));
         personalInfoPanel.setLayout(new GridLayout(2, 1));
-
-        depositButton.addActionListener(this);
-        withdrawButton.addActionListener(this);
-        editButton.addActionListener(this);
-        backButton.addActionListener(this);
-
+        addActionListeners();
         frame.add(panel);
         panel.add(backButton);
         panel.add(accountPanel);
@@ -58,6 +53,13 @@ public class AccountGUI extends AbstractGUI implements ActionListener {
         balancePanel.add(withdrawButton);
         frameSetup();
         frame.setTitle("Account");
+    }
+
+    private void addActionListeners() {
+        depositButton.addActionListener(this);
+        withdrawButton.addActionListener(this);
+        editButton.addActionListener(this);
+        backButton.addActionListener(this);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.moneyoutprimitives.Location;
 import model.moneyoutprimitives.LocationList;

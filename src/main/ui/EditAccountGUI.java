@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.Account;
 import model.moneyoutprimitives.Location;
@@ -60,7 +60,8 @@ public class EditAccountGUI extends AbstractGUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Account acc = Account.accessAccount();
         acc.setName(nameText.getText());
-        acc.setAddress(new Location(locationNameText.getText(), districtText.getText(), Integer.parseInt(distanceText.getText())));
+        acc.setAddress(new Location(locationNameText.getText(), districtText.getText(),
+                Integer.parseInt(distanceText.getText())));
         frame.dispose();
         new AccountGUI();
     }

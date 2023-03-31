@@ -152,17 +152,17 @@ public class TransactionList implements Writable {
     //TODO getETransferHistory() Test Coverage
     //EFFECTS: Returns a list of all E-Transfers recorded in transactionHistory.
     public static List<ETransfer> getETransferHistory() {
-        List<ETransfer> eTransferHistory = new ArrayList<>();
+        List<ETransfer> etransferHistory = new ArrayList<>();
 
         for (int i = 0; i < transactionHistory.list.size(); i++) {
             Transaction transaction = transactionHistory.list.get(i);
             String classString = transaction.getClass().toString();
             if (classString.equals("class model.transactions.ETransfer")) {
-                eTransferHistory.add((ETransfer) transaction);
+                etransferHistory.add((ETransfer) transaction);
             }
         }
 
-        return eTransferHistory;
+        return etransferHistory;
     }
 
     //EFFECTS: returns global transaction history as ArrayList object

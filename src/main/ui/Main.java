@@ -1,7 +1,5 @@
 package ui;
 
-import ui.GUI.MoneyOutAppGUI;
-
 //public class Main {
 //    public static void main(String[] args) {
 //        try {

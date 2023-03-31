@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.transactions.Transaction;
 import model.transactions.TransactionList;

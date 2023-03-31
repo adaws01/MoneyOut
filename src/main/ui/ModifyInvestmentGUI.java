@@ -1,9 +1,7 @@
-package ui.GUI;
+package ui;
 
 import model.moneyoutprimitives.Date;
-import model.moneyoutprimitives.LocationList;
 import model.transactions.Investment;
-import model.transactions.PosPurchase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static model.transactions.TransactionList.getInvestmentHistory;
-import static model.transactions.TransactionList.getPosPurchaseHistory;
 
 public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
 
@@ -45,9 +42,12 @@ public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
         innerPanel.setLayout(new GridLayout(1, 2));
         inputsPanel.setLayout(new GridLayout(5, 2));
         investmentHistoryScrollPane.setPreferredSize(new Dimension(400, 20));
-
         enterButton.addActionListener(this);
+        addElements();
+        frameSetup();
+    }
 
+    private void addElements() {
         frame.add(panel);
         panel.add(investmentHistoryScrollPane);
         panel.add(indexPanel);
@@ -66,7 +66,6 @@ public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
         inputsPanel.add(domain);
         inputsPanel.add(domainText);
         innerPanel.add(enterButton);
-        frameSetup();
     }
 
     @Override

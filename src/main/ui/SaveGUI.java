@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.Account;
 import model.moneyoutprimitives.LocationList;
@@ -11,10 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
-
-import persistence.*;
-
-public class SaveGUI extends AbstractGUI{
+public class SaveGUI extends AbstractGUI {
 
     Account account = Account.accessAccount(); //Accessor for account
     private static final String ACCOUNT_JSON_STORE = "./data/account.json";

@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.Account;
 import persistence.*;
@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class LoadGUI extends AbstractGUI{
+public class LoadGUI extends AbstractGUI {
 
     Account account = Account.accessAccount(); //Accessor for account
     private static final String ACCOUNT_JSON_STORE = "./data/account.json";

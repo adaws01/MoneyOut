@@ -1,9 +1,7 @@
-package ui.GUI;
+package ui;
 
 import model.moneyoutprimitives.Date;
-import model.moneyoutprimitives.LocationList;
 import model.transactions.Investment;
-import model.transactions.PosPurchase;
 import model.transactions.Transaction;
 import model.transactions.TransactionList;
 

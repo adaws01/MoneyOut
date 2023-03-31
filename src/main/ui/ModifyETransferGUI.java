@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.moneyoutprimitives.Date;
 import model.transactions.ETransfer;
@@ -60,10 +60,10 @@ public class ModifyETransferGUI extends AbstractGUI implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ETransfer eTransfer = getETransferHistory().get(Integer.parseInt(indexText.getText()) - 1);
-        eTransfer.setCost(Double.parseDouble(costText.getText()));
-        eTransfer.setDate(new Date(Integer.parseInt(dateText.getText())));
-        eTransfer.setName(nameText.getText());
+        ETransfer etransfer = getETransferHistory().get(Integer.parseInt(indexText.getText()) - 1);
+        etransfer.setCost(Double.parseDouble(costText.getText()));
+        etransfer.setDate(new Date(Integer.parseInt(dateText.getText())));
+        etransfer.setName(nameText.getText());
         frame.dispose();
         new TransactionsGUI();
     }

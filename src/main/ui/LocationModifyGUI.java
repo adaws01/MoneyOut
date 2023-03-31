@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.moneyoutprimitives.Location;
 import model.moneyoutprimitives.LocationList;
@@ -38,16 +38,8 @@ public class LocationModifyGUI extends AbstractGUI implements ActionListener {
 
     public LocationModifyGUI() {
         windowSetup();
-
-        panel.setLayout(new GridLayout(3, 1));
-        indexPanel.setLayout(new GridLayout(1, 2));
-        modifyPanel.setLayout(new GridLayout(1, 2));
-        newLocationPanel.setLayout(new GridLayout(1, 2));
-        labelsPanel.setLayout(new GridLayout(3, 1));
-        fieldsPanel.setLayout(new GridLayout(3, 1));
-
+        setLayouts();
         enterButton.addActionListener(this);
-
         frame.add(panel);
         panel.add(locationsScrollPane);
         panel.add(indexPanel);
@@ -66,6 +58,15 @@ public class LocationModifyGUI extends AbstractGUI implements ActionListener {
         fieldsPanel.add(distanceText);
         frameSetup();
         frame.setTitle("Provide the Following:");
+    }
+
+    private void setLayouts() {
+        panel.setLayout(new GridLayout(3, 1));
+        indexPanel.setLayout(new GridLayout(1, 2));
+        modifyPanel.setLayout(new GridLayout(1, 2));
+        newLocationPanel.setLayout(new GridLayout(1, 2));
+        labelsPanel.setLayout(new GridLayout(3, 1));
+        fieldsPanel.setLayout(new GridLayout(3, 1));
     }
 
     @Override

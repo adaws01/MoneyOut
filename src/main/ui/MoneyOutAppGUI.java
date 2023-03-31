@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,19 +59,19 @@ public class MoneyOutAppGUI extends AbstractGUI implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==transactionsButton) {
+        if (e.getSource() == transactionsButton) {
             frame.dispose();
             new TransactionsGUI();
-        } else if (e.getSource()==accountButton) {
+        } else if (e.getSource() == accountButton) {
             frame.dispose();
             new AccountGUI();
-        } else if (e.getSource()==statsAndInsightsButton) {
+        } else if (e.getSource() == statsAndInsightsButton) {
             frame.dispose();
             new StatsAndInsightsGUI();
-        } else if (e.getSource()==locationsButton) {
+        } else if (e.getSource() == locationsButton) {
             frame.dispose();
             new LocationsGUI();
-        } else if (e.getSource()==saveButton) {
+        } else if (e.getSource() == saveButton) {
             new SaveGUI();
         } else {
             new LoadGUI();

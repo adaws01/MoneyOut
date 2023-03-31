@@ -1,4 +1,4 @@
-package ui.GUI;
+package ui;
 
 import model.moneyoutprimitives.Date;
 import model.transactions.ETransfer;
@@ -46,9 +46,9 @@ public class NewETransferGUI extends AbstractGUI implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ETransfer eTransfer = new ETransfer(Double.parseDouble(costText.getText()),
+        ETransfer etransfer = new ETransfer(Double.parseDouble(costText.getText()),
                 new Date(Integer.parseInt(dateText.getText())), nameText.getText());
-        TransactionList.addTransaction((Transaction) eTransfer);
+        TransactionList.addTransaction((Transaction) etransfer);
         frame.dispose();
         new TransactionsGUI();
     }
