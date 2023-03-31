@@ -31,11 +31,14 @@ public class LogTransactionGUI extends AbstractGUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == pos) {
-            //TODO New POS
+            frame.dispose();
+            new NewPosPurchaseGUI();
         } else if (e.getSource() == inv) {
-            //TODO New INV
+            frame.dispose();
+            new NewInvestmentGUI();
         } else {
-            //TODO New ETR
+            frame.dispose();
+            new NewETransferGUI();
         }
     }
 }
