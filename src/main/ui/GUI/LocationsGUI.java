@@ -14,7 +14,7 @@ public class LocationsGUI extends AbstractGUI implements ActionListener {
     JPanel panel = new JPanel();
     JPanel locationsPanel = new JPanel();
     JPanel toolsPanel = new JPanel();
-    JScrollPane locationsScrollPane = generateLocationListPanel();
+    JScrollPane locationsScrollPane = generateLocationListScrollPane();
 
     JButton newLocationButton = new JButton("New Location");
     JButton modifyLocationButton = new JButton("Modify Location");

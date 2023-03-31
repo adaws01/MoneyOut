@@ -1,11 +1,17 @@
 package ui.GUI;
 
+import model.moneyoutprimitives.Date;
 import model.moneyoutprimitives.Location;
+import model.transactions.ETransfer;
+import model.transactions.Investment;
+import model.transactions.PosPurchase;
+import model.transactions.Transaction;
 
 import javax.swing.*;
 import java.awt.*;
 
 import static model.moneyoutprimitives.LocationList.accessLocationList;
+import static model.transactions.TransactionList.accessTransactionHistory;
 
 /**
  * AbstractGUI contains the window setup information for all GUI windows.
@@ -33,7 +39,54 @@ public abstract class AbstractGUI {
                 + "km from home.";
     }
 
-    public JScrollPane generateLocationListPanel() {
+    public String generateTransactionString(Transaction transaction) {
+        String tranClass = String.valueOf(transaction.getClass());
+
+        return handleTransactionClass(transaction, tranClass);
+    }
+
+    //EFFECTS: Generates a String that formats Date to be more easily read by user
+    private String parseDate(Date date) {
+        return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
+    }
+
+    public String writeDate(int date) {
+        Date processedDate = new Date(date);
+        return parseDate(processedDate);
+    }
+
+    //EFFECTS: Handles selecting String format of Transaction based on subclass
+    private String handleTransactionClass(Transaction transaction, String tranClass) {
+        if (tranClass.equals("class model.transactions.PosPurchase")) {
+            return writePosPurchase((PosPurchase) transaction);
+        } else if (tranClass.equals("class model.transactions.Investment")) {
+            return writeInvestment((Investment) transaction);
+        } else {
+            return writeETransfer((ETransfer) transaction);
+        }
+    }
+
+    //EFFECTS: Generates a String containing a formatted representation of a POSPurchase
+    private String writePosPurchase(PosPurchase posPurchase) {
+        return "POS PURCHASE \n\tCost: $" + posPurchase.getCost() + ", Date of Purchase: "
+                + writeDate(posPurchase.getDate()) + ", Good: " + posPurchase.getGood() + ", Quantity: "
+                + posPurchase.getQuantity() + ", Purchased at: " + generateLocationString(posPurchase.getLocation());
+    }
+
+    //EFFECTS: Generates a String containing a formatted representation of an Investment
+    private String writeInvestment(Investment investment) {
+        return "INVESTMENT \n\tCost: $" + investment.getCost() + ", Date of Investment: "
+                + writeDate(investment.getDate()) + ", Company: " + investment.getCompany()
+                + ", Shares: " + investment.getShares() + ", Domain: " + investment.getDomain() + ".";
+    }
+
+    //EFFECTS: Generates a String containing a formatted representation of an ETransfer
+    private String writeETransfer(ETransfer etransfer) {
+        return "E-TRANSFER \n\tAmount: $" + etransfer.getCost() + ", Date of E-Transfer: "
+                + writeDate(etransfer.getDate()) + ", To: " + etransfer.getName() + ".";
+    }
+
+    public JScrollPane generateLocationListScrollPane() {
         JPanel locationListPanel = new JPanel();
         locationListPanel.setLayout(new GridLayout(0, 1));
 
@@ -46,5 +99,20 @@ public abstract class AbstractGUI {
         locationsScrollPane.setViewportView(locationListPanel);
 
         return locationsScrollPane;
+    }
+
+    public JScrollPane generateTransactionHistoryScrollPane() {
+        JPanel transactionHistoryPanel = new JPanel();
+        transactionHistoryPanel.setLayout(new GridLayout(0, 1));
+
+        for (int i = 0; i <= accessTransactionHistory().size() - 1; i++) {
+            JLabel label = new JLabel((i + 1) + ". " + generateTransactionString(accessTransactionHistory().get(i)));
+            transactionHistoryPanel.add(label);
+        }
+
+        JScrollPane transactionsScrollPane = new JScrollPane();
+        transactionsScrollPane.setViewportView(transactionHistoryPanel);
+
+        return transactionsScrollPane;
     }
 }

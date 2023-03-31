@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 
 public class LocationModifyGUI extends AbstractGUI implements ActionListener {
 
-    JScrollPane locationsScrollPane = generateLocationListPanel();
+    JScrollPane locationsScrollPane = generateLocationListScrollPane();
 
     JPanel panel = new JPanel();
     JPanel indexPanel = new JPanel();
