@@ -53,7 +53,5 @@ public abstract class Transaction implements Writable {
     //JSON
     //EFFECTS: Abstract method to convert an individual Transaction to JSON data. Overridden by Transaction subclasses.
     @Override
-    public JSONObject toJson() {
-        return null;
-    }
+    public abstract JSONObject toJson();
 }

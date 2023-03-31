@@ -3,7 +3,7 @@ package ui;
 import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
-public class SplashScreenGUI extends AbstractGUI{
+public class SplashScreenGUI extends AbstractGUI {
 
     JLabel label = new JLabel();
     String splashImageLocation = "./lib/MoneyOutSplash.jpg";

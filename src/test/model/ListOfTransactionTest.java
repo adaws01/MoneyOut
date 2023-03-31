@@ -124,6 +124,22 @@ public class ListOfTransactionTest {
     }
 
     @Test
+    void testGetInvestmentHistory() {
+        List<Investment> investments = new ArrayList<>();
+        investments.add(i1);
+        investments.add(i2);
+        assertEquals(investments, TransactionList.getInvestmentHistory());
+    }
+
+    @Test
+    void testGetETransferHistory() {
+        List<ETransfer> etransfers = new ArrayList<>();
+        etransfers.add(e1);
+        etransfers.add(e2);
+        assertEquals(etransfers, TransactionList.getETransferHistory());
+    }
+
+    @Test
     void testTransactionsOverLastMonth() {
         List<Transaction> lastMonth = new ArrayList<>();
         lastMonth.add(p1);
