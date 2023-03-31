@@ -2,6 +2,7 @@ package ui.GUI;
 
 import model.moneyoutprimitives.Date;
 import model.moneyoutprimitives.LocationList;
+import model.transactions.Investment;
 import model.transactions.PosPurchase;
 
 import javax.swing.*;
@@ -9,12 +10,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static model.transactions.TransactionList.getInvestmentHistory;
 import static model.transactions.TransactionList.getPosPurchaseHistory;
 
-public class ModifyPosPurchaseGUI extends AbstractGUI implements ActionListener {
+public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
 
-    JScrollPane locationListScrollPane = generateLocationListScrollPane();
-    JScrollPane posPurchaseHistoryScrollPane = generatePosPurchaseHistoryScrollPane();
+    JScrollPane investmentHistoryScrollPane = generateInvestmentHistoryScrollPane();
 
     JPanel panel = new JPanel();
     JPanel indexPanel = new JPanel();
@@ -23,34 +24,32 @@ public class ModifyPosPurchaseGUI extends AbstractGUI implements ActionListener 
 
     JLabel cost = new JLabel("Cost ($):");
     JLabel date = new JLabel("Date (YYYYMMDD):");
-    JLabel good = new JLabel("Good:");
-    JLabel quantity = new JLabel("Quantity Purchased:");
-    JLabel location = new JLabel("Index of Location:");
+    JLabel company = new JLabel("Company:");
+    JLabel shares = new JLabel("Shares Purchased:");
+    JLabel domain = new JLabel("Domain of Investment:");
     JLabel indexLabel = new JLabel("Index of POS Purchase to Modify:");
 
     JTextArea costText = new JTextArea();
     JTextArea dateText = new JTextArea();
-    JTextArea goodText = new JTextArea();
-    JTextArea quantityText = new JTextArea();
-    JTextArea locationText = new JTextArea();
+    JTextArea companyText = new JTextArea();
+    JTextArea sharesText = new JTextArea();
+    JTextArea domainText = new JTextArea();
     JTextArea indexText = new JTextArea();
 
     JButton enterButton = new JButton("Enter");
 
-    public ModifyPosPurchaseGUI() {
+    public ModifyInvestmentGUI() {
         windowSetup();
-        panel.setLayout(new GridLayout(4, 1));
+        panel.setLayout(new GridLayout(3, 1));
         indexPanel.setLayout(new GridLayout(1, 2));
         innerPanel.setLayout(new GridLayout(1, 2));
         inputsPanel.setLayout(new GridLayout(5, 2));
-        locationListScrollPane.setPreferredSize(new Dimension(400, 20));
-        posPurchaseHistoryScrollPane.setPreferredSize(new Dimension(400, 20));
+        investmentHistoryScrollPane.setPreferredSize(new Dimension(400, 20));
 
         enterButton.addActionListener(this);
 
         frame.add(panel);
-        panel.add(locationListScrollPane);
-        panel.add(posPurchaseHistoryScrollPane);
+        panel.add(investmentHistoryScrollPane);
         panel.add(indexPanel);
         indexPanel.add(indexLabel);
         indexPanel.add(indexText);
@@ -60,24 +59,24 @@ public class ModifyPosPurchaseGUI extends AbstractGUI implements ActionListener 
         inputsPanel.add(costText);
         inputsPanel.add(date);
         inputsPanel.add(dateText);
-        inputsPanel.add(good);
-        inputsPanel.add(goodText);
-        inputsPanel.add(quantity);
-        inputsPanel.add(quantityText);
-        inputsPanel.add(location);
-        inputsPanel.add(locationText);
+        inputsPanel.add(company);
+        inputsPanel.add(companyText);
+        inputsPanel.add(shares);
+        inputsPanel.add(sharesText);
+        inputsPanel.add(domain);
+        inputsPanel.add(domainText);
         innerPanel.add(enterButton);
         frameSetup();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        PosPurchase purchase = getPosPurchaseHistory().get(Integer.parseInt(indexText.getText()) - 1);
-        purchase.setCost(Double.parseDouble(costText.getText()));
-        purchase.setDate(new Date(Integer.parseInt(dateText.getText())));
-        purchase.setGood(goodText.getText());
-        purchase.setQuantity(Integer.parseInt(quantityText.getText()));
-        purchase.setLocation(LocationList.accessLocationList().get(Integer.parseInt(locationText.getText()) - 1));
+        Investment investment = getInvestmentHistory().get(Integer.parseInt(indexText.getText()) - 1);
+        investment.setCost(Double.parseDouble(costText.getText()));
+        investment.setDate(new Date(Integer.parseInt(dateText.getText())));
+        investment.setCompany(companyText.getText());
+        investment.setShares(Integer.parseInt(sharesText.getText()));
+        investment.setDomain(domainText.getText());
         frame.dispose();
         new TransactionsGUI();
     }

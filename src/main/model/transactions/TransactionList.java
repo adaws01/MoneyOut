@@ -133,7 +133,21 @@ public class TransactionList implements Writable {
         return posPurchaseHistory;
     }
 
-    //TODO getInvestmentHistory()
+    //TODO getInvestmentHistory() Test coverage
+    //EFFECTS: Returns a list of all Investments recorded in transactionHistory.
+    public static List<Investment> getInvestmentHistory() {
+        List<Investment> investmentHistory = new ArrayList<>();
+
+        for (int i = 0; i < transactionHistory.list.size(); i++) {
+            Transaction transaction = transactionHistory.list.get(i);
+            String classString = transaction.getClass().toString();
+            if (classString.equals("class model.transactions.Investment")) {
+                investmentHistory.add((Investment) transaction);
+            }
+        }
+
+        return investmentHistory;
+    }
 
     //TODO getETransferHistory()
 
