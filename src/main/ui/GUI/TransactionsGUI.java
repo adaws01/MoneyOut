@@ -62,7 +62,7 @@ public class TransactionsGUI extends AbstractGUI implements ActionListener {
             new ModifyTransactionGUI();
         } else {
             frame.dispose();
-            //TODO new DeleteTransactionGUI();
+            new DeleteTransactionGUI();
         }
     }
 }
