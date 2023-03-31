@@ -1,1 +1,18 @@
-{"TransactionHistory": []}
+{"TransactionHistory": [
+    {
+        "date": 20230330,
+        "cost": 10,
+        "quantity": 40,
+        "location": {
+            "district": "Kitsilano",
+            "distanceFromHome": 20,
+            "name": "Grocery Store"
+        },
+        "good": "Tea Bag"
+    },
+    {
+        "date": 20230330,
+        "cost": 500,
+        "name": "Landlord"
+    }
+]}

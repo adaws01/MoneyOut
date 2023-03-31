@@ -1,9 +1,9 @@
 {
     "address": {
-        "district": "DISTRICT",
+        "district": "University Endowment Lands",
         "distanceFromHome": 0,
-        "name": "NEED ADDRESS"
+        "name": "Home Location"
     },
-    "balance": 400,
-    "name": "Xander"
+    "balance": 40,
+    "name": "Alexander"
 }

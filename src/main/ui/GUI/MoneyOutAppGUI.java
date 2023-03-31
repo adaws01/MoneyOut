@@ -74,7 +74,7 @@ public class MoneyOutAppGUI extends AbstractGUI implements ActionListener {
         } else if (e.getSource()==saveButton) {
             new SaveGUI();
         } else {
-            //TODO LoadGUI();
+            new LoadGUI();
         }
     }
 }

@@ -1,1 +1,5 @@
-{"LocationList": []}
+{"LocationList": [{
+    "district": "Kitsilano",
+    "distanceFromHome": 20,
+    "name": "Grocery Store"
+}]}

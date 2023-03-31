@@ -30,17 +30,11 @@ public class SaveGUI extends AbstractGUI{
     private LocationListWriter locationListWriter;
     private TransactionHistoryWriter transactionHistoryWriter;
     private AccountWriter accountWriter;
-    private AccountReader accountReader;
-    private LocationListReader locationListReader;
-    private TransactionHistoryReader transactionHistoryReader;
 
     public SaveGUI() {
         accountWriter = new AccountWriter(ACCOUNT_JSON_STORE);
         transactionHistoryWriter = new TransactionHistoryWriter(TRANSACTION_HISTORY_JSON_STORE);
         locationListWriter = new LocationListWriter(LOCATION_LIST_JSON_STORE);
-        accountReader = new AccountReader(ACCOUNT_JSON_STORE);
-        locationListReader = new LocationListReader(LOCATION_LIST_JSON_STORE);
-        transactionHistoryReader = new TransactionHistoryReader(TRANSACTION_HISTORY_JSON_STORE);
 
         windowSetup();
         panel.setLayout(new GridLayout(3, 1));
@@ -53,7 +47,10 @@ public class SaveGUI extends AbstractGUI{
         panel.add(locationSave);
         panel.add(transactionSave);
         panel.add(accountSave);
-        frameSetup();
+        frame.setTitle("Save");
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     // EFFECTS: saves LocationList to file
