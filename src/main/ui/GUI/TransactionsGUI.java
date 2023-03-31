@@ -31,6 +31,11 @@ public class TransactionsGUI extends AbstractGUI implements ActionListener {
 
         transactionsScrollPane.setPreferredSize(new Dimension(400, 20));
 
+        logButton.addActionListener(this);
+        modifyButton.addActionListener(this);
+        deleteButton.addActionListener(this);
+        backButton.addActionListener(this);
+
 
         frame.add(panel);
         panel.add(backButton);
@@ -46,6 +51,18 @@ public class TransactionsGUI extends AbstractGUI implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == backButton) {
+            frame.dispose();
+            new MoneyOutAppGUI();
+        } else if (e.getSource() == logButton) {
+            frame.dispose();
+            new LogTransactionGUI();
+        } else if (e.getSource() == modifyButton) {
+            frame.dispose();
+            //TODO new ModifyTransactionGUI();
+        } else {
+            frame.dispose();
+            //TODO new DeleteTransactionGUI();
+        }
     }
 }
