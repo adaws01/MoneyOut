@@ -1,12 +1,1 @@
-{"LocationList": [
-    {
-        "district": "Downtown",
-        "distanceFromHome": 10,
-        "name": "Grocery Store A"
-    },
-    {
-        "district": "Kitsilano",
-        "distanceFromHome": 6,
-        "name": "Shop 2"
-    }
-]}
+{"LocationList": []}
