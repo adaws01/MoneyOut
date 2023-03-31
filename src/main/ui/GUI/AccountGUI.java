@@ -66,11 +66,14 @@ public class AccountGUI extends AbstractGUI implements ActionListener {
             frame.dispose();
             new MoneyOutAppGUI();
         } else if (e.getSource() == depositButton) {
-            //TODO Deposit to account action
+            frame.dispose();
+            new UpdateBalanceGUI("Deposit");
         } else if (e.getSource() == withdrawButton) {
-            //TODO Withdraw from account action
+            frame.dispose();
+            new UpdateBalanceGUI("Withdraw");
         } else if (e.getSource() == editButton) {
-            //TODO Edit Account Information action
+            frame.dispose();
+            new EditAccountGUI();
         }
     }
 }
