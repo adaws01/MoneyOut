@@ -38,7 +38,7 @@ public class ModifyTransactionGUI extends AbstractGUI implements ActionListener 
             new ModifyInvestmentGUI();
         } else {
             frame.dispose();
-            //new ModifyETransferGUI();
+            new ModifyETransferGUI();
         }
     }
 }

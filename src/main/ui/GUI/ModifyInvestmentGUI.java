@@ -27,7 +27,7 @@ public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
     JLabel company = new JLabel("Company:");
     JLabel shares = new JLabel("Shares Purchased:");
     JLabel domain = new JLabel("Domain of Investment:");
-    JLabel indexLabel = new JLabel("Index of POS Purchase to Modify:");
+    JLabel indexLabel = new JLabel("Index of Investment to Modify:");
 
     JTextArea costText = new JTextArea();
     JTextArea dateText = new JTextArea();

@@ -145,4 +145,19 @@ public abstract class AbstractGUI {
 
         return investmentsScrollPane;
     }
+
+    public JScrollPane generateETransferHistoryScrollPane() {
+        JPanel etransferHistoryPanel = new JPanel();
+        etransferHistoryPanel.setLayout(new GridLayout(0, 1));
+
+        for (int i = 0; i <= getETransferHistory().size() - 1; i++) {
+            JLabel label = new JLabel((i + 1) + ". " + generateTransactionString(getETransferHistory().get(i)));
+            etransferHistoryPanel.add(label);
+        }
+
+        JScrollPane etransferScrollPane = new JScrollPane();
+        etransferScrollPane.setViewportView(etransferHistoryPanel);
+
+        return etransferScrollPane;
+    }
 }
