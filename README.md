@@ -54,6 +54,9 @@ shopping lists suited to various sections of the city.
 - View percentages of what I spend money on
 - View shops that I spend the most money at
 
+---
+
+
 ### P2
 
 - Save my recorded Transactions, Locations, and Account information to file (if I so choose)
@@ -61,16 +64,22 @@ shopping lists suited to various sections of the city.
 
 ---
 
-## Footnotes
+### P3
 
-**This is a note about why I chose this idea. Unrelated to P0 Task 2 on EdX.**
-The development of this application will extend my foundation in 
-Java, and offer me the opportunity to explore app development across numerous
-data types and structures. There are lots of extensions to this idea that
-I could plausibly develop based on what direction CPSC 210 steers me. It
-will allow me to explore Java's graphical capabilities, including basic
-menus and GUI, as well as visualizations. It is a straightforward idea,
-meaning that my learning in this project is focused on implementing Java
-and the tenets of object-oriented programming and design, not unrelated
-matters (music theory, game design, to name a couple from my other
-project ideas).
+### Instructions for Grader
+
+- You can generate the first required action related to adding Xs to a Y by:
+  - First opening the Locations menu, and selecting 'New Location'
+  - Entering location information as prompted (note, some transactions require at least one location to be logged)
+- You can generate the second required action related to adding Xs to a Y by:
+  - Opening the Locations menu, and selecting 'Modify Location'
+  - Entering location information as prompted (there must already be a location logged)
+
+^Note: The same actions are also available within the Transactions menu, and some similar actions in the Account menu.
+
+- You can locate my visual component by:
+  - Relaunching the app to find a splash screen
+- You can save the state of my application by:
+  - Selecting 'Save to File' from the main menu
+- You can reload the state of my application by:
+  - Selecting 'Load from File' from the main menu
