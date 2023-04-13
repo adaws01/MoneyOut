@@ -10,8 +10,13 @@ import java.awt.event.ActionListener;
 
 import static model.transactions.TransactionList.getETransferHistory;
 
+/**
+ * Handles modifying an existing ETransfer based on user input
+ */
+
 public class ModifyETransferGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JScrollPane investmentHistoryScrollPane = generateETransferHistoryScrollPane();
 
     JPanel panel = new JPanel();
@@ -31,6 +36,7 @@ public class ModifyETransferGUI extends AbstractGUI implements ActionListener {
 
     JButton enterButton = new JButton("Enter");
 
+    //EFFECTS: Window setup for Modify ETransfer window
     public ModifyETransferGUI() {
         windowSetup();
         panel.setLayout(new GridLayout(3, 1));
@@ -58,6 +64,8 @@ public class ModifyETransferGUI extends AbstractGUI implements ActionListener {
         frameSetup();
     }
 
+    //EFFECTS: Setup for Enter button; commits updated ETransfer information to all instances of the original
+    //         ETransfer object
     @Override
     public void actionPerformed(ActionEvent e) {
         ETransfer etransfer = getETransferHistory().get(Integer.parseInt(indexText.getText()) - 1);

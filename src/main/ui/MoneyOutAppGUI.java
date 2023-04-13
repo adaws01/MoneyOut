@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  */
 
 public class MoneyOutAppGUI extends AbstractGUI implements ActionListener {
-
+    //JAVA Swing UI Elements
     JButton transactionsButton;
     JButton accountButton;
     JButton statsAndInsightsButton;
@@ -24,6 +24,7 @@ public class MoneyOutAppGUI extends AbstractGUI implements ActionListener {
 
     JPanel panel = new JPanel();
 
+    //EFFECTS: Window setup for Main window (Entry point for the entire app)
     public MoneyOutAppGUI() {
         windowSetup();
 
@@ -57,6 +58,7 @@ public class MoneyOutAppGUI extends AbstractGUI implements ActionListener {
         frameSetup();
     }
 
+    //EFFECTS: Button Setup; Calls each of the 6 subsequent windows
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == transactionsButton) {

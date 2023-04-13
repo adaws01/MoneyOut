@@ -37,5 +37,16 @@
         "date": 20210612,
         "cost": 30,
         "name": "Barber"
+    },
+    {
+        "date": 20230406,
+        "cost": 40,
+        "quantity": 2,
+        "location": {
+            "district": "Kitsilano",
+            "distanceFromHome": 20,
+            "name": "Grocery Store"
+        },
+        "good": "Item"
     }
 ]}

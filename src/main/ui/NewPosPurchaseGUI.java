@@ -11,8 +11,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Handles creating a new PosPurchase based on user input
+ */
+
 public class NewPosPurchaseGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JScrollPane locationListScrollPane = generateLocationListScrollPane();
 
     JPanel panel = new JPanel();
@@ -33,6 +38,7 @@ public class NewPosPurchaseGUI extends AbstractGUI implements ActionListener {
 
     JButton enterButton = new JButton("Enter");
 
+    //EFFECTS: Window setup for new PosPurchase window
     public NewPosPurchaseGUI() {
         windowSetup();
         panel.setLayout(new GridLayout(2, 1));
@@ -60,6 +66,8 @@ public class NewPosPurchaseGUI extends AbstractGUI implements ActionListener {
         frameSetup();
     }
 
+    //EFFECTS: Enter button setup; commits input PosPurchase information to a new object in memory.
+    //         Returns to previous window
     @Override
     public void actionPerformed(ActionEvent e) {
         PosPurchase purchase = new PosPurchase(Double.parseDouble(costText.getText()),

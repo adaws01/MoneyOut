@@ -11,8 +11,13 @@ import java.awt.event.ActionListener;
 
 import static model.transactions.TransactionList.getPosPurchaseHistory;
 
+/**
+ * Handles modifying an existing PosPurchase based on user input
+ */
+
 public class ModifyPosPurchaseGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JScrollPane locationListScrollPane = generateLocationListScrollPane();
     JScrollPane posPurchaseHistoryScrollPane = generatePosPurchaseHistoryScrollPane();
 
@@ -37,6 +42,7 @@ public class ModifyPosPurchaseGUI extends AbstractGUI implements ActionListener 
 
     JButton enterButton = new JButton("Enter");
 
+    //EFFECTS: Window setup for modify PosPurchase window
     public ModifyPosPurchaseGUI() {
         windowSetup();
         panel.setLayout(new GridLayout(4, 1));
@@ -50,6 +56,7 @@ public class ModifyPosPurchaseGUI extends AbstractGUI implements ActionListener 
         frameSetup();
     }
 
+    //EFFECTS: Adds all UI elements to window.
     private void addElements() {
         frame.add(panel);
         panel.add(locationListScrollPane);
@@ -72,6 +79,7 @@ public class ModifyPosPurchaseGUI extends AbstractGUI implements ActionListener 
         innerPanel.add(enterButton);
     }
 
+    //EFFECTS: Enter button setup; commits input PosPurchase information to all instances of original object
     @Override
     public void actionPerformed(ActionEvent e) {
         PosPurchase purchase = getPosPurchaseHistory().get(Integer.parseInt(indexText.getText()) - 1);

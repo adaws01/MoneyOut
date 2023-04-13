@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 
 public class LocationModifyGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JScrollPane locationsScrollPane = generateLocationListScrollPane();
 
     JPanel panel = new JPanel();
@@ -36,6 +37,7 @@ public class LocationModifyGUI extends AbstractGUI implements ActionListener {
 
     JButton enterButton = new JButton("Enter");
 
+    //EFFECTS: Window setup for modify Location window
     public LocationModifyGUI() {
         windowSetup();
         setLayouts();
@@ -60,6 +62,7 @@ public class LocationModifyGUI extends AbstractGUI implements ActionListener {
         frame.setTitle("Provide the Following:");
     }
 
+    //EFFECTS: Establishes Swing grid to contain UI objects. Objects placed in constructor above.
     private void setLayouts() {
         panel.setLayout(new GridLayout(3, 1));
         indexPanel.setLayout(new GridLayout(1, 2));
@@ -69,6 +72,7 @@ public class LocationModifyGUI extends AbstractGUI implements ActionListener {
         fieldsPanel.setLayout(new GridLayout(3, 1));
     }
 
+    //EFFECTS: Sets up enter button; commits updated Location information to Location in locationList
     @Override
     public void actionPerformed(ActionEvent e) {
         Location location = LocationList.accessLocationList().get(Integer.parseInt(indexText.getText()) - 1);

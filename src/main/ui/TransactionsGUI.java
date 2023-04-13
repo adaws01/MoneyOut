@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 public class TransactionsGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JScrollPane transactionsScrollPane = generateTransactionHistoryScrollPane();
 
     JPanel panel = new JPanel();
@@ -21,7 +22,7 @@ public class TransactionsGUI extends AbstractGUI implements ActionListener {
     JButton modifyButton = new JButton("Modify");
     JButton deleteButton = new JButton("Delete");
 
-
+    //EFFECTS: Window setup for Transactions window
     public TransactionsGUI() {
         windowSetup();
 
@@ -49,6 +50,7 @@ public class TransactionsGUI extends AbstractGUI implements ActionListener {
         frame.setTitle("Transactions");
     }
 
+    //EFFECTS: Button Setup; Transaction buttons and back button
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {

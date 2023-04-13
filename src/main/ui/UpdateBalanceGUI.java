@@ -7,9 +7,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Update Balance GUI. Allows the user to either deposit to or withdraw from their account balance.
+ */
+
 public class UpdateBalanceGUI extends AbstractGUI implements ActionListener {
 
-    String process;
+    String process;  //stores deposit or withdraw (for use in evaluating new account balance)
+
+    //JAVA Swing UI Elements
     JPanel panel = new JPanel();
     JPanel entryPanel = new JPanel();
 
@@ -20,6 +26,7 @@ public class UpdateBalanceGUI extends AbstractGUI implements ActionListener {
     JTextArea amount = new JTextArea();
 
     //REQUIRES: process == either "Deposit" or "Withdraw"
+    //EFFECTS: Window setup for Update Balance window
     public UpdateBalanceGUI(String process) {
         this.process = process;
 
@@ -39,6 +46,7 @@ public class UpdateBalanceGUI extends AbstractGUI implements ActionListener {
         frameSetup();
     }
 
+    //EFFECTS: Button Setup; Handles updating account balance based on user input
     @Override
     public void actionPerformed(ActionEvent e) {
         Double previousBalance = Account.accessAccount().getBalance();

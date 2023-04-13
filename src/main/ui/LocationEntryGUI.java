@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 
 public class LocationEntryGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JPanel panel = new JPanel();
     JPanel newLocationPanel = new JPanel();
     JPanel labelsPanel = new JPanel();
@@ -29,6 +30,7 @@ public class LocationEntryGUI extends AbstractGUI implements ActionListener {
 
     JButton enterButton = new JButton("Enter");
 
+    //EFFECTS: Window setup for the Add Location dialogue
     public LocationEntryGUI() {
         windowSetup();
 
@@ -54,6 +56,7 @@ public class LocationEntryGUI extends AbstractGUI implements ActionListener {
         frame.setTitle("Provide the Following:");
     }
 
+    //EFFECTS: Enter button action; commits Location information to locationList
     @Override
     public void actionPerformed(ActionEvent e) {
         Location location = new Location(nameText.getText(), districtText.getText(),

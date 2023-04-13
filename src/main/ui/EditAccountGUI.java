@@ -8,8 +8,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Edit Account Window. Provides User options to update their account details
+ */
+
 public class EditAccountGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JPanel panel = new JPanel();
     JPanel infoPanel = new JPanel();
     JPanel newInfoPanel = new JPanel();
@@ -30,6 +35,7 @@ public class EditAccountGUI extends AbstractGUI implements ActionListener {
 
     JButton enterButton = new JButton("Enter");
 
+    //EFFECTS: Window setup for EditAccount window
     public EditAccountGUI() {
         windowSetup();
 
@@ -56,6 +62,7 @@ public class EditAccountGUI extends AbstractGUI implements ActionListener {
         frameSetup();
     }
 
+    //EFFECTS: Setup for enter Button; commits changes to the user Account to memory
     @Override
     public void actionPerformed(ActionEvent e) {
         Account acc = Account.accessAccount();

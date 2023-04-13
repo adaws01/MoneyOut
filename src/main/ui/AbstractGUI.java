@@ -18,14 +18,17 @@ import static model.transactions.TransactionList.*;
  */
 
 public abstract class AbstractGUI {
-    JFrame frame;
-    JButton backButton = new JButton("Back");
+    JFrame frame;  //Defines the outer container used in any GUI Window
+    JButton backButton = new JButton("Back");  //Defines the back button (defined in each individual window)
 
+    //EFFECTS: Instantiates the most basic elements of a GUI window. First GUI code to run in calling any window
     public void windowSetup() {
         frame = new JFrame();
         frame.setSize(400, 200);
     }
 
+    //EFFECTS: The final setup of a GUI window. Sets a default title, places all elements in the window, centers the
+    //         window on the screen, and reveals the window.
     public void frameSetup() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Money Out");
@@ -34,22 +37,25 @@ public abstract class AbstractGUI {
         frame.setVisible(true);
     }
 
+    //EFFECTS: Returns a String containing all of a Location's information written in plain English.
     public String generateLocationString(Location location) {
         return location.getName() + ", " + location.getDistrict() + ", " + location.getDistanceFromHome()
                 + "km from home.";
     }
 
+    //EFFECTS: Returns a String containing all of a Transaction's information written in plain English
     public String generateTransactionString(Transaction transaction) {
         String tranClass = String.valueOf(transaction.getClass());
 
         return handleTransactionClass(transaction, tranClass);
     }
 
-    //EFFECTS: Generates a String that formats Date to be more easily read by user
+    //EFFECTS: Generates a String that formats a Date to be more easily read by user
     private String parseDate(Date date) {
         return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
     }
 
+    //EFFECTS: Processes an integer as a Date, then returns a string that formats the Date to be more easily read.
     public String writeDate(int date) {
         Date processedDate = new Date(date);
         return parseDate(processedDate);
@@ -86,6 +92,8 @@ public abstract class AbstractGUI {
                 + writeDate(etransfer.getDate()) + ", To: " + etransfer.getName() + ".";
     }
 
+    //EFFECTS: Generates a Scroll Pane UI Element containing all Locations in the static locationList. Text is
+    //         not overlapping, and scrolls when long enough.
     public JScrollPane generateLocationListScrollPane() {
         JPanel locationListPanel = new JPanel();
         locationListPanel.setLayout(new GridLayout(0, 1));
@@ -101,6 +109,8 @@ public abstract class AbstractGUI {
         return locationsScrollPane;
     }
 
+    //EFFECTS: Generates a Scroll Pane UI Element containing all Transactions in the static transactionHistory list.
+    //         Text is not overlapping, and scrolls when long enough.
     public JScrollPane generateTransactionHistoryScrollPane() {
         JPanel transactionHistoryPanel = new JPanel();
         transactionHistoryPanel.setLayout(new GridLayout(0, 1));
@@ -116,6 +126,8 @@ public abstract class AbstractGUI {
         return transactionsScrollPane;
     }
 
+    //EFFECTS: Generates a Scroll Pane UI Element containing all PosPurchases in the posPurchaseHistory list.
+    //         Text is not overlapping, and scrolls when long enough.
     public JScrollPane generatePosPurchaseHistoryScrollPane() {
         JPanel posPurchaseHistoryPanel = new JPanel();
         posPurchaseHistoryPanel.setLayout(new GridLayout(0, 1));
@@ -131,6 +143,8 @@ public abstract class AbstractGUI {
         return posPurchasesScrollPane;
     }
 
+    //EFFECTS: Generates a Scroll Pane UI Element containing all Investments in the investmentHistory list.
+    //         Text is not overlapping, and scrolls when long enough.
     public JScrollPane generateInvestmentHistoryScrollPane() {
         JPanel investmentHistoryPanel = new JPanel();
         investmentHistoryPanel.setLayout(new GridLayout(0, 1));
@@ -146,6 +160,8 @@ public abstract class AbstractGUI {
         return investmentsScrollPane;
     }
 
+    //EFFECTS: Generates a Scroll Pane UI Element containing all ETransfers in the etransferHistory list.
+    //         Text is not overlapping, and scrolls when long enough.
     public JScrollPane generateETransferHistoryScrollPane() {
         JPanel etransferHistoryPanel = new JPanel();
         etransferHistoryPanel.setLayout(new GridLayout(0, 1));

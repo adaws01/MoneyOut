@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 public class LocationsGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JPanel panel = new JPanel();
     JPanel locationsPanel = new JPanel();
     JPanel toolsPanel = new JPanel();
@@ -19,6 +20,7 @@ public class LocationsGUI extends AbstractGUI implements ActionListener {
     JButton newLocationButton = new JButton("New Location");
     JButton modifyLocationButton = new JButton("Modify Location");
 
+    //EFFECTS: Window setup for Locations window
     public LocationsGUI() {
         windowSetup();
         frame.setMaximumSize(new Dimension(800, 300));
@@ -43,6 +45,7 @@ public class LocationsGUI extends AbstractGUI implements ActionListener {
         frame.setTitle("Locations");
     }
 
+    //EFFECTS: Button setup for all buttons in window: Back, new Location, update Location
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
@@ -55,11 +58,13 @@ public class LocationsGUI extends AbstractGUI implements ActionListener {
         }
     }
 
+    //EFFECTS: Closes Locations window and opens the Location Entry Window
     private void logNewLocation() {
         frame.dispose();
         new LocationEntryGUI();
     }
 
+    //EFFECTS: Closes Locations window and opens the Location update Window
     private void modifyLocation() {
         frame.dispose();
         new LocationModifyGUI();

@@ -11,23 +11,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
+/**
+ * Save Data GUI. Handles saving data to memory and outputs to user where data was saved to.
+ */
+
 public class SaveGUI extends AbstractGUI {
 
+    //JSON Data access information
     Account account = Account.accessAccount(); //Accessor for account
     private static final String ACCOUNT_JSON_STORE = "./data/account.json";
     private static final String TRANSACTION_HISTORY_JSON_STORE = "./data/transactionHistory.json";
     private static final String LOCATION_LIST_JSON_STORE = "./data/locationList.json";
 
+    //JAVA Swing UI Elements
     JPanel panel = new JPanel();
 
     JLabel locationSave = new JLabel();
     JLabel transactionSave = new JLabel();
     JLabel accountSave = new JLabel();
 
+    //Sets up JSON Data writer objects
     private LocationListWriter locationListWriter;
     private TransactionHistoryWriter transactionHistoryWriter;
     private AccountWriter accountWriter;
 
+    //EFFECTS: Window setup for Save Data window
     public SaveGUI() {
         accountWriter = new AccountWriter(ACCOUNT_JSON_STORE);
         transactionHistoryWriter = new TransactionHistoryWriter(TRANSACTION_HISTORY_JSON_STORE);

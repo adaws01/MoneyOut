@@ -85,5 +85,3 @@ public class Account implements Writable {
         return json;
     }
 }
-
-//TODO: Fix Account Home Location Information (not updating)

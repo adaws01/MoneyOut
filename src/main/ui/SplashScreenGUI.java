@@ -3,11 +3,17 @@ package ui;
 import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Splash Screen. Image displayed at startup. Proceeds to main menu
+ */
+
 public class SplashScreenGUI extends AbstractGUI {
 
+    //JAVA Swing UI Elements
     JLabel label = new JLabel();
     String splashImageLocation = "./lib/MoneyOutSplash.jpg";
 
+    //EFFECTS: Window setup for Splash Screen. Calls Main window after displaying for 3 seconds
     public SplashScreenGUI() throws InterruptedException {
         windowSetup();
 

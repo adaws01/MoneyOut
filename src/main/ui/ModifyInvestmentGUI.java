@@ -10,8 +10,13 @@ import java.awt.event.ActionListener;
 
 import static model.transactions.TransactionList.getInvestmentHistory;
 
+/**
+ * Handles modifying an existing Investment based on user input
+ */
+
 public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JScrollPane investmentHistoryScrollPane = generateInvestmentHistoryScrollPane();
 
     JPanel panel = new JPanel();
@@ -35,6 +40,7 @@ public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
 
     JButton enterButton = new JButton("Enter");
 
+    //EFFECTS: Window setup for Modify Investment window
     public ModifyInvestmentGUI() {
         windowSetup();
         panel.setLayout(new GridLayout(3, 1));
@@ -47,6 +53,7 @@ public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
         frameSetup();
     }
 
+    //EFFECTS: Adds all UI elements to window.
     private void addElements() {
         frame.add(panel);
         panel.add(investmentHistoryScrollPane);
@@ -68,6 +75,7 @@ public class ModifyInvestmentGUI extends AbstractGUI implements ActionListener {
         innerPanel.add(enterButton);
     }
 
+    //EFFECTS: Enter button setup; commits input Investment information to all instances of original Investment object
     @Override
     public void actionPerformed(ActionEvent e) {
         Investment investment = getInvestmentHistory().get(Integer.parseInt(indexText.getText()) - 1);

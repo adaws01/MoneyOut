@@ -15,22 +15,26 @@ import static model.Account.accessAccount;
 
 public class AccountGUI extends AbstractGUI implements ActionListener {
 
+    //Panels to contain UI Elements
     JPanel panel = new JPanel();
     JPanel accountPanel = new JPanel();
     JPanel balancePanel = new JPanel();
     JPanel personalInfoEditPanel = new JPanel();
     JPanel personalInfoPanel = new JPanel();
 
+    //Labels to contain Text
     JLabel name = new JLabel(accessAccount().getName());
     Location address = accessAccount().getAddress();
     JLabel location = new JLabel("Address: " + generateLocationString(address));
     JLabel balance = new JLabel("Balance: $" + accessAccount().getBalance());
 
+    //Buttons to allow user Input
     JButton depositButton = new JButton("Deposit");
     JButton withdrawButton = new JButton("Withdraw");
     JButton editButton = new JButton("Edit");
 
-
+    //EFFECTS: Performs basic window setup, establishes UI grid layout for window, sets up buttons, and adds all
+    //         elements to window
     public AccountGUI() {
         windowSetup();
         panel.setLayout(new GridLayout(1, 2));
@@ -55,6 +59,7 @@ public class AccountGUI extends AbstractGUI implements ActionListener {
         frame.setTitle("Account");
     }
 
+    //EFFECTS: Tells Java to perform an action when each button is pressed. Action defined in actionPerformed()
     private void addActionListeners() {
         depositButton.addActionListener(this);
         withdrawButton.addActionListener(this);
@@ -62,6 +67,7 @@ public class AccountGUI extends AbstractGUI implements ActionListener {
         backButton.addActionListener(this);
     }
 
+    //EFFECTS: Establishes Button functionality
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {

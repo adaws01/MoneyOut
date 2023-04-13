@@ -34,27 +34,6 @@ public class TransactionHistoryWriter {
         saveToFile(json.toString(TAB));
     }
 
-//    //MODIFIES: this
-//    //EFFECTS: writes JSON representation of PosPurchase to file
-//    public static void writePosPurchase(PosPurchase posPurchase) {
-//        JSONObject json = posPurchase.toJson();
-//        saveToFile(json.toString(TAB));
-//    }
-//
-//    //MODIFIES: this
-//    //EFFECTS: writes JSON representation of Investment to file
-//    public static void writeInvestment(Investment investment) {
-//        JSONObject json = investment.toJson();
-//        saveToFile(json.toString(TAB));
-//    }
-//
-//    //MODIFIES: this
-//    //EFFECTS: writes JSON representation of ETransfer to file
-//    public static void writeETransfer(ETransfer etransfer) {
-//        JSONObject json = etransfer.toJson();
-//        saveToFile(json.toString(TAB));
-//    }
-
     // MODIFIES: this
     // EFFECTS: closes writer
     public static void close() {

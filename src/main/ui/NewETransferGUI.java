@@ -10,8 +10,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Handles creating a new ETransfer based on user input
+ */
+
 public class NewETransferGUI extends AbstractGUI implements ActionListener {
 
+    //JAVA Swing UI Elements
     JPanel innerPanel = new JPanel();
     JPanel inputsPanel = new JPanel();
 
@@ -25,6 +30,7 @@ public class NewETransferGUI extends AbstractGUI implements ActionListener {
 
     JButton enterButton = new JButton("Enter");
 
+    //EFFECTS: Window setup for New ETransfer window
     public NewETransferGUI() {
         windowSetup();
         innerPanel.setLayout(new GridLayout(1, 2));
@@ -44,6 +50,8 @@ public class NewETransferGUI extends AbstractGUI implements ActionListener {
         frameSetup();
     }
 
+    //EFFECTS: Enter button setup; commits input ETransfer information to a new object in memory.
+    //         Returns to previous window
     @Override
     public void actionPerformed(ActionEvent e) {
         ETransfer etransfer = new ETransfer(Double.parseDouble(costText.getText()),

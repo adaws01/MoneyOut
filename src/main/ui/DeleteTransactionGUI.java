@@ -9,10 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Delete Transaction Window (removes a transaction from transactionHistory)
+ */
+
 public class DeleteTransactionGUI extends AbstractGUI implements ActionListener {
 
     JScrollPane transactionScrollPane = generateTransactionHistoryScrollPane();
 
+    //UI Element definitions
     JPanel panel = new JPanel();
     JPanel controlPanel = new JPanel();
     JPanel inputPanel = new JPanel();
@@ -23,6 +28,7 @@ public class DeleteTransactionGUI extends AbstractGUI implements ActionListener 
 
     JTextArea indexText = new JTextArea();
 
+    //EFFECTS: Window and grid setup, button setup, adds all UI elements to window
     public DeleteTransactionGUI() {
         windowSetup();
         panel.setLayout(new GridLayout(2, 1));
@@ -42,6 +48,7 @@ public class DeleteTransactionGUI extends AbstractGUI implements ActionListener 
         frame.setTitle("Delete Transaction");
     }
 
+    //EFFECTS: Button Definition for delete Transaction button
     @Override
     public void actionPerformed(ActionEvent e) {
         List<Transaction> transactions = TransactionList.accessTransactionHistory();

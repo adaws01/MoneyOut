@@ -133,7 +133,6 @@ public class TransactionList implements Writable {
         return posPurchaseHistory;
     }
 
-    //TODO getInvestmentHistory() Test coverage
     //EFFECTS: Returns a list of all Investments recorded in transactionHistory.
     public static List<Investment> getInvestmentHistory() {
         List<Investment> investmentHistory = new ArrayList<>();
@@ -149,7 +148,6 @@ public class TransactionList implements Writable {
         return investmentHistory;
     }
 
-    //TODO getETransferHistory() Test Coverage
     //EFFECTS: Returns a list of all E-Transfers recorded in transactionHistory.
     public static List<ETransfer> getETransferHistory() {
         List<ETransfer> etransferHistory = new ArrayList<>();
