@@ -135,3 +135,29 @@ Thu Apr 13 18:13:29 PDT 2023
 Changed Transaction Date from 20230301 to 20230228.
 Thu Apr 13 18:13:29 PDT 2023
 Changed ETransfer Recipient Name from Landlord to Landlord.
+
+---
+
+### Phase 4: Task 3
+
+My project is fully functional, though there is still a substantial amount of 
+duplication present in the code. If I had more time to work on this project,
+I would begin with the obvious refactoring, starting with breaking the console
+application up into multiple classes. This was the most difficult part of my
+project to deal with, as my Console application class got very long towards
+the end of it's development, and was very tedious to work with.
+
+Additionally, I would try to find more elegant solutions for certain issues I faced.
+For instance, I have a couple classes named Average Cost, and Loading that I
+use to pass information engaging with rather specific behaviours of my application.
+Average Cost was used in my model that locates the optimal shop to buy a certain good at,
+and the Loading class was used to mute the writing of the EventLog during data loading,
+as I believed it took away from the point of the EventLog system. While these implementations
+work, I believe there are more elegant solutions that do not require me to create additional
+small classes. I would also introduce more abstraction in my UI code, as I currently have
+every UI window dependent on a single class. There are numerous objects in the app
+that are very similar that I could have abstracted into abstract classes or interfaces.
+Finally, now understanding the Singleton design pattern, I would more closely
+follow that recipe in creating my Account, LocationList and TransactionHistory
+classes, as following that design pattern would have alleviated some headaches
+in creating my model early on.
