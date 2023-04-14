@@ -1,9 +1,14 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 
 /**
@@ -13,7 +18,7 @@ import java.awt.event.ActionListener;
  * Makes calls that modify or manipulate the lists of data recorded in the model package.
  */
 
-public class MoneyOutAppGUI extends AbstractGUI implements ActionListener {
+public class MoneyOutAppGUI extends AbstractGUI implements ActionListener, WindowListener {
     //JAVA Swing UI Elements
     JButton transactionsButton;
     JButton accountButton;
@@ -37,6 +42,8 @@ public class MoneyOutAppGUI extends AbstractGUI implements ActionListener {
         locationsButton = new JButton("Locations");
         saveButton = new JButton("Save to File");
         loadButton = new JButton("Load from File");
+
+        frame.addWindowListener(this);
 
         transactionsButton.addActionListener(this);
         accountButton.addActionListener(this);
@@ -62,21 +69,67 @@ public class MoneyOutAppGUI extends AbstractGUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == transactionsButton) {
-            frame.dispose();
+            frame.setVisible(false);
             new TransactionsGUI();
         } else if (e.getSource() == accountButton) {
-            frame.dispose();
+            frame.setVisible(false);
             new AccountGUI();
         } else if (e.getSource() == statsAndInsightsButton) {
-            frame.dispose();
+            frame.setVisible(false);
             new StatsAndInsightsGUI();
         } else if (e.getSource() == locationsButton) {
-            frame.dispose();
+            frame.setVisible(false);
             new LocationsGUI();
         } else if (e.getSource() == saveButton) {
             new SaveGUI();
         } else {
             new LoadGUI();
         }
+    }
+
+    //EFFECTS: Runs when application is closed (using the close window Button)
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Event Log: ");
+        printEventLogToConsole();
+    }
+
+    //EFFECTS: Writes EventLog To Console when app is closed
+    private void printEventLogToConsole() {
+        EventLog log = EventLog.getInstance();
+        for (Event next : log) {
+            System.out.println(next.toString());
+        }
+    }
+
+    //WindowListener Methods (Unused)
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

@@ -1,52 +1,25 @@
 {"TransactionHistory": [
     {
-        "date": 20230330,
-        "cost": 10,
-        "quantity": 40,
+        "date": 20230412,
+        "cost": 25,
+        "quantity": 2,
         "location": {
-            "district": "Kitsilano",
-            "distanceFromHome": 20,
-            "name": "Grocery Store"
+            "district": "Gastown",
+            "distanceFromHome": 11,
+            "name": "123 Water Street"
         },
-        "good": "Tea Bag"
+        "good": "Mug"
     },
     {
-        "date": 20230330,
-        "cost": 500,
-        "name": "Landlord"
-    },
-    {
-        "date": 20230320,
-        "cost": 400,
-        "quantity": 1,
-        "location": {
-            "district": "Kitsilano",
-            "distanceFromHome": 20,
-            "name": "Grocery Store"
-        },
-        "good": "Phone"
-    },
-    {
-        "date": 20200330,
+        "date": 20230221,
         "shares": 1,
-        "cost": 200,
+        "cost": 105,
         "domain": "Technology",
         "company": "Apple"
     },
     {
-        "date": 20210612,
-        "cost": 30,
-        "name": "Barber"
-    },
-    {
-        "date": 20230406,
-        "cost": 40,
-        "quantity": 2,
-        "location": {
-            "district": "Kitsilano",
-            "distanceFromHome": 20,
-            "name": "Grocery Store"
-        },
-        "good": "Item"
+        "date": 20230228,
+        "cost": 850,
+        "name": "Landlord"
     }
 ]}

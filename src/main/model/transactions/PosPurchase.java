@@ -1,5 +1,8 @@
 package model.transactions;
 
+import model.Event;
+import model.EventLog;
+import model.Loading;
 import model.moneyoutprimitives.Date;
 import model.moneyoutprimitives.Location;
 import org.json.JSONObject;
@@ -23,6 +26,11 @@ public class PosPurchase extends Transaction {
         this.good = good;
         this.quantity = quantity;
         this.location = location;
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Logged New POS Purchase with Cost: " + cost
+                    + ", Date: " + date.getDate() + ", Good: " + good + ", Quantity: "
+                    + quantity + ", At: " + location.getName() + "."));
+        }
     }
 
     //Getters
@@ -40,14 +48,26 @@ public class PosPurchase extends Transaction {
 
     //Setters
     public void setGood(String s) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed POS Purchase Good from " + this.getGood()
+                    + " to " + s + "."));
+        }
         this.good = s;
     }
 
     public void setQuantity(int quantity) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed POS Purchase Quantity from "
+                    + this.getQuantity() + " to " + quantity + "."));
+        }
         this.quantity = quantity;
     }
 
     public void setLocation(Location location) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed POS Purchase Location from "
+                    + this.getLocation().getName() + " to " + location.getName() + "."));
+        }
         this.location = location;
     }
 

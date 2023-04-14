@@ -1,13 +1,10 @@
 package model.moneyoutprimitives;
 
-import model.transactions.Transaction;
+import model.Event;
+import model.EventLog;
+import model.Loading;
 import org.json.JSONObject;
 import persistence.Writable;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static model.moneyoutprimitives.LocationList.accessLocationList;
 
 /**
  * Represents a Location with name, neighbourhood/district, and
@@ -30,6 +27,10 @@ public class Location implements Writable {
         this.name = name;
         this.district = district;
         this.distanceFromHome = distanceFromHome;
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Logged New Location with Name: " + name
+                    + ", District: " + district + ", " + distanceFromHome + "km away from Home."));
+        }
     }
 
     //Getters
@@ -47,14 +48,26 @@ public class Location implements Writable {
 
     //Setters
     public void setName(String name) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed Location Name from " + this.getName()
+                    + " to " + name + "."));
+        }
         this.name = name;
     }
 
     public void setDistrict(String district) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed Location District from " + this.getDistrict()
+                    + " to " + district + "."));
+        }
         this.district = district;
     }
 
     public void setDistanceFromHome(int distanceFromHome) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed Location Distance from Home from "
+                    + this.getDistanceFromHome() + " to " + distanceFromHome + "km."));
+        }
         this.distanceFromHome = distanceFromHome;
     }
 

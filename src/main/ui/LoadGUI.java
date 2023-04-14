@@ -1,6 +1,7 @@
 package ui;
 
 import model.Account;
+import model.Loading;
 import persistence.*;
 
 import javax.swing.*;
@@ -40,9 +41,13 @@ public class LoadGUI extends AbstractGUI {
         windowSetup();
         panel.setLayout(new GridLayout(3, 1));
 
+        Loading.setLoading(true);
+
         locationLoad.setText(loadLocationList());
         transactionLoad.setText(loadTransactionHistory());
         accountLoad.setText(loadAccount());
+
+        Loading.setLoading(false);
 
         frame.add(panel);
         panel.add(locationLoad);

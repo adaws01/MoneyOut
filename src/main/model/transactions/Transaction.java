@@ -1,6 +1,9 @@
 package model.transactions;
 
 import model.Account;
+import model.Event;
+import model.EventLog;
+import model.Loading;
 import model.moneyoutprimitives.Date;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -43,10 +46,18 @@ public abstract class Transaction implements Writable {
 
     //Setters (Test Coverage handled in POSPurchase)
     public void setCost(double cost) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed Transaction Cost from " + this.getCost()
+                    + " to " + cost + "."));
+        }
         this.cost = cost;
     }
 
     public void setDate(Date date) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed Transaction Date from "
+                    + this.date.getDate() + " to " + date.getDate() + "."));
+        }
         this.date = date;
     }
 

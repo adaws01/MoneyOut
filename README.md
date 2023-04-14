@@ -83,3 +83,55 @@ shopping lists suited to various sections of the city.
   - Selecting 'Save to File' from the main menu
 - You can reload the state of my application by:
   - Selecting 'Load from File' from the main menu
+
+
+---
+
+### Phase 4: Task 2
+
+A Sample Console Output when the app is Quit:
+
+Thu Apr 13 18:10:07 PDT 2023
+Logged New Location with Name: NEED ADDRESS, District: DISTRICT, 0km away from Home.
+Thu Apr 13 18:10:07 PDT 2023
+Logged New Location with Name: Water Street, District: Downtown, 10km away from Home.
+Thu Apr 13 18:10:23 PDT 2023
+Changed Location Name from Water Street to 123 Water Street.
+Thu Apr 13 18:10:23 PDT 2023
+Changed Location District from Downtown to Gastown.
+Thu Apr 13 18:10:23 PDT 2023
+Changed Location Distance from Home from 10 to 11km.
+Thu Apr 13 18:11:07 PDT 2023
+Logged New Location with Name: 1130 University Boulevard, District: University Endowment Lands, 0km away from Home.
+Thu Apr 13 18:11:48 PDT 2023
+Logged New POS Purchase with Cost: 20.0, Date: 20230413, Good: Mug, Quantity: 1, At: 123 Water Street.
+Thu Apr 13 18:12:06 PDT 2023
+Logged New Investment with Cost: 100.0, Date: 20230220, Company: Apple, Shares: 1, in Domain: Technology.
+Thu Apr 13 18:12:16 PDT 2023
+Logged New ETransfer with Cost: 800.0, Date: 20230301, to: Landlord.
+Thu Apr 13 18:12:39 PDT 2023
+Changed Transaction Cost from 20.0 to 25.0.
+Thu Apr 13 18:12:39 PDT 2023
+Changed Transaction Date from 20230413 to 20230412.
+Thu Apr 13 18:12:39 PDT 2023
+Changed POS Purchase Good from Mug to Mug.
+Thu Apr 13 18:12:39 PDT 2023
+Changed POS Purchase Quantity from 1 to 2.
+Thu Apr 13 18:12:39 PDT 2023
+Changed POS Purchase Location from 123 Water Street to 123 Water Street.
+Thu Apr 13 18:13:10 PDT 2023
+Changed Transaction Cost from 100.0 to 105.0.
+Thu Apr 13 18:13:10 PDT 2023
+Changed Transaction Date from 20230220 to 20230221.
+Thu Apr 13 18:13:10 PDT 2023
+Changed Investment Company from Apple to Apple.
+Thu Apr 13 18:13:10 PDT 2023
+Changed Investment Shares from 1 to 1.
+Thu Apr 13 18:13:10 PDT 2023
+Changed Investment Domain from Technology to Technology.
+Thu Apr 13 18:13:29 PDT 2023
+Changed Transaction Cost from 800.0 to 850.0.
+Thu Apr 13 18:13:29 PDT 2023
+Changed Transaction Date from 20230301 to 20230228.
+Thu Apr 13 18:13:29 PDT 2023
+Changed ETransfer Recipient Name from Landlord to Landlord.

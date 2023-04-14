@@ -1,5 +1,8 @@
 package model.transactions;
 
+import model.Event;
+import model.EventLog;
+import model.Loading;
 import model.moneyoutprimitives.Date;
 import org.json.JSONObject;
 
@@ -21,6 +24,11 @@ public class Investment extends Transaction {
         this.company = company;
         this.shares = shares;
         this.domain = domain;
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Logged New Investment with Cost: " + cost
+                    + ", Date: " + date.getDate() + ", Company: " + company + ", Shares: "
+                    + shares + ", in Domain: " + domain + "."));
+        }
     }
 
     //Getters
@@ -38,14 +46,26 @@ public class Investment extends Transaction {
 
     //Setters
     public void setCompany(String company) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed Investment Company from " + this.getCompany()
+                    + " to " + company + "."));
+        }
         this.company = company;
     }
 
     public void setShares(int shares) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed Investment Shares from " + this.getShares()
+                    + " to " + shares + "."));
+        }
         this.shares = shares;
     }
 
     public void setDomain(String domain) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed Investment Domain from " + this.getDomain()
+                    + " to " + domain + "."));
+        }
         this.domain = domain;
     }
 

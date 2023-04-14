@@ -1,5 +1,8 @@
 package model.transactions;
 
+import model.Event;
+import model.EventLog;
+import model.Loading;
 import model.moneyoutprimitives.Date;
 import org.json.JSONObject;
 
@@ -15,6 +18,10 @@ public class ETransfer extends Transaction {
     public ETransfer(double cost, Date date, String name) {
         super(cost, date);
         this.name = name;
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Logged New ETransfer with Cost: " + cost
+                    + ", Date: " + date.getDate() + ", to: " + name + "."));
+        }
     }
 
     //Getters
@@ -24,6 +31,10 @@ public class ETransfer extends Transaction {
 
     //Setters
     public void setName(String name) {
+        if (!Loading.isLoading() == true) {
+            EventLog.getInstance().logEvent(new Event("Changed ETransfer Recipient Name from "
+                    + this.getName() + " to " + name + "."));
+        }
         this.name = name;
     }
 
